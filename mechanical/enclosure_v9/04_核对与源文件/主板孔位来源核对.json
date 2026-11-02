@@ -1,0 +1,129 @@
+{
+  "source": "E:\\微信\\聊天文件\\xwechat_files\\wxid_gaehxn9k2xsu22_a0a9\\temp\\RWTemp\\2026-10\\b5c72e7d7f469b621e3aa130b2d7679d\\TI60F225_DEMOBOARD-装配图.pdf",
+  "units": "mm",
+  "board": [
+    80,
+    100
+  ],
+  "coordinateOrigin": "Component side PCB top-left; u right, v down from Type-C edge.",
+  "fiveSelectedHoles": [
+    {
+      "id": "H1",
+      "nominal": "M2",
+      "u": 3,
+      "v": 3,
+      "frontAndBack": [
+        {
+          "u": 2.999989131666665,
+          "v": 2.9999557236111047,
+          "diameter": 1.999897222222216,
+          "coordinateError": 4.559078068081979e-05
+        },
+        {
+          "u": 2.999898095000006,
+          "v": 2.9999557236111047,
+          "diameter": 1.999897222222216,
+          "coordinateError": 0.00011110817988507292
+        }
+      ]
+    },
+    {
+      "id": "H2",
+      "nominal": "M2",
+      "u": 3,
+      "v": 97,
+      "frontAndBack": [
+        {
+          "u": 2.999989131666665,
+          "v": 97.00002662722221,
+          "diameter": 1.9998972222222209,
+          "coordinateError": 2.8759861477606214e-05
+        },
+        {
+          "u": 2.999898095000006,
+          "v": 97.00002662722223,
+          "diameter": 1.9998972222222209,
+          "coordinateError": 0.00010532634042467725
+        }
+      ]
+    },
+    {
+      "id": "H3",
+      "nominal": "M2",
+      "u": 77,
+      "v": 97,
+      "frontAndBack": [
+        {
+          "u": 77.000101905,
+          "v": 97.00002662722221,
+          "diameter": 1.9998972222222209,
+          "coordinateError": 0.00010532634042108465
+        },
+        {
+          "u": 77.00001086833333,
+          "v": 97.00002662722223,
+          "diameter": 1.9998972222222209,
+          "coordinateError": 2.8759861490259823e-05
+        }
+      ]
+    },
+    {
+      "id": "H4",
+      "nominal": "M3",
+      "u": 73.01508,
+      "v": 8.47464,
+      "frontAndBack": [
+        {
+          "u": 73.01508458083333,
+          "v": 8.474643219166676,
+          "diameter": 3.249788888888885,
+          "coordinateError": 5.598845248630649e-06
+        },
+        {
+          "u": 73.01499890638888,
+          "v": 8.474643219166676,
+          "diameter": 3.249788888888885,
+          "coordinateError": 8.115748146516176e-05
+        }
+      ]
+    },
+    {
+      "id": "H5",
+      "nominal": "M3",
+      "u": 73.01508,
+      "v": 38.19366,
+      "frontAndBack": [
+        {
+          "u": 73.01508458083333,
+          "v": 38.193662535277774,
+          "diameter": 3.249788888888885,
+          "coordinateError": 5.235615285529364e-06
+        },
+        {
+          "u": 73.01499890638888,
+          "v": 38.193662535277774,
+          "diameter": 3.249788888888885,
+          "coordinateError": 8.113323238394998e-05
+        }
+      ]
+    }
+  ],
+  "outlines": [
+    {
+      "left": 0.0,
+      "top": 79.63029360000002
+    },
+    {
+      "left": 0.0,
+      "top": 72.36029359999998
+    }
+  ],
+  "maxCoordinateError": 0.00011110817988507292,
+  "extraUnassignedHole": {
+    "u": 38.735,
+    "v": 3,
+    "diameter": 2,
+    "use": "Preserved in PCB outline but not assigned a post; drawing has four small-hole candidates while user specified three M2 fixing points."
+  },
+  "selectionCaveat": "PDF has four 2 mm ringed candidates plus two J7 3.25 mm holes. User specified five: selected three corner M2 and J7 pair. Extra (38.735,3) remains on PCB but no support post."
+}

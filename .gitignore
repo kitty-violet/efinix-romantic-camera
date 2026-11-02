@@ -1,0 +1,53 @@
+# Environments and credentials
+.venv/
+venv/
+env/
+.conda/
+node_modules/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.lic
+.ssh/
+
+# Tool outputs and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.Xil/
+work/
+simulation/
+sim_build/
+outflow/
+build/
+dist/
+output/
+logs/
+*.log
+*.jou
+*.tmp
+*.bak
+*.swp
+*.wlf
+*.vcd
+*.fst
+
+# Generated programming files are added deliberately, with version records
+*.bit
+*.hex
+*.bin
+*.apk
+
+# Local editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

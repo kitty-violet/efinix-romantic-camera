@@ -1,0 +1,9 @@
+﻿零件编号,零件名称,每套数量,X尺寸_mm,Y尺寸_mm,Z尺寸_mm,STL文件,STP文件
+01_front_frame_grip,前框_实心抓边_挂绳耳,1,404.0,18.0,301.0,01_正式打印零件/01_front_frame_grip.stl,01_正式打印零件/01_front_frame_grip.stp
+02_rear_case_camera,后壳_主板托架_摄像头螺纹筒,1,366.0,171.0,246.0,01_正式打印零件/02_rear_case_camera.stl,01_正式打印零件/02_rear_case_camera.stp
+03_sliding_lid,顶部散热滑盖,1,232.0,136.7,3.75,01_正式打印零件/03_sliding_lid.stl,01_正式打印零件/03_sliding_lid.stp
+04_camera_screw_cap,摄像头内螺纹罩盖,1,50.65,26.5,50.65,01_正式打印零件/04_camera_screw_cap.stl,01_正式打印零件/04_camera_screw_cap.stp
+05_camera_spacer_1mm,摄像头1mm隔套_可用金属件代替,4,3.6,1.0,3.6,01_正式打印零件/05_camera_spacer_1mm.stl,01_正式打印零件/05_camera_spacer_1mm.stp
+06_IO_spacer_7p4mm,IO板7.4mm隔套_可用金属件代替,2,5.4,5.4,7.4,01_正式打印零件/06_IO_spacer_7p4mm.stl,01_正式打印零件/06_IO_spacer_7p4mm.stp
+T1_male_thread_fit,外螺纹试配环,1,50.0,11.5,50.0,02_先打螺纹试配件/T1_male_thread_fit.stl,02_先打螺纹试配件/T1_male_thread_fit.stp
+T2_female_thread_fit,内螺纹试配环,1,50.65,10.3,50.65,02_先打螺纹试配件/T2_female_thread_fit.stl,02_先打螺纹试配件/T2_female_thread_fit.stp

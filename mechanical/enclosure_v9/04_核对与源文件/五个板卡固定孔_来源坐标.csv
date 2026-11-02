@@ -1,0 +1,6 @@
+﻿ID,u_from_left_mm,v_from_TypeC_edge_mm,PCB_hole_class,PCB_drawing_diameter_mm,Printed_support_bore_mm
+H1,3,3,M2,2,3.4
+H2,3,97,M2,2,3.4
+H3,77,97,M2,2,3.4
+H4,73.01508,8.47464,M3,3.25,3.4
+H5,73.01508,38.19366,M3,3.25,3.4

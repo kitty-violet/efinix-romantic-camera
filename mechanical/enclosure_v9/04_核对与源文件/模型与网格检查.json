@@ -1,0 +1,655 @@
+{
+  "version": "V9-P1",
+  "units": "mm",
+  "parts": [
+    {
+      "id": "01_front_frame_grip",
+      "label": "前框_实心抓边_挂绳耳",
+      "quantity": 1,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/01_front_frame_grip.stl",
+      "step": "01_正式打印零件/01_front_frame_grip.stp",
+      "assemblyBounds": {
+        "min": [
+          -202.0000001,
+          -3.0000001,
+          -142.0000001
+        ],
+        "max": [
+          202.0000001,
+          15.000000100000245,
+          159.0000001
+        ],
+        "size": [
+          404.0000002,
+          18.000000200000244,
+          301.0000002
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -202.0000001,
+        -3.0000001,
+        -142.0000001
+      ],
+      "volumeMM3": 650114.8743969251,
+      "stlVolumeRelativeError": 0.0004821510743962953,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 316464,
+        "weldedVertices": 158220,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 650428.3279820966,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          404.0,
+          18.0,
+          301.0
+        ]
+      }
+    },
+    {
+      "id": "02_rear_case_camera",
+      "label": "后壳_主板托架_摄像头螺纹筒",
+      "quantity": 1,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/02_rear_case_camera.stl",
+      "step": "01_正式打印零件/02_rear_case_camera.stp",
+      "assemblyBounds": {
+        "min": [
+          -183.0000001,
+          14.9999999,
+          -123.0000001
+        ],
+        "max": [
+          183.0000001,
+          186.0000001,
+          123.0000001
+        ],
+        "size": [
+          366.0000002,
+          171.0000002,
+          246.0000002
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -183.0000001,
+        14.9999999,
+        -123.0000001
+      ],
+      "volumeMM3": 657634.6711107158,
+      "stlVolumeRelativeError": 1.2577563761961984e-06,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 765940,
+        "weldedVertices": 382598,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 657635.4982549166,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          366.0,
+          171.0,
+          246.0
+        ]
+      }
+    },
+    {
+      "id": "03_sliding_lid",
+      "label": "顶部散热滑盖",
+      "quantity": 1,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/03_sliding_lid.stl",
+      "step": "01_正式打印零件/03_sliding_lid.stp",
+      "assemblyBounds": {
+        "min": [
+          -64.0000001,
+          23.150000000000002,
+          104.7
+        ],
+        "max": [
+          168.0000001,
+          159.85000000000002,
+          108.45
+        ],
+        "size": [
+          232.0000002,
+          136.70000000000002,
+          3.75
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -64.0000001,
+        23.150000000000002,
+        104.7
+      ],
+      "volumeMM3": 70030.30804696193,
+      "stlVolumeRelativeError": 2.3224998466694015e-05,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 245928,
+        "weldedVertices": 122822,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 70031.93450075894,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          232.0,
+          136.6999969482422,
+          3.75
+        ]
+      }
+    },
+    {
+      "id": "04_camera_screw_cap",
+      "label": "摄像头内螺纹罩盖",
+      "quantity": 1,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/04_camera_screw_cap.stl",
+      "step": "01_正式打印零件/04_camera_screw_cap.stp",
+      "assemblyBounds": {
+        "min": [
+          -25.325,
+          172.5,
+          -25.325
+        ],
+        "max": [
+          25.325,
+          199.0,
+          25.325
+        ],
+        "size": [
+          50.65,
+          26.5,
+          50.65
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -25.325,
+        172.5,
+        -25.325
+      ],
+      "volumeMM3": 12745.955477689364,
+      "stlVolumeRelativeError": 0.0005016864031642277,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 10844,
+        "weldedVertices": 5422,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 12739.56100513087,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          50.650001525878906,
+          26.5,
+          50.650001525878906
+        ]
+      }
+    },
+    {
+      "id": "05_camera_spacer_1mm",
+      "label": "摄像头1mm隔套_可用金属件代替",
+      "quantity": 4,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/05_camera_spacer_1mm.stl",
+      "step": "01_正式打印零件/05_camera_spacer_1mm.stp",
+      "assemblyBounds": {
+        "min": [
+          -1.8,
+          186.0,
+          -1.8
+        ],
+        "max": [
+          1.8,
+          187.0,
+          1.8
+        ],
+        "size": [
+          3.6,
+          1.0,
+          3.6
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -1.8,
+        186.0,
+        -1.8
+      ],
+      "volumeMM3": 7.634070148223196,
+      "stlVolumeRelativeError": 0.00026279107213941685,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 1264,
+        "weldedVertices": 632,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 7.632063982744157,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0003600000054575503,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.599639892578125,
+          1.0,
+          3.5999999046325684
+        ]
+      }
+    },
+    {
+      "id": "06_IO_spacer_7p4mm",
+      "label": "IO板7.4mm隔套_可用金属件代替",
+      "quantity": 2,
+      "category": "01_正式打印零件",
+      "stl": "01_正式打印零件/06_IO_spacer_7p4mm.stl",
+      "step": "01_正式打印零件/06_IO_spacer_7p4mm.stp",
+      "assemblyBounds": {
+        "min": [
+          -2.7,
+          -2.7,
+          84.8
+        ],
+        "max": [
+          2.7,
+          2.7,
+          92.2
+        ],
+        "size": [
+          5.4,
+          5.4,
+          7.400000000000006
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -2.7,
+        -2.7,
+        84.8
+      ],
+      "volumeMM3": 102.29025680088367,
+      "stlVolumeRelativeError": 0.00026440850990607406,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 1264,
+        "weldedVertices": 632,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 102.26321038650504,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0005300000193528831,
+          0.0
+        ],
+        "max": [
+          5.400000095367432,
+          5.39946985244751,
+          7.400000095367432
+        ]
+      }
+    },
+    {
+      "id": "T1_male_thread_fit",
+      "label": "外螺纹试配环",
+      "quantity": 1,
+      "category": "02_先打螺纹试配件",
+      "stl": "02_先打螺纹试配件/T1_male_thread_fit.stl",
+      "step": "02_先打螺纹试配件/T1_male_thread_fit.stp",
+      "assemblyBounds": {
+        "min": [
+          -25.0,
+          171.5,
+          -25.0
+        ],
+        "max": [
+          25.0,
+          183.0000001,
+          25.0
+        ],
+        "size": [
+          50.0,
+          11.500000099999994,
+          50.0
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -25.0,
+        171.5,
+        -25.0
+      ],
+      "volumeMM3": 5662.105008903508,
+      "stlVolumeRelativeError": 4.322385304590089e-05,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 8550,
+        "weldedVertices": 4275,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 5661.860270908673,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.004939999897032976,
+          0.0,
+          0.0
+        ],
+        "max": [
+          49.995059967041016,
+          11.5,
+          50.0
+        ]
+      }
+    },
+    {
+      "id": "T2_female_thread_fit",
+      "label": "内螺纹试配环",
+      "quantity": 1,
+      "category": "02_先打螺纹试配件",
+      "stl": "02_先打螺纹试配件/T2_female_thread_fit.stl",
+      "step": "02_先打螺纹试配件/T2_female_thread_fit.stp",
+      "assemblyBounds": {
+        "min": [
+          -25.325,
+          172.5,
+          -25.325
+        ],
+        "max": [
+          25.325,
+          182.8,
+          25.325
+        ],
+        "size": [
+          50.65,
+          10.300000000000011,
+          50.65
+        ]
+      },
+      "printToAssemblyTranslation": [
+        -25.325,
+        172.5,
+        -25.325
+      ],
+      "volumeMM3": 4599.448978565371,
+      "stlVolumeRelativeError": 0.0004835338554130209,
+      "brepValid": true,
+      "solidCount": 1,
+      "stepReadbackValid": true,
+      "meshNormalization": {
+        "removedPoleOrDuplicateTriangles": 0,
+        "coordinateWeldToleranceMM": 1e-05
+      },
+      "mesh": {
+        "triangles": 9738,
+        "weldedVertices": 4869,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 4597.22498926799,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          50.650001525878906,
+          10.300000190734863,
+          50.650001525878906
+        ]
+      }
+    }
+  ],
+  "checks": {
+    "leftVentCount": 34,
+    "rightVentCount": 42,
+    "rearVentCount": 91,
+    "actualHelicalToothSamples": [
+      {
+        "y": 175,
+        "radius": 21.5,
+        "maleSolid": false,
+        "femaleSolid": true
+      },
+      {
+        "y": 176,
+        "radius": 21.5,
+        "maleSolid": true,
+        "femaleSolid": false
+      },
+      {
+        "y": 177,
+        "radius": 21.5,
+        "maleSolid": false,
+        "femaleSolid": true
+      },
+      {
+        "y": 178,
+        "radius": 21.5,
+        "maleSolid": true,
+        "femaleSolid": false
+      },
+      {
+        "y": 179,
+        "radius": 21.5,
+        "maleSolid": false,
+        "femaleSolid": true
+      },
+      {
+        "y": 180,
+        "radius": 21.5,
+        "maleSolid": true,
+        "femaleSolid": false
+      },
+      {
+        "y": 181,
+        "radius": 21.5,
+        "maleSolid": false,
+        "femaleSolid": true
+      }
+    ],
+    "frameToRearOverlapMM3": 0.0,
+    "lidToRearOverlapMM3": 0.0,
+    "capToCameraOverlapMM3": 0.0,
+    "lidMotion": [
+      {
+        "travel": 0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 10,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 50,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 100,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 150,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 196,
+        "intersectionMM3": 0.0
+      }
+    ],
+    "capScrewMotion": [
+      {
+        "travel": 0,
+        "rotationDegrees": 0.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 0.5,
+        "rotationDegrees": -90.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 1,
+        "rotationDegrees": -180.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 2,
+        "rotationDegrees": -360.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 4,
+        "rotationDegrees": -720.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 6,
+        "rotationDegrees": -1080.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 8,
+        "rotationDegrees": -1440.0,
+        "intersectionMM3": 0.0
+      },
+      {
+        "travel": 10,
+        "rotationDegrees": -1800.0,
+        "intersectionMM3": 0.0
+      }
+    ],
+    "screenEnvelope": [
+      330,
+      210,
+      20
+    ],
+    "screenInsertionFromOpenFront": true,
+    "frameSplitY": 15.0,
+    "frameJoiningScrews": {
+      "centersXZ": [
+        [
+          -175.0,
+          -115.0
+        ],
+        [
+          -175.0,
+          115.0
+        ],
+        [
+          175.0,
+          -115.0
+        ],
+        [
+          175.0,
+          115.0
+        ]
+      ],
+      "bore": 3.4,
+      "nutAF": 5.9
+    },
+    "cameraHolePassages": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "innerCameraNutAccess": true,
+    "cameraFPCSlit": [
+      14,
+      3
+    ],
+    "cameraFPCSlitCenterXZ": [
+      0,
+      -12.5
+    ],
+    "cameraCapProjection": 13.0,
+    "cameraAperture": 16,
+    "threadRadialAllowance": 0.35,
+    "displayPortStatus": "V9 photo-estimated positions retained; not remeasured"
+  },
+  "elapsedSeconds": 77.16441535949707
+}

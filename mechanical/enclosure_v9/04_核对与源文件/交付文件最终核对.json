@@ -1,0 +1,263 @@
+{
+  "units": "mm",
+  "parts": [
+    {
+      "id": "01_front_frame_grip",
+      "quantity": 1,
+      "stl": {
+        "triangles": 316464,
+        "weldedVertices": 158220,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 650428.3279820966,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          404.0,
+          18.0,
+          301.0
+        ]
+      },
+      "STEPRelativeVolumeError": 2.1488261797103488e-14,
+      "STEPSizeErrorMM": 9.999996564147295e-08,
+      "sha256": {
+        "stl": "61b796923ee5a55df1505d771ccb1bf62cd279c8e02acdee9a9c6352464a9a9f",
+        "step": "f1df404379c7e255c5ff987beaa5be6cba6ba51b23fc0f4e68e4d5ba7d5dab85"
+      }
+    },
+    {
+      "id": "02_rear_case_camera",
+      "quantity": 1,
+      "stl": {
+        "triangles": 765940,
+        "weldedVertices": 382598,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 657635.4982549166,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          366.0,
+          171.0,
+          246.0
+        ]
+      },
+      "STEPRelativeVolumeError": 6.4958606645207315e-09,
+      "STEPSizeErrorMM": 5.684341886080802e-14,
+      "sha256": {
+        "stl": "b1e971eb91297e0e95f67093dc8a06f3a54cf96d73f2d70eac1eda0f5efb8700",
+        "step": "f4d3521360ee82198619a1eefe8a77470e3af6f6ffb6febb8b57f71ddbb9cd02"
+      }
+    },
+    {
+      "id": "03_sliding_lid",
+      "quantity": 1,
+      "stl": {
+        "triangles": 245928,
+        "weldedVertices": 122822,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 70031.93450075894,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          232.0,
+          136.6999969482422,
+          3.75
+        ]
+      },
+      "STEPRelativeVolumeError": 1.4545617381871136e-15,
+      "STEPSizeErrorMM": 2.842170943040401e-14,
+      "sha256": {
+        "stl": "2b45423d22b352f0f65ac2f7cdf7a3dc90b5821c84ef210a44ecb0b781dc3071",
+        "step": "7887c421ef19c44b22426d3056d0dec22ad7cc9f5c2966236ead18304a83b134"
+      }
+    },
+    {
+      "id": "04_camera_screw_cap",
+      "quantity": 1,
+      "stl": {
+        "triangles": 10844,
+        "weldedVertices": 5422,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 12739.56100513087,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          50.650001525878906,
+          26.5,
+          50.650001525878906
+        ]
+      },
+      "STEPRelativeVolumeError": 7.142462062025183e-08,
+      "STEPSizeErrorMM": 4.121147867408581e-13,
+      "sha256": {
+        "stl": "3fcf59bfd7741cf6ca835621a7bff77d4a9face8cbd27e663bee4b4272506927",
+        "step": "d084d7cc5b3093e8ce089119e56bc901817f148fb7432c4125ad97f3a2164274"
+      }
+    },
+    {
+      "id": "05_camera_spacer_1mm",
+      "quantity": 4,
+      "stl": {
+        "triangles": 1264,
+        "weldedVertices": 632,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 7.632063982744157,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0003600000054575503,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.599639892578125,
+          1.0,
+          3.5999999046325684
+        ]
+      },
+      "STEPRelativeVolumeError": 2.2221708062534314e-14,
+      "STEPSizeErrorMM": 0.0,
+      "sha256": {
+        "stl": "808b3c9b321cae9ee1b620437510d70e2ede250246d1c80632e7019d2f6ea31a",
+        "step": "9bcde99a2a9b0e20f58e828b0d026877b167c41faaea2c2b43bf0e8fb0b79970"
+      }
+    },
+    {
+      "id": "06_IO_spacer_7p4mm",
+      "quantity": 2,
+      "stl": {
+        "triangles": 1264,
+        "weldedVertices": 632,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 102.26321038650504,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0005300000193528831,
+          0.0
+        ],
+        "max": [
+          5.400000095367432,
+          5.39946985244751,
+          7.400000095367432
+        ]
+      },
+      "STEPRelativeVolumeError": 2.222828278609501e-14,
+      "STEPSizeErrorMM": 5.329070518200751e-15,
+      "sha256": {
+        "stl": "b322d558de6755ac85be8102fb8ac2f44950000a1b5e59b7b2c554448a59daab",
+        "step": "ea05289ae97dbec3073fbb2f74584fbfa98745185a7589c1f3c74e5d54aa3ec4"
+      }
+    },
+    {
+      "id": "T1_male_thread_fit",
+      "quantity": 1,
+      "stl": {
+        "triangles": 8550,
+        "weldedVertices": 4275,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 5661.860270908673,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.004939999897032976,
+          0.0,
+          0.0
+        ],
+        "max": [
+          49.995059967041016,
+          11.5,
+          50.0
+        ]
+      },
+      "STEPRelativeVolumeError": 5.634629203509339e-08,
+      "STEPSizeErrorMM": 5.329070518200751e-15,
+      "sha256": {
+        "stl": "4471bb2c29ac9f7c3c1d5ae2f9b41318bc65d6d090845680d0ec943378defb44",
+        "step": "c7ac4cb96e1c98f0217bc60f1e170199e410ce737834c1eea816c81f5fdfa7f0"
+      }
+    },
+    {
+      "id": "T2_female_thread_fit",
+      "quantity": 1,
+      "stl": {
+        "triangles": 9738,
+        "weldedVertices": 4869,
+        "boundaryEdges": 0,
+        "nonManifoldEdges": 0,
+        "windingErrors": 0,
+        "degenerateTriangles": 0,
+        "signedVolume": 4597.22498926799,
+        "watertight": true,
+        "connectedComponents": 1,
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          50.650001525878906,
+          10.300000190734863,
+          50.650001525878906
+        ]
+      },
+      "STEPRelativeVolumeError": 2.0056835385268608e-07,
+      "STEPSizeErrorMM": 1.0658141036401503e-14,
+      "sha256": {
+        "stl": "78010eca75aada350c39856c0412a81d001f4181c982b5b926abb77b42df24b6",
+        "step": "df7640c6c87c3a32eb104dd1b4e139b6df45e2c143edc6e0c96ca1a6de0b0c00"
+      }
+    }
+  ],
+  "sourceGeometry": "V9-P1",
+  "assemblySTEPValid": true,
+  "assemblySolids": 4,
+  "threadFromExportedSTEP": {
+    "profileSamples": 24,
+    "maximumRadiusErrorMM": 3.967285156036837e-05,
+    "minimumRadialGapMM": 0.34998321533203125,
+    "wrongPhase90DegreesOverlapMM3": 104.97628062283388,
+    "description": "Wrong-phase interference proves physical teeth; correct screw motion is checked separately."
+  }
+}

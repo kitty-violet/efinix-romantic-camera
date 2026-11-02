@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "generated_date": "2026-11-02",
+  "description": "Selected original assets, copied without byte changes. New documentation is tracked by Git.",
+  "versions": {
+    "fpga": "legacy222-ble-five-cn-20261101-ble5",
+    "mechanical": "V9-P1 / 2026-10-28"
+  },
+  "asset_count": 39,
+  "total_bytes": 229416618,
+  "assets": [
+    {
+      "path": "fpga/说明.txt",
+      "source_root": "github代码",
+      "source_path": "说明.txt",
+      "bytes": 1559,
+      "sha256": "1bc4ba091118034a6d7abed8c18cee7ff19786a80d1e849cd2a6e546d4741f63",
+      "lfs": false
+    },
+    {
+      "path": "fpga/rtl/ble_uart_buttons.sv",
+      "source_root": "github代码",
+      "source_path": "rtl/ble_uart_buttons.sv",
+      "bytes": 3575,
+      "sha256": "629b609afcff26e61d1fac770d2d12c0e45ea9ccd1395e14958d9d264dba75ed",
+      "lfs": false
+    },
+    {
+      "path": "fpga/rtl/five_style_name_osd.sv",
+      "source_root": "github代码",
+      "source_path": "rtl/five_style_name_osd.sv",
+      "bytes": 5207,
+      "sha256": "e54a1a918d0d48a7d1c59685fe2c0b1947bab110d2cb0d4dee37192441b55a7f",
+      "lfs": false
+    },
+    {
+      "path": "fpga/rtl/legacy222_names.sv",
+      "source_root": "github代码",
+      "source_path": "rtl/legacy222_names.sv",
+      "bytes": 980,
+      "sha256": "00ba4523d047c9ea5f1bbc7dcb5ee5f0aeeb0ab8402071b5db922a33d062e80b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/rtl/native222.v",
+      "source_root": "github代码",
+      "source_path": "rtl/native222.v",
+      "bytes": 130402533,
+      "sha256": "f0568f90ad8469a839b65696d0181ab84bb46623cfce8e143ec9d853d7026347",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/01_front_frame_grip.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/01_front_frame_grip.stl",
+      "bytes": 15823284,
+      "sha256": "61b796923ee5a55df1505d771ccb1bf62cd279c8e02acdee9a9c6352464a9a9f",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/01_front_frame_grip.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/01_front_frame_grip.stp",
+      "bytes": 1705958,
+      "sha256": "f1df404379c7e255c5ff987beaa5be6cba6ba51b23fc0f4e68e4d5ba7d5dab85",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/02_rear_case_camera.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/02_rear_case_camera.stl",
+      "bytes": 38297084,
+      "sha256": "b1e971eb91297e0e95f67093dc8a06f3a54cf96d73f2d70eac1eda0f5efb8700",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/02_rear_case_camera.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/02_rear_case_camera.stp",
+      "bytes": 7220537,
+      "sha256": "f4d3521360ee82198619a1eefe8a77470e3af6f6ffb6febb8b57f71ddbb9cd02",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/03_sliding_lid.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/03_sliding_lid.stl",
+      "bytes": 12296484,
+      "sha256": "2b45423d22b352f0f65ac2f7cdf7a3dc90b5821c84ef210a44ecb0b781dc3071",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/03_sliding_lid.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/03_sliding_lid.stp",
+      "bytes": 2517476,
+      "sha256": "7887c421ef19c44b22426d3056d0dec22ad7cc9f5c2966236ead18304a83b134",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/04_camera_screw_cap.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/04_camera_screw_cap.stl",
+      "bytes": 542284,
+      "sha256": "3fcf59bfd7741cf6ca835621a7bff77d4a9face8cbd27e663bee4b4272506927",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/04_camera_screw_cap.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/04_camera_screw_cap.stp",
+      "bytes": 1059976,
+      "sha256": "d084d7cc5b3093e8ce089119e56bc901817f148fb7432c4125ad97f3a2164274",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/05_camera_spacer_1mm.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/05_camera_spacer_1mm.stl",
+      "bytes": 63284,
+      "sha256": "808b3c9b321cae9ee1b620437510d70e2ede250246d1c80632e7019d2f6ea31a",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/05_camera_spacer_1mm.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/05_camera_spacer_1mm.stp",
+      "bytes": 9282,
+      "sha256": "9bcde99a2a9b0e20f58e828b0d026877b167c41faaea2c2b43bf0e8fb0b79970",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/06_IO_spacer_7p4mm.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/06_IO_spacer_7p4mm.stl",
+      "bytes": 63284,
+      "sha256": "b322d558de6755ac85be8102fb8ac2f44950000a1b5e59b7b2c554448a59daab",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/01_正式打印零件/06_IO_spacer_7p4mm.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "01_正式打印零件/06_IO_spacer_7p4mm.stp",
+      "bytes": 9288,
+      "sha256": "ea05289ae97dbec3073fbb2f74584fbfa98745185a7589c1f3c74e5d54aa3ec4",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/02_先打螺纹试配件/T1_male_thread_fit.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "02_先打螺纹试配件/T1_male_thread_fit.stl",
+      "bytes": 427584,
+      "sha256": "4471bb2c29ac9f7c3c1d5ae2f9b41318bc65d6d090845680d0ec943378defb44",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/02_先打螺纹试配件/T1_male_thread_fit.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "02_先打螺纹试配件/T1_male_thread_fit.stp",
+      "bytes": 317656,
+      "sha256": "c7ac4cb96e1c98f0217bc60f1e170199e410ce737834c1eea816c81f5fdfa7f0",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/02_先打螺纹试配件/T2_female_thread_fit.stl",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "02_先打螺纹试配件/T2_female_thread_fit.stl",
+      "bytes": 486984,
+      "sha256": "78010eca75aada350c39856c0412a81d001f4181c982b5b926abb77b42df24b6",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/02_先打螺纹试配件/T2_female_thread_fit.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "02_先打螺纹试配件/T2_female_thread_fit.stp",
+      "bytes": 1053012,
+      "sha256": "df7640c6c87c3a32eb104dd1b4e139b6df45e2c143edc6e0c96ca1a6de0b0c00",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/03_三维核对/打印零件_装配分解核对.png",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "03_三维核对/打印零件_装配分解核对.png",
+      "bytes": 477004,
+      "sha256": "33a31d6d71c53a3fac2f81837d592be4ec27dcd33815073a830da9b15291c8fd",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/03_三维核对/V9确认稿_含电子件示意.png",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "03_三维核对/V9确认稿_含电子件示意.png",
+      "bytes": 491337,
+      "sha256": "8eda62c11efb293d2dae4f514d577df7364c75599a27f6fe9cd7f32d14d655b2",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/01_front_frame_grip_assembly.brep",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/01_front_frame_grip_assembly.brep",
+      "bytes": 771573,
+      "sha256": "8db9159322018654cc1dc826465cb5504fb66697be969ed5f867b7be5d947caf",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/02_rear_case_camera_assembly.brep",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/02_rear_case_camera_assembly.brep",
+      "bytes": 1672694,
+      "sha256": "3eb0dacdd4b183d689d712e9fcb5dffe1a2ae08d7866324928b95c8e6903a543",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/03_sliding_lid_assembly.brep",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/03_sliding_lid_assembly.brep",
+      "bytes": 622071,
+      "sha256": "67f24eeaf202b410dbfb08333e116c4161216abc7c9704ae833c3746663a807c",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/04_camera_screw_cap_assembly.brep",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/04_camera_screw_cap_assembly.brep",
+      "bytes": 431483,
+      "sha256": "f3cf0bb4fde178e0562dd3c81e186388fdea79cf693c2cc2f1e4016f2d302947",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/打印件安装孔中心.csv",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/打印件安装孔中心.csv",
+      "bytes": 591,
+      "sha256": "7e10f1e774b826a394d6be6d8132c12ab3213c69daff3401742149cd2b614978",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/交付文件最终核对.json",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/交付文件最终核对.json",
+      "bytes": 7482,
+      "sha256": "741d320559c9e19de301ed5b9703ebbbb40f69fa7540e47f78432e6baa12dc9f",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/模型与网格检查.json",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/模型与网格检查.json",
+      "bytes": 15655,
+      "sha256": "2d724c1fd7103b83b2a2b05f9e34f3f886de5b1e36d2f42ef31422aa4216bbf4",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/五个板卡固定孔_来源坐标.csv",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/五个板卡固定孔_来源坐标.csv",
+      "bytes": 227,
+      "sha256": "83a0adf839e58cbff038e2c9330cad0169c013383d13bcd90802d3a29623fa16",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/主板孔位来源核对.json",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/主板孔位来源核对.json",
+      "bytes": 3503,
+      "sha256": "0dc3a6feb4959cc25e3cb739e1907edb0e27dd542868cac3d95bb7142b2d4ffe",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/主板原图孔位核对.png",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/主板原图孔位核对.png",
+      "bytes": 66741,
+      "sha256": "5a189f8f563aaa46523751ba3c05584c0d3765b8712ff87b6c04ba53f83f694c",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/build_print_files.py",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/build_print_files.py",
+      "bytes": 29131,
+      "sha256": "01d988b1cd7e9131fa0ba5aba2dd0280e825fcf95dfb7da08173319df92db02d",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/04_核对与源文件/layout_v9.json",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "04_核对与源文件/layout_v9.json",
+      "bytes": 13184,
+      "sha256": "17f08c69246cd5fbf7779963fc655ee61b0cedbb651f040f5b4ebae65cd2f74c",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/零件清单.csv",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "零件清单.csv",
+      "bytes": 1369,
+      "sha256": "dcfd47a67d218b5f871a2cf9d66e63d025bbc72e9628878a7e2c85744ead78c1",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/商家请先看.txt",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "商家请先看.txt",
+      "bytes": 3891,
+      "sha256": "66d287bfd3dd9584a9f3133bb83577b8bbf26a91a7fa28ed186d8e0a36cd9ba6",
+      "lfs": false
+    },
+    {
+      "path": "mechanical/enclosure_v9/整机装配_V9_P1.stp",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "整机装配_V9_P1.stp",
+      "bytes": 12495328,
+      "sha256": "d8213bc714e8572f9fe46af534f97fd8ff769213151c16b1492da7e8070e6222",
+      "lfs": true
+    },
+    {
+      "path": "mechanical/enclosure_v9/装配与五金说明.md",
+      "source_root": "3D打印交付_相机外壳_V9",
+      "source_path": "装配与五金说明.md",
+      "bytes": 6043,
+      "sha256": "90d8be3af3b7cf82cd600d921e5aad2bb2e4e7a1a01d96714b79d10ca57ed1a2",
+      "lfs": false
+    }
+  ],
+  "omitted_from_mechanical_source": [
+    {
+      "path": "03_三维核对/打印零件_离线三维预览.html",
+      "reason": "Duplicate embedded mesh viewer; STEP and reference images retained."
+    },
+    {
+      "path": "04_核对与源文件/output/",
+      "reason": "Browser review screenshots and transient logs."
+    },
+    {
+      "path": "04_核对与源文件/finalize_delivery.py",
+      "reason": "Original delivery packaging automation, not required for CAD generation."
+    },
+    {
+      "path": "文件校验_SHA256.txt",
+      "reason": "Original full-package list replaced by this selected-asset manifest."
+    }
+  ]
+}
