@@ -8,6 +8,7 @@ import hashlib
 import json
 import re
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
 
@@ -33,6 +34,57 @@ def repository_path(value: str) -> Path:
     if not resolved.is_relative_to(ROOT):
         raise ValueError(f"Path outside repository: {value!r}")
     return resolved
+
+
+def verify_fpga(indexed: dict[str, dict], errors: list[str]) -> int:
+    package = json.loads(repository_path("fpga/MANIFEST.json").read_text(encoding="utf-8"))
+    if package["version"] != "production-r15":
+        errors.append("Unexpected FPGA package version")
+    listed = package["files"]
+    expected = {"fpga/MANIFEST.json"}
+    for name, digest in listed.items():
+        full_name = f"fpga/{name}"
+        repository_path(full_name)
+        expected.add(full_name)
+        if full_name not in indexed or indexed[full_name]["sha256"] != digest:
+            errors.append(f"Upstream package manifest mismatch: {full_name}")
+    actual = {name for name in indexed if name.startswith("fpga/")}
+    if actual != expected:
+        errors.append(f"FPGA asset coverage mismatch: {sorted(actual ^ expected)}")
+    disk_files = {path.relative_to(ROOT).as_posix()
+                  for path in (ROOT / "fpga").rglob("*")
+                  if path.is_file() and "build" not in path.relative_to(ROOT / "fpga").parts
+                  and not any(part.startswith("work_") for part in path.relative_to(ROOT / "fpga").parts)}
+    if not expected.issubset(disk_files):
+        errors.append("Some FPGA package files are absent from disk")
+
+    project = repository_path("fpga/project/ti60f225_oob.xml")
+    tree = ET.parse(project)
+    references = 0
+    for element in tree.iter():
+        tag = element.tag.split("}")[-1]
+        if tag in {"design_file", "sdc_file", "peri_file", "default_peri_file"}:
+            target = element.attrib["name"]
+            full_name = f"fpga/project/{target}"
+            if not repository_path(full_name).is_file() or full_name not in indexed:
+                errors.append(f"Missing or unlisted Efinity reference: {target}")
+            references += 1
+    data = repository_path("fpga/firmware/prebuilt/control.bin").read_bytes()
+    if len(data) > 8192:
+        errors.append("CPU firmware exceeds the 8 KiB OCR")
+        return references
+    data += bytes(8192 - len(data))
+    for lane in range(4):
+        filename = f"EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol{lane}.bin"
+        expected_bytes = data[lane::4]
+        for folder in ("fpga/project", "fpga/firmware/prebuilt"):
+            path = repository_path(f"{folder}/{filename}")
+            lines = path.read_text(encoding="ascii").splitlines()
+            if any(not re.fullmatch(r"[01]{8}", line) for line in lines):
+                errors.append(f"Invalid ROM lane data: {folder}/{filename}")
+            elif bytes(int(line, 2) for line in lines) != expected_bytes:
+                errors.append(f"Firmware/ROM lane mismatch: {folder}/{filename}")
+    return references
 
 
 def verify(allow_pointers: bool) -> int:
@@ -84,15 +136,26 @@ def verify(allow_pointers: bool) -> int:
     total_bytes = sum(asset["bytes"] for asset in assets)
     if manifest["asset_count"] != len(assets) or manifest["total_bytes"] != total_bytes:
         errors.append("Manifest totals differ from asset entries")
+    fpga_assets = [asset for asset in assets if asset["path"].startswith("fpga/")]
+    archive = manifest["fpga_archive"]
+    if archive["file_count"] != len(fpga_assets) or archive["total_bytes"] != sum(
+        asset["bytes"] for asset in fpga_assets
+    ):
+        errors.append("FPGA archive totals differ from imported assets")
+    if not re.fullmatch(r"[0-9a-f]{64}", archive["sha256"]):
+        errors.append("Invalid source archive SHA-256")
+    project_references = verify_fpga(indexed, errors)
 
     required = [
         "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md",
         ".gitattributes", ".gitignore", ".github/workflows/verify.yml",
-        "fpga/README.md", "fpga/说明.txt", "fpga/rtl/native222.v",
-        "fpga/rtl/ble_uart_buttons.sv", "fpga/rtl/legacy222_names.sv",
-        "fpga/rtl/five_style_name_osd.sv", f"{CAD}/README.md",
+        "fpga/README.md", "fpga/MANIFEST.json", "fpga/project/native222.v",
+        "fpga/project/ble_uart_buttons.sv", "fpga/project/legacy222_names.sv",
+        "fpga/project/five_style_name_osd.sv", "fpga/project/ti60f225_oob.xml",
+        "fpga/firmware/main.c", "fpga/tools/verify_package.py", f"{CAD}/README.md",
         "docs/environment.md", "docs/usage.md", "docs/ble-protocol.md",
         "docs/competition-checklist.md", "docs/submission.md", "docs/verification.md",
+        "docs/fpga-project.md",
     ]
     for name in required:
         if not repository_path(name).is_file():
@@ -149,6 +212,7 @@ def verify(allow_pointers: bool) -> int:
     print(f"PASS: {len(assets)} source assets; {total_bytes:,} bytes; {mode}")
     print(f"Verified: {actual_count} file hashes; {pointer_count} LFS pointers")
     print(f"Documentation: {len(markdown_files)} Markdown files; {link_count} local links")
+    print(f"FPGA: original package hashes, {project_references} project references, and 8 ROM lane copies match")
     print("CAD: parts CSV references and historical final SHA-256 values match")
     print("Scope: file integrity only; no synthesis, timing, board, or physical print tests")
     return 0
@@ -163,7 +227,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         return verify(args.allow_lfs_pointers)
-    except (OSError, ValueError, KeyError, TypeError, csv.Error) as error:
+    except (OSError, ValueError, KeyError, TypeError, csv.Error, ET.ParseError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
         return 1
 

@@ -1,0 +1,97 @@
+
+# Efinity Interface Routing Info
+# Version: 2026.1.132
+# Date: 2026-11-01 20:18
+
+# Copyright (C) 2013 - 2026 Efinix Inc. All rights reserved.
+
+path {
+	element {routing_blk: "GPIOL_PN_08" routing_pin: "REFCLK_GCLK_OUT" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "GPIO[1]" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "BOT_6" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "OUT[6]" }
+}
+path {
+	element {routing_blk: "GPIOL_PN_10" routing_pin: "REFCLK_GCLK_OUT" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "GPIO[3]" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "BOT_1" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "OUT[1]" }
+}
+path {
+	element {routing_blk: "GPIOT_PN_09" routing_pin: "MIPI_CLK_OUT" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "MIPI_CLK1" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "BOT_4" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "OUT[4]" }
+}
+path {
+	element {routing_blk: "PLL_BL0" routing_pin: "CLKOUT0" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL0[0]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_3" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[3]" }
+}
+path {
+	element {routing_blk: "PLL_BL0" routing_pin: "CLKOUT1" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL0[1]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_6" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[6]" }
+}
+path {
+	element {routing_blk: "PLL_BL0" routing_pin: "CLKOUT2" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL0[2]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_2" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[2]" }
+}
+path {
+	element {routing_blk: "PLL_BL0" routing_pin: "CLKOUT3" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL0[3]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_1" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[1]" }
+}
+path {
+	element {routing_blk: "PLL_BR0" routing_pin: "CLKOUT0" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL1[0]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_4" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[4]" }
+}
+path {
+	element {routing_blk: "PLL_BR0" routing_pin: "CLKOUT1" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "PLL0[1]" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "BOT_6" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "OUT[6]" }
+}
+path {
+	element {routing_blk: "PLL_BR0" routing_pin: "CLKOUT2" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "PLL1[2]" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "BOT_5" }
+	element {routing_blk: "CLKMUX_B" routing_pin: "OUT[5]" }
+}
+path {
+	element {routing_blk: "PLL_TL0" routing_pin: "CLKOUT0" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "PLL1[0]" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "BOT_4" }
+	element {routing_blk: "CLKMUX_L" routing_pin: "OUT[4]" }
+}
+path {
+	element {routing_blk: "PLL_TR0" routing_pin: "CLKOUT0" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "PLL1[0]" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "BOT_4" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "OUT[4]" }
+}
+path {
+	element {routing_blk: "PLL_TR0" routing_pin: "CLKOUT1" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "PLL1[1]" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "BOT_1" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "OUT[1]" }
+}
+path {
+	element {routing_blk: "PLL_TR0" routing_pin: "CLKOUT2" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "PLL1[2]" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "BOT_5" }
+	element {routing_blk: "CLKMUX_R" routing_pin: "OUT[5]" }
+}
+path {
+	element {routing_blk: "PLL_TR0" routing_pin: "CLKOUT3" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "PLL1[3]" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "BOT_6" }
+	element {routing_blk: "CLKMUX_T" routing_pin: "OUT[6]" }
+}

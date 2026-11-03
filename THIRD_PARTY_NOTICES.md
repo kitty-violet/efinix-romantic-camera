@@ -8,9 +8,13 @@
 
 ## Efinix 器件原语和 IP
 
-`fpga/rtl/native222.v` 是来源于成功版本的冻结网表，文件中带有 Efinity 2026.1.132 属性、Efinix 器件原语和 `pragma protect` 保护段；`five_style_name_osd.sv` 使用 `EFX_DPRAM10`。
+`fpga/project/native222.v` 是 r15 顶层网表，文件中带有 Efinity 2026.1.132 属性、Efinix 器件原语和 `pragma protect` 保护段；`five_style_name_osd.sv` 使用 `EFX_DPRAM10`。综合/仿真用 Sapphire 核及 `tests/vendor/efx_dsp48.v` 也按原包保留其厂家声明和保护内容。
 
 受保护内容和厂家器件库适用其原有权利与许可条件。归档未解密、剥离或改写保护段，不把厂家 IP 改标为团队开源代码。使用者需自行具备合法的 Efinity/Titanium 工具与相应 IP 使用权限。
+
+## I2C 源文件声明
+
+r15 的 `i2c_master_bit_ctrl.v`、`i2c_master_byte_ctrl.v`、`i2c_master_defines.v` 同时带有 Intel 许可提示和 Richard Herveille/OpenCores 原始版权声明。本次逐字节保留这些文件及声明，不将它们改标为团队原创，也不为其添加统一开源授权。
 
 ## 机械设计来源记录
 
@@ -20,4 +24,4 @@ V9 参数和孔位报告引用板卡装配图、板卡设计说明、蓝牙模�
 
 ## 后续公开
 
-如团队决定公开仓库，需先明确自研文件的许可证、第三方 IP/原语可公开边界和必要声明。更改仓库可见性本身不会补齐这些授权，也不会自动使当前归档成为可独立构建的完整工程。
+如团队决定公开仓库，需先明确自研文件的许可证、第三方 IP/原语可公开边界和必要声明。更改仓库可见性本身不会补齐这些授权，也不会补齐缺少的生产数据镜像或构建验证结果。

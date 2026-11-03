@@ -1,5 +1,15 @@
 # 版本记录
 
+## 2026-11-03 - production-r15
+
+- 使用 `sapphire-native8h-r15-code-20261103.zip` 更新 FPGA 目录，89 个包内文件逐字节保留。
+- 新增 Sapphire RISC-V 控制面、C 固件、预编译 ELF/BIN/ROM、Efinity XML/外设/SDC、六模式相关逻辑、测试台与配置。
+- 大网表改为 `fpga/project/native222.v` 并继续使用 Git LFS；保留必需的 project/outflow、ROM 和测试 HEX，补齐忽略规则例外。
+- 更新项目、环境、使用、协议、赛题对照及交接文档，撤下当前版本“无 RISC-V、缺工程配置”的旧描述；不把旧 17.1 AI FPS 当作 r15 测量。
+- 更新资产清单及自动检查，增加原包清单、工程引用和 CPU ROM 一致性验证。
+- V9-P1 的 34 个原始资产未改变；旧 FPGA 代码仍可在提交 `423d07a` 查阅。
+- 本次不安装软件、不改 HDL/C 逻辑、不执行综合、仿真或板上烧录。
+
 ## 2026-11-02 - 首次私有仓库归档
 
 - 收录 `legacy222-ble-five-cn-20261101-ble5` 的四个 HDL 文件和原始说明，未修改其内容。
@@ -12,6 +22,7 @@
 
 | 来源 | 版本/日期 |
 | --- | --- |
-| FPGA 原始说明 | `legacy222-ble-five-cn-20261101-ble5` |
+| 当前 FPGA 包 | `production-r15`，2026-11-03 |
+| 历史 FPGA 说明 | `legacy222-ble-five-cn-20261101-ble5`，提交 `423d07a` |
 | 网表工具属性 | Efinity `2026.1.132` |
 | 外壳原交付 | V9-P1，2026-10-28 |

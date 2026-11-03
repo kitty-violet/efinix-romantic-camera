@@ -7,6 +7,7 @@
 ```powershell
 git lfs pull
 python -B scripts/verify_repository.py
+python -B fpga/tools/verify_package.py
 git lfs fsck
 ```
 
@@ -19,6 +20,9 @@ git lfs fsck
 - Markdown 中相对链接指向的文件/目录是否存在；不联网、不校验锚点。
 - 机械零件 CSV 中 STEP/STL 引用及历史最终报告中的网格/STEP 校验值。
 - GitHub 工作流、关键说明和 HDL 入口是否存在。
+- r15 原包清单的 88 个条目及额外 MANIFEST 自身是否全部收录且与仓库资产清单一致。
+- Efinity XML 中的设计源、SDC、外设文件引用是否存在。
+- CPU 固件补零至 8 KiB 后与 project/prebuilt 四个 ROM lane 是否逐字节一致。
 
 成功退出码为 0。缺文件、内容变化、未拉取 LFS、清单错误或断链均以非零退出，并列出具体路径。
 
@@ -30,12 +34,12 @@ git lfs fsck
 python -B scripts/verify_repository.py --allow-lfs-pointers
 ```
 
-自动检查默认不下载大文件，而是核对 LFS 指针声明的 SHA-256 和字节数是否与清单一致，普通文件仍做实际哈希。这能发现指针/清单不一致，但**不能证明 LFS 服务端对象可下载**。拿到可用于综合或打印的完整副本，必须在已授权机器上运行不带该选项的完整检查。
+自动检查默认不下载大文件，而是核对 LFS 指针声明的 SHA-256 和字节数是否与清单一致，普通文件、原包清单、工程引用及 CPU ROM 仍做实际检查。这**不能证明 LFS 服务端对象可下载**。完整下载后应执行上面两级校验；原包 `verify_package.py` 需要真实大网表，不能在只取到指针时运行。
 
 ## 清单的含义
 
-[source-assets.json](../manifests/source-assets.json)记录本次从两份输入目录筛选导入的原始资产。`source_root` 是输入包名称，`source_path` 是该包内部相对路径，不依赖作者电脑绝对路径。文件原样复制，SHA-256 在复制前后核对。
+[source-assets.json](../manifests/source-assets.json)记录 r15 ZIP 原样导入的 89 个文件，以及保留的 34 个 V9 资产。`source_root` 是输入包名称，`source_path` 是其内部相对路径，不依赖作者电脑绝对路径。另记录新 ZIP 的 SHA-256 和旧版 Git commit；机械筛选范围与初次归档相同。
 
-新增的 README、环境/使用文档和检查脚本不属于原始资产，使用 Git commit 跟踪；它们的相对链接仍接受检查。后续若有意修改原资产，应更新来源、版本和清单，不应直接关闭检查。
+根 README、环境/使用文档和仓库检查脚本以 Git commit 跟踪；`fpga/README.md` 是 r15 原包文件，保持原样并纳入资产哈希。后续有意修改 FPGA 文件时，应同时更新原包 MANIFEST 与仓库清单，并记录版本，不能直接关闭检查。
 
 完整性检查不能证明 HDL 功能、时序、帧率、打印几何或实物装配通过。原包的已验证声明与本次重新执行的文件检查分别记录，见[赛题对照](competition-checklist.md)。

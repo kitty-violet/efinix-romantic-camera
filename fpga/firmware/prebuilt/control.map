@@ -1,0 +1,160 @@
+
+Discarded input sections
+
+ .text          0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .data          0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .bss           0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .riscv.attributes
+                0x00000000       0x33 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .text          0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .data          0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss           0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .comment       0x00000000       0x34 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .riscv.attributes
+                0x00000000       0x35 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+OCR              0xf9000000         0x00002000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+LOAD C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+LOAD E:\fpga\workspaces\rv32-200mhz-optimization\tools\gcc\lib\gcc\riscv-none-elf\15.2.0\rv32i\ilp32\libgcc.a
+
+.text           0xf9000000     0x1550
+ *(.init)
+ .init          0xf9000000       0x50 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+                0xf9000000                _start
+ *(.text .text.*)
+ .text.fail     0xf9000050       0x24 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.wait_complete.isra.0
+                0xf9000074       0x58 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.camera   0xf90000cc       0x54 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.wr       0xf9000120       0x4c C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.transfer
+                0xf900016c       0x5c C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.copy_verified.constprop.0
+                0xf90001c8       0x84 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.rd       0xf900024c       0x4c C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.prepare_style
+                0xf9000298      0x268 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.stop     0xf9000500       0xf8 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.start    0xf90005f8       0xfc C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .text.firmware_trap
+                0xf90006f4      0x10c C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+                0xf90006f4                firmware_trap
+ .text.firmware_main
+                0xf9000800      0xd50 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+                0xf9000800                firmware_main
+
+.rodata         0xf9001550      0x2c8
+ *(.rodata .rodata.*)
+ .rodata.camera_verify
+                0xf9001550       0x38 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .rodata.camera_config
+                0xf9001588      0x290 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.rela.dyn       0xf9001818        0x0
+ .rela.init     0xf9001818        0x0 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+
+.data           0xf9001818        0x0
+                0xf9001818                        . = ALIGN (0x4)
+                0xf9002018                        __global_pointer$ = (. + 0x800)
+ *(.sdata .sdata.* .data .data.*)
+
+.bss            0xf9001818      0x280
+                0xf9001818                        . = ALIGN (0x4)
+                0xf9001818                        __bss_start = .
+ *(.sbss .sbss.* .bss .bss.* COMMON)
+ .bss.irq_count
+                0xf9001818        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.irq_seen  0xf900181c        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.resident_valid
+                0xf9001820        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.frame_base
+                0xf9001824        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.finite_frames
+                0xf9001828        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.manual_mode
+                0xf900182c        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.progress_poll_time
+                0xf9001830        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.poll_time
+                0xf9001834        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.progress_time
+                0xf9001838        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.last_count
+                0xf900183c        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.isp_ready
+                0xf9001840        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.request_seq
+                0xf9001844        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.view      0xf9001848        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.flags     0xf900184c        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.count     0xf9001850        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.selected  0xf9001854        0x4 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+ .bss.directory
+                0xf9001858      0x240 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+                0xf9001a98                        . = ALIGN (0x4)
+                0xf9001a98                        __bss_end = .
+                0xf9002000                        __stack_top = (ORIGIN (OCR) + LENGTH (OCR))
+                0x00000001                        ASSERT (((__bss_end + 0x300) <= __stack_top), Firmware exceeds OCR with required stack reserve)
+
+/DISCARD/
+ *(.comment .eh_frame .riscv.attributes)
+OUTPUT(E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\build\production-firmware\control.elf elf32-littleriscv)
+
+.debug_line     0x00000000     0x334e
+ .debug_line    0x00000000       0x9c C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .debug_line    0x0000009c     0x32b2 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_line_str
+                0x00000000      0x18d
+ .debug_line_str
+                0x00000000      0x18d C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+                                 0xb2 (size before relaxing)
+ .debug_line_str
+                0x0000018d        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+                                0x18c (size before relaxing)
+
+.debug_info     0x00000000     0x2e0d
+ .debug_info    0x00000000       0x24 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .debug_info    0x00000024     0x2de9 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_abbrev   0x00000000      0x466
+ .debug_abbrev  0x00000000       0x14 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .debug_abbrev  0x00000014      0x452 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_aranges  0x00000000       0x98
+ .debug_aranges
+                0x00000000       0x20 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+ .debug_aranges
+                0x00000020       0x78 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_str      0x00000000      0x7a7
+ .debug_str     0x00000000      0x7a7 C:\Users\Lenovo\AppData\Local\Temp\ccAMnmtK.o
+                                 0xbe (size before relaxing)
+ .debug_str     0x000007a7        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+                                0x743 (size before relaxing)
+
+.debug_loclists
+                0x00000000     0x13bb
+ .debug_loclists
+                0x00000000     0x13bb C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_rnglists
+                0x00000000      0x446
+ .debug_rnglists
+                0x00000000      0x446 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.note.GNU-stack
+                0x00000000        0x0
+ .note.GNU-stack
+                0x00000000        0x0 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o
+
+.debug_frame    0x00000000      0x208
+ .debug_frame   0x00000000      0x208 C:\Users\Lenovo\AppData\Local\Temp\cckVAHN4.o

@@ -1,6 +1,6 @@
 # 基于易灵思的浪漫相机
 
-基于 Efinix Titanium Ti60F225 的五风格视频图像处理作品，包含冻结版 FPGA 网表、蓝牙控制与中文 OSD 模块，以及 V9-P1 相机外壳的打印文件和设计源文件。
+基于 Efinix Titanium Ti60F225 与 Sapphire RISC-V 的视频图像处理作品。当前代码为 **production-r15（2026-11-03）**，包含 Efinity 工程、C 固件、CPU ROM、六模式显示与控制、测试源码，以及 V9-P1 相机外壳。
 
 本仓库用于 2026 年全国大学生嵌入式芯片与系统设计竞赛 FPGA 创新设计赛道的项目归档与团队交接，对应易灵思赛题一“AI 赋能的「实时绘画」——风格化视频渲染系统”。当前仓库为私有仓库。
 
@@ -13,19 +13,19 @@
 | 项目 | 内容 |
 | --- | --- |
 | FPGA 器件 | Efinix Titanium Ti60F225 |
-| 代码版本 | `legacy222-ble-five-cn-20261101-ble5` |
+| 代码版本 | `production-r15`，来自 `sapphire-native8h-r15-code-20261103.zip` |
 | 顶层模块 | `ti60f225_oob_top` |
-| 处理分辨率 | 1280 × 720，见原始版本说明 |
-| HDMI 输出 | 1920 × 1080 @ 30 Hz，见原始版本说明 |
-| AI 处理速度 | 原始说明记录约 17.1 FPS；本次归档未重新进行实板测量 |
-| 风格顺序 | 漫画 → 阿凡达 → 热成像 → 像素动画 → 阴曹地府 |
-| 控制 | 实体按键事件、蓝牙 UART 三类命令、中文风格名称 OSD |
-| Efinity 来源版本 | 网表文件头记录 `2026.1.132` |
+| CPU | 官方 Sapphire `trim3_no_clint`，RV32I + Zicsr/Zifencei，100 MHz，8 KiB OCR |
+| 硬件计算域 | 150 MHz；风格处理及原始分辨率路径见工程模块 |
+| 模式 | 原包说明为六模式，包含中文名称、FPS、全/半屏切换 |
+| 控制 | C 固件负责相机配置、目录校验、装载调度、事件及模式切换；BLE/实体按键输入 |
+| Efinity | `2026.1.132`；工程器件 Ti60F225、时序模型 I3 |
+| 固件工具链 | RV32 GCC 15.2.0，已附对应预编译固件和四个 ROM lane 文件 |
 | 外壳 | V9-P1，2026-10-28，毫米，1:1 |
 
-HDMI 的 30 Hz 是显示输出时序，不能等同于每秒完成 30 帧 AI 推理。五种视觉模式也不能仅凭名称认定为五套独立神经网络权重。
+视频输出时序与 AI 推理帧率是两种指标。旧版约 17.1 AI FPS 的记录不作为 r15 的实测值；新包没有附本版实测帧率、切换延迟或综合时序结果，也不能凭六个显示模式推定有六套独立网络权重。
 
-原始[代码说明](fpga/说明.txt)将此版本标为已实板验证的**无 RISC-V 稳定版**。此归档没有 Efinity 工程 XML、引脚/外设配置、SDC、位流或独立模型文件，因此**不能只克隆本仓库就重新生成并烧录位流**。外壳原交付说明标为首件试装阶段，尚未做实物打印装配验证。完整情况见[赛题要求对照](docs/competition-checklist.md)。
+本次将新包 **89 个文件原样收录**于 `fpga/`，已具备项目 XML、外设配置、引脚/时序资料、RTL、C 固件和测试源码。[原包 README](fpga/README.md)和[工程使用说明](docs/fpga-project.md)给出构建入口。包内未附最终 FPGA 位流及外部 Flash 目录/模型/ISP 数据镜像，故不能仅用 CPU `control.bin` 完成整机烧录。本次没有重新综合、仿真或实板测试。外壳仍是原 V9-P1 首件试装交付，完整边界见[赛题对照](docs/competition-checklist.md)。
 
 ## 从哪里开始
 
@@ -33,7 +33,7 @@ HDMI 的 30 Hz 是显示输出时序，不能等同于每秒完成 30 帧 AI 推
 | --- | --- |
 | 下载完整文件、配置已有环境 | [环境与获取方式](docs/environment.md) |
 | 使用已有已烧录设备 | [使用说明](docs/usage.md) |
-| 查阅 HDL 模块及接口 | [FPGA 代码说明](fpga/README.md) |
+| 打开 FPGA 工程、构建固件 | [工程使用说明](docs/fpga-project.md)、[原包说明](fpga/README.md) |
 | 实现手机/串口控制 | [蓝牙命令协议](docs/ble-protocol.md) |
 | 打印和装配外壳 | [V9-P1 外壳入口](mechanical/enclosure_v9/README.md) |
 | 准备比赛提交、核对缺项 | [赛题对照](docs/competition-checklist.md)、[交接与提交](docs/submission.md) |
@@ -49,19 +49,24 @@ git clone https://github.com/kitty-violet/efinix-romantic-camera.git
 cd efinix-romantic-camera
 git lfs pull
 python -B scripts/verify_repository.py
+python -B fpga/tools/verify_package.py
 ```
 
 私有仓库需要 GitHub 账号已获访问权限；命令中的 `git` 和 `python` 应替换为本人已确认的可执行文件路径。校验脚本仅使用 Python 3.10+ 标准库，无需 PyTorch、CUDA 或训练环境。
 
-大网表、STEP/STL/BREP 使用 Git LFS。没有拉取 LFS 时，它们可能只是几行指针文本，不能用于综合或打印。不要仅凭网页文件列表判断已下载完整文件，详见[环境说明](docs/environment.md)。
+大网表、STEP/STL/BREP 使用 Git LFS。r15 顶层网表约 174.8 MiB；没有拉取 LFS 时，它们可能只是几行指针文本。完整下载及磁盘预算见[环境说明](docs/environment.md)。
 
 ## 仓库结构
 
 ```text
 .
 ├── fpga/
-│   ├── rtl/                     冻结网表、蓝牙译码与中文 OSD
-│   └── 说明.txt                 原始代码说明，原样保留
+│   ├── project/                 Efinity XML、RTL、外设/SDC、CPU ROM
+│   ├── firmware/                C/汇编/链接脚本及本版预编译文件
+│   ├── sapphire/                Sapphire 配置与 BSP
+│   ├── tests/                   测试台、仿真模型及测试数据
+│   ├── tools/                   固件构建与原包校验脚本
+│   └── MANIFEST.json            原包 SHA-256 清单，原样保留
 ├── mechanical/enclosure_v9/
 │   ├── 01_正式打印零件/         六种正式零件，STEP/STL 各一份
 │   ├── 02_先打螺纹试配件/       T1/T2 试配环
@@ -74,7 +79,7 @@ python -B scripts/verify_repository.py
 └── .github/workflows/           自动执行仓库完整性检查
 ```
 
-本次只整理团队指定的当前代码与 V9 外壳，不包含历史训练实验、个人环境、账号凭据、工具安装包、厂家完整资料或其他外壳版本。正式导入资产及来源相对路径以[资产清单](manifests/source-assets.json)为准。
+当前收录 123 个原始资产：r15 代码包 89 个、V9 外壳 34 个，共约 271.5 MiB。未打包个人环境、账号凭据、工具安装包或历史训练实验。文件来源与哈希见[资产清单](manifests/source-assets.json)。11 月 2 日的五风格无 RISC-V 版本保留在 Git 历史提交 `423d07a`，不与新工程混用。
 
 ## 维护
 

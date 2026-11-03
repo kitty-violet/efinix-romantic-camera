@@ -1,0 +1,12 @@
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:22:13:fail	0	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:43:17:wait_complete.isra	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:66:17:camera	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:64:13:wr	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:149:17:transfer	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:156:13:copy_verified.constprop	32	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:63:17:rd	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:170:13:prepare_style	48	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:237:13:stop	16	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:249:13:start	32	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:28:6:firmware_trap	64	static
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\production\firmware\main.c:262:6:firmware_main	80	static

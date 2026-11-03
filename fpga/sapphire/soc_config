@@ -1,0 +1,23 @@
+--ramHex "E:\efinity-2026.1.132-windows-x64\efinity\2026.1\ipm\ip\efx_soc\efx_soc\generator\bootloader\bootloader_8K.hex"
+--apbBridgeAddress 0xf8000000
+--systemFrequency 100000000
+--noMulDiv
+--L1D false
+--Atomic false
+--L1I false
+--Linux false
+--cpuCount 1
+--reducedCsr
+--onChipRamAddress 0xf9000000
+--lowArea 5
+--onChipRamSize 0x2000
+--interrupt name=userInterruptA,id=16
+--ddrAEnable false
+--FpuDouble false
+--axiAEnable false
+--PeripheralClock false
+--apbSlave name=io_apbSlave_0,address=0x100000,size=65536
+--Fpu false
+--softTap false
+--noBarrelShifter
+--noClint

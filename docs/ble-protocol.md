@@ -1,6 +1,6 @@
 # 蓝牙 UART 命令协议
 
-依据 [ble_uart_buttons.sv](../fpga/rtl/ble_uart_buttons.sv) 和冻结顶层的实例参数整理。此协议位于蓝牙模块到 FPGA 的 UART 一侧，不规定蓝牙广播名、服务 UUID、配对口令或手机应用界面。
+依据 r15 [ble_uart_buttons.sv](../fpga/project/ble_uart_buttons.sv) 和顶层集成整理。UART 译码源码与旧版相同；三类事件在 r15 交给 Sapphire C 固件调度。此协议位于蓝牙模块到 FPGA 的 UART 一侧，不规定蓝牙广播名、服务 UUID、配对口令或手机应用界面。
 
 ## 链路
 
@@ -18,11 +18,13 @@
 
 | 原始字节（HEX） | 模块输出 | 含义 |
 | --- | --- | --- |
-| `A5 01 FE` | `key_start` | 启动/操作事件，后续含义由既有控制逻辑决定 |
+| `A5 01 FE` | `key_start` | r15 运行/停止切换事件，需先完成准备 |
 | `A5 02 FD` | `key_style` | 风格切换事件 |
 | `A5 03 FC` | `key_view` | 视图切换事件 |
 
 三类命令与已有实体按键事件在顶层合并。不能通过本协议指定绝对风格槽位、读回状态、请求图像流或加载权重。
+
+r15 顶层先做就绪/运行条件检查，再送入 C 固件的事件队列。`A5 03 FC` 对应的视图键只在运行且已准备时受理；切换模式的实际数量受 Flash 目录约束。固件寄存器定义见 [control.h](../fpga/firmware/control.h)，软件调度见 [main.c](../fpga/firmware/main.c)。
 
 ## 发送方式与超时
 

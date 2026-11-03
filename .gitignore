@@ -27,6 +27,9 @@ simulation/
 sim_build/
 outflow/
 build/
+work_syn/
+work_pnr/
+work_dbg/
 dist/
 output/
 logs/
@@ -44,6 +47,14 @@ logs/
 *.hex
 *.bin
 *.apk
+
+# Keep all supplied r15 project, ROM, firmware and simulation assets.
+!/fpga/project/outflow/
+!/fpga/project/outflow/**
+!/fpga/project/*.bin
+!/fpga/project/*.hex
+!/fpga/firmware/prebuilt/*.bin
+!/fpga/tests/data/*.hex
 
 # Local editor and OS files
 .vscode/

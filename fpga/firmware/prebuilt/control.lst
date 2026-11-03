@@ -1,0 +1,1936 @@
+
+E:\fpga\workspaces\sapphire-s4r1-control\native8h-integration\build\production-firmware\control.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+f9000000 <_start>:
+.section .init,"ax",@progbits
+.globl _start
+_start:
+ .option push
+ .option norelax
+ la gp,__global_pointer$
+f9000000:	00002197          	auipc	gp,0x2
+f9000004:	01818193          	addi	gp,gp,24 # f9002018 <__global_pointer$>
+ .option pop
+ la sp,__stack_top
+f9000008:	00002117          	auipc	sp,0x2
+f900000c:	ff810113          	addi	sp,sp,-8 # f9002000 <__stack_top>
+ la t0,firmware_trap
+f9000010:	00000297          	auipc	t0,0x0
+f9000014:	6e428293          	addi	t0,t0,1764 # f90006f4 <firmware_trap>
+ csrw mtvec,t0
+f9000018:	30529073          	csrw	mtvec,t0
+ csrw mie,zero
+f900001c:	30401073          	csrw	mie,zero
+ csrw mstatus,zero
+f9000020:	30001073          	csrw	mstatus,zero
+ la t0,__bss_start
+f9000024:	00001297          	auipc	t0,0x1
+f9000028:	7f428293          	addi	t0,t0,2036 # f9001818 <irq_count>
+ la t1,__bss_end
+f900002c:	00002317          	auipc	t1,0x2
+f9000030:	a6c30313          	addi	t1,t1,-1428 # f9001a98 <__bss_end>
+1:
+ bgeu t0,t1,2f
+f9000034:	0062f863          	bgeu	t0,t1,f9000044 <_start+0x44>
+ sw zero,0(t0)
+f9000038:	0002a023          	sw	zero,0(t0)
+ addi t0,t0,4
+f900003c:	00428293          	addi	t0,t0,4
+ j 1b
+f9000040:	ff5ff06f          	j	f9000034 <_start+0x34>
+2:
+ call firmware_main
+f9000044:	7bc000ef          	jal	f9000800 <firmware_main>
+ call firmware_trap
+f9000048:	6ac000ef          	jal	f90006f4 <firmware_trap>
+3:
+ j 3b
+f900004c:	0000006f          	j	f900004c <_start+0x4c>
+
+f9000050 <fail>:
+
+static inline uint32_t io_read(unsigned offset) {
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+}
+static inline void io_write(unsigned offset,uint32_t value) {
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000050:	f81007b7          	lui	a5,0xf8100
+f9000054:	0807a823          	sw	zero,144(a5) # f8100090 <_start-0xefff70>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000058:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f900005c:	0607a223          	sw	zero,100(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000060:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000064:	06a7a823          	sw	a0,112(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000068:	0ff0000f          	fence
+static void fail(uint32_t code) __attribute__((noreturn));
+static void fail(uint32_t code) {
+ io_write(R_READY,0);
+ io_write(R_FLAGS,0);
+ io_write(R_FAULT,code);
+ for (;;) __asm__ volatile("nop");
+f900006c:	00000013          	nop
+f9000070:	ffdff06f          	j	f900006c <fail+0x1c>
+
+f9000074 <wait_complete.isra.0>:
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000074:	f8100737          	lui	a4,0xf8100
+f9000078:	07872603          	lw	a2,120(a4) # f8100078 <_start-0xefff88>
+ irq_seen=1;irq_count++;
+ io_write(R_IRQ_HANDLED,irq_count);
+ PLIC(0x200004)=id;
+}
+
+static uint32_t wait_complete(unsigned reg,uint32_t limit) {
+f900007c:	ff010113          	addi	sp,sp,-16
+f9000080:	f81007b7          	lui	a5,0xf8100
+f9000084:	07870713          	addi	a4,a4,120
+f9000088:	00112623          	sw	ra,12(sp)
+f900008c:	00f50533          	add	a0,a0,a5
+f9000090:	00052783          	lw	a5,0(a0)
+ uint32_t begin=io_read(R_TIMER),status;
+ do {
+  status=io_read(reg);
+  if(status&IO_ERROR) fail(0xd1);
+f9000094:	0047f693          	andi	a3,a5,4
+f9000098:	00068663          	beqz	a3,f90000a4 <wait_complete.isra.0+0x30>
+f900009c:	0d100513          	li	a0,209
+  if((uint32_t)(io_read(R_TIMER)-begin)>limit) fail(0xd2);
+f90000a0:	fb1ff0ef          	jal	f9000050 <fail>
+f90000a4:	00072683          	lw	a3,0(a4)
+f90000a8:	40c686b3          	sub	a3,a3,a2
+f90000ac:	00d5f663          	bgeu	a1,a3,f90000b8 <wait_complete.isra.0+0x44>
+f90000b0:	0d200513          	li	a0,210
+f90000b4:	fedff06f          	j	f90000a0 <wait_complete.isra.0+0x2c>
+ } while(!(status&IO_DONE));
+f90000b8:	0027f793          	andi	a5,a5,2
+f90000bc:	fc078ae3          	beqz	a5,f9000090 <wait_complete.isra.0+0x1c>
+ return status;
+}
+f90000c0:	00c12083          	lw	ra,12(sp)
+f90000c4:	01010113          	addi	sp,sp,16
+f90000c8:	00008067          	ret
+
+f90000cc <camera>:
+}
+static uint32_t rd(uint32_t address) { return native(address,0,0); }
+static void wr(uint32_t address,uint32_t data) { (void)native(address,data,1); }
+
+static uint32_t camera(unsigned device,unsigned address,unsigned data,unsigned reading) {
+ io_write(R_CAMERA_WORD,(address<<16)|(device<<8)|data);
+f90000cc:	00851513          	slli	a0,a0,0x8
+static uint32_t camera(unsigned device,unsigned address,unsigned data,unsigned reading) {
+f90000d0:	ff010113          	addi	sp,sp,-16
+ io_write(R_CAMERA_WORD,(address<<16)|(device<<8)|data);
+f90000d4:	00c56533          	or	a0,a0,a2
+f90000d8:	01059593          	slli	a1,a1,0x10
+static uint32_t camera(unsigned device,unsigned address,unsigned data,unsigned reading) {
+f90000dc:	00112623          	sw	ra,12(sp)
+ io_write(R_CAMERA_WORD,(address<<16)|(device<<8)|data);
+f90000e0:	00b56533          	or	a0,a0,a1
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90000e4:	f81007b7          	lui	a5,0xf8100
+f90000e8:	04a7a823          	sw	a0,80(a5) # f8100050 <_start-0xefffb0>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90000ec:	0ff0000f          	fence
+ io_write(R_CAMERA_GO,reading?2:1);
+f90000f0:	00168693          	addi	a3,a3,1
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90000f4:	04d7aa23          	sw	a3,84(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90000f8:	0ff0000f          	fence
+ wait_complete(R_CAMERA_STATUS,BUS_TIMEOUT);
+f90000fc:	000f45b7          	lui	a1,0xf4
+f9000100:	05800513          	li	a0,88
+f9000104:	24058593          	addi	a1,a1,576 # f4240 <_start-0xf8f0bdc0>
+f9000108:	f6dff0ef          	jal	f9000074 <wait_complete.isra.0>
+ return io_read(R_CAMERA_RESULT);
+}
+f900010c:	00c12083          	lw	ra,12(sp)
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000110:	f81007b7          	lui	a5,0xf8100
+f9000114:	05c7a503          	lw	a0,92(a5) # f810005c <_start-0xefffa4>
+f9000118:	01010113          	addi	sp,sp,16
+f900011c:	00008067          	ret
+
+f9000120 <wr>:
+static void wr(uint32_t address,uint32_t data) { (void)native(address,data,1); }
+f9000120:	ff010113          	addi	sp,sp,-16
+f9000124:	00112623          	sw	ra,12(sp)
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000128:	f81007b7          	lui	a5,0xf8100
+f900012c:	00a7a823          	sw	a0,16(a5) # f8100010 <_start-0xeffff0>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000130:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000134:	00b7aa23          	sw	a1,20(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000138:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f900013c:	00200713          	li	a4,2
+f9000140:	00e7ac23          	sw	a4,24(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000144:	0ff0000f          	fence
+ wait_complete(R_NATIVE_STATUS,BUS_TIMEOUT);
+f9000148:	000f45b7          	lui	a1,0xf4
+f900014c:	24058593          	addi	a1,a1,576 # f4240 <_start-0xf8f0bdc0>
+f9000150:	01c00513          	li	a0,28
+f9000154:	f21ff0ef          	jal	f9000074 <wait_complete.isra.0>
+static void wr(uint32_t address,uint32_t data) { (void)native(address,data,1); }
+f9000158:	00c12083          	lw	ra,12(sp)
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f900015c:	f81007b7          	lui	a5,0xf8100
+f9000160:	0207a783          	lw	a5,32(a5) # f8100020 <_start-0xefffe0>
+f9000164:	01010113          	addi	sp,sp,16
+f9000168:	00008067          	ret
+
+f900016c <transfer>:
+ io_write(R_STYLE,selected|(count<<8));
+}
+
+/* All bulk data movement is hardware owned; CPU validates source metadata,
+ * starts bounded DMA, and checks complete-transfer CRC and independent readback. */
+static uint32_t transfer(unsigned op,uint32_t src,uint32_t dst,uint32_t length) {
+f900016c:	ff010113          	addi	sp,sp,-16
+f9000170:	00112623          	sw	ra,12(sp)
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000174:	f81007b7          	lui	a5,0xf8100
+f9000178:	02b7ac23          	sw	a1,56(a5) # f8100038 <_start-0xefffc8>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900017c:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000180:	02c7ae23          	sw	a2,60(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000184:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000188:	04d7a023          	sw	a3,64(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900018c:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000190:	04a7a223          	sw	a0,68(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000194:	0ff0000f          	fence
+ io_write(R_DMA_SOURCE,src);io_write(R_DMA_TARGET,dst);io_write(R_DMA_LENGTH,length);
+ io_write(R_DMA_GO,op);
+ wait_complete(R_DMA_STATUS,LONG_TIMEOUT);
+f9000198:	773595b7          	lui	a1,0x77359
+f900019c:	40058593          	addi	a1,a1,1024 # 77359400 <_start-0x81ca6c00>
+f90001a0:	04800513          	li	a0,72
+f90001a4:	ed1ff0ef          	jal	f9000074 <wait_complete.isra.0>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90001a8:	f81007b7          	lui	a5,0xf8100
+f90001ac:	00100713          	li	a4,1
+f90001b0:	06e7aa23          	sw	a4,116(a5) # f8100074 <_start-0xefff8c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90001b4:	0ff0000f          	fence
+ heartbeat();
+ return io_read(R_DMA_CRC);
+}
+f90001b8:	00c12083          	lw	ra,12(sp)
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f90001bc:	04c7a503          	lw	a0,76(a5)
+f90001c0:	01010113          	addi	sp,sp,16
+f90001c4:	00008067          	ret
+
+f90001c8 <copy_verified.constprop.0>:
+static void copy_verified(unsigned op,uint32_t src,uint32_t dst,uint32_t bytes,uint32_t expected) {
+f90001c8:	fe010113          	addi	sp,sp,-32
+f90001cc:	00912a23          	sw	s1,20(sp)
+f90001d0:	01212823          	sw	s2,16(sp)
+f90001d4:	01312623          	sw	s3,12(sp)
+f90001d8:	00058493          	mv	s1,a1
+f90001dc:	00068993          	mv	s3,a3
+f90001e0:	00060913          	mv	s2,a2
+ if(transfer(op,src,dst,bytes)!=expected)fail(0x23);
+f90001e4:	00060693          	mv	a3,a2
+f90001e8:	00058613          	mv	a2,a1
+f90001ec:	00050593          	mv	a1,a0
+f90001f0:	00100513          	li	a0,1
+static void copy_verified(unsigned op,uint32_t src,uint32_t dst,uint32_t bytes,uint32_t expected) {
+f90001f4:	00112e23          	sw	ra,28(sp)
+f90001f8:	00812c23          	sw	s0,24(sp)
+ if(transfer(op,src,dst,bytes)!=expected)fail(0x23);
+f90001fc:	f71ff0ef          	jal	f900016c <transfer>
+f9000200:	01350663          	beq	a0,s3,f900020c <copy_verified.constprop.0+0x44>
+f9000204:	02300513          	li	a0,35
+ if(transfer(D_CRC,dst,0,bytes)!=expected)fail(0x24);
+f9000208:	e49ff0ef          	jal	f9000050 <fail>
+f900020c:	00050413          	mv	s0,a0
+f9000210:	00090693          	mv	a3,s2
+f9000214:	00000613          	li	a2,0
+f9000218:	00048593          	mv	a1,s1
+f900021c:	00300513          	li	a0,3
+f9000220:	f4dff0ef          	jal	f900016c <transfer>
+f9000224:	00a40663          	beq	s0,a0,f9000230 <copy_verified.constprop.0+0x68>
+f9000228:	02400513          	li	a0,36
+f900022c:	fddff06f          	j	f9000208 <copy_verified.constprop.0+0x40>
+}
+f9000230:	01c12083          	lw	ra,28(sp)
+f9000234:	01812403          	lw	s0,24(sp)
+f9000238:	01412483          	lw	s1,20(sp)
+f900023c:	01012903          	lw	s2,16(sp)
+f9000240:	00c12983          	lw	s3,12(sp)
+f9000244:	02010113          	addi	sp,sp,32
+f9000248:	00008067          	ret
+
+f900024c <rd>:
+static uint32_t rd(uint32_t address) { return native(address,0,0); }
+f900024c:	ff010113          	addi	sp,sp,-16
+f9000250:	00112623          	sw	ra,12(sp)
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000254:	f81007b7          	lui	a5,0xf8100
+f9000258:	00a7a823          	sw	a0,16(a5) # f8100010 <_start-0xeffff0>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900025c:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000260:	0007aa23          	sw	zero,20(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000264:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000268:	00100713          	li	a4,1
+f900026c:	00e7ac23          	sw	a4,24(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000270:	0ff0000f          	fence
+ wait_complete(R_NATIVE_STATUS,BUS_TIMEOUT);
+f9000274:	000f45b7          	lui	a1,0xf4
+f9000278:	01c00513          	li	a0,28
+f900027c:	24058593          	addi	a1,a1,576 # f4240 <_start-0xf8f0bdc0>
+f9000280:	df5ff0ef          	jal	f9000074 <wait_complete.isra.0>
+static uint32_t rd(uint32_t address) { return native(address,0,0); }
+f9000284:	00c12083          	lw	ra,12(sp)
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000288:	f81007b7          	lui	a5,0xf8100
+f900028c:	0207a503          	lw	a0,32(a5) # f8100020 <_start-0xefffe0>
+f9000290:	01010113          	addi	sp,sp,16
+f9000294:	00008067          	ret
+
+f9000298 <prepare_style>:
+  uint32_t *p=entry(n),base=slot_base(n);
+  copy_verified(D_SPI_COPY,p[2],base,p[3],p[4]);
+  copy_verified(D_SPI_COPY,p[5],base+0xc0000,p[6],p[7]);
+ }
+}
+static void prepare_style(unsigned n) {
+f9000298:	fd010113          	addi	sp,sp,-48
+f900029c:	01812423          	sw	s8,8(sp)
+ uint32_t *p=entry(n),base=slot_base(n);
+ if(n>=count || !resident_valid)fail(0x13);
+f90002a0:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+static void prepare_style(unsigned n) {
+f90002a4:	02112623          	sw	ra,44(sp)
+f90002a8:	02812423          	sw	s0,40(sp)
+f90002ac:	02912223          	sw	s1,36(sp)
+f90002b0:	03212023          	sw	s2,32(sp)
+f90002b4:	01312e23          	sw	s3,28(sp)
+f90002b8:	01412c23          	sw	s4,24(sp)
+f90002bc:	01512a23          	sw	s5,20(sp)
+f90002c0:	01612823          	sw	s6,16(sp)
+f90002c4:	01712623          	sw	s7,12(sp)
+f90002c8:	01912223          	sw	s9,4(sp)
+ if(n>=count || !resident_valid)fail(0x13);
+f90002cc:	00f57663          	bgeu	a0,a5,f90002d8 <prepare_style+0x40>
+f90002d0:	8081a783          	lw	a5,-2040(gp) # f9001820 <resident_valid>
+f90002d4:	00079663          	bnez	a5,f90002e0 <prepare_style+0x48>
+f90002d8:	01300513          	li	a0,19
+  * The coefficient engine also reads directly from that resident slot. */
+ io_write(R_STYLE,n|(count<<8));
+ wr(MB+8,p[1]);wr(MB+12,p[7]);wr(MB+16,p[4]);wr(MB+20,directory[9]);
+ wr(APB+8,0);wr(APB+0x10,1);wr(APB+0x14,17792);wr(APB+0x18,p[1]);wr(APB+0x1c,1);
+ /* The coefficient DMA fills and independently verifies all five coefficient banks. */
+ if(transfer(D_COEFFICIENTS,base+0xc0000,p[1],p[6])!=p[7])fail(0x25);
+f90002dc:	d75ff0ef          	jal	f9000050 <fail>
+static uint32_t *entry(unsigned n) { return directory+16+(n<<4); }
+f90002e0:	00150413          	addi	s0,a0,1
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90002e4:	f81009b7          	lui	s3,0xf8100
+f90002e8:	f9002937          	lui	s2,0xf9002
+f90002ec:	85890913          	addi	s2,s2,-1960 # f9001858 <directory>
+f90002f0:	00641413          	slli	s0,s0,0x6
+f90002f4:	09098993          	addi	s3,s3,144 # f8100090 <_start-0xefff70>
+f90002f8:	00050493          	mv	s1,a0
+f90002fc:	01240433          	add	s0,s0,s2
+f9000300:	0009a023          	sw	zero,0(s3)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000304:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000308:	f8100ab7          	lui	s5,0xf8100
+f900030c:	068a8a93          	addi	s5,s5,104 # f8100068 <_start-0xefff98>
+f9000310:	00b00793          	li	a5,11
+f9000314:	00faa023          	sw	a5,0(s5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000318:	0ff0000f          	fence
+ flags=F_STOPPED;io_write(R_FLAGS,flags);
+f900031c:	00400c93          	li	s9,4
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000320:	f8100a37          	lui	s4,0xf8100
+f9000324:	8391aa23          	sw	s9,-1996(gp) # f900184c <flags>
+f9000328:	064a0a13          	addi	s4,s4,100 # f8100064 <_start-0xefff9c>
+f900032c:	019a2023          	sw	s9,0(s4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000330:	0ff0000f          	fence
+ io_write(R_STYLE,n|(count<<8));
+f9000334:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000338:	f8100bb7          	lui	s7,0xf8100
+f900033c:	06cb8b93          	addi	s7,s7,108 # f810006c <_start-0xefff94>
+f9000340:	00879793          	slli	a5,a5,0x8
+f9000344:	00a7e7b3          	or	a5,a5,a0
+f9000348:	00fba023          	sw	a5,0(s7)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900034c:	0ff0000f          	fence
+ wr(MB+8,p[1]);wr(MB+12,p[7]);wr(MB+16,p[4]);wr(MB+20,directory[9]);
+f9000350:	00442583          	lw	a1,4(s0)
+f9000354:	f9001537          	lui	a0,0xf9001
+f9000358:	f0850513          	addi	a0,a0,-248 # f9000f08 <firmware_main+0x708>
+f900035c:	dc5ff0ef          	jal	f9000120 <wr>
+f9000360:	01c42583          	lw	a1,28(s0)
+f9000364:	f9001537          	lui	a0,0xf9001
+f9000368:	f0c50513          	addi	a0,a0,-244 # f9000f0c <firmware_main+0x70c>
+f900036c:	db5ff0ef          	jal	f9000120 <wr>
+f9000370:	01042583          	lw	a1,16(s0)
+f9000374:	f9001537          	lui	a0,0xf9001
+f9000378:	f1050513          	addi	a0,a0,-240 # f9000f10 <firmware_main+0x710>
+f900037c:	da5ff0ef          	jal	f9000120 <wr>
+f9000380:	02492583          	lw	a1,36(s2)
+f9000384:	f9001537          	lui	a0,0xf9001
+f9000388:	f1450513          	addi	a0,a0,-236 # f9000f14 <firmware_main+0x714>
+f900038c:	d95ff0ef          	jal	f9000120 <wr>
+ wr(APB+8,0);wr(APB+0x10,1);wr(APB+0x14,17792);wr(APB+0x18,p[1]);wr(APB+0x1c,1);
+f9000390:	f8100537          	lui	a0,0xf8100
+f9000394:	00000593          	li	a1,0
+f9000398:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f900039c:	d85ff0ef          	jal	f9000120 <wr>
+f90003a0:	f8100537          	lui	a0,0xf8100
+f90003a4:	00100593          	li	a1,1
+f90003a8:	01050513          	addi	a0,a0,16 # f8100010 <_start-0xeffff0>
+f90003ac:	d75ff0ef          	jal	f9000120 <wr>
+f90003b0:	000045b7          	lui	a1,0x4
+f90003b4:	f8100537          	lui	a0,0xf8100
+f90003b8:	58058593          	addi	a1,a1,1408 # 4580 <_start-0xf8ffba80>
+f90003bc:	01450513          	addi	a0,a0,20 # f8100014 <_start-0xefffec>
+f90003c0:	d61ff0ef          	jal	f9000120 <wr>
+f90003c4:	00442583          	lw	a1,4(s0)
+f90003c8:	f8100537          	lui	a0,0xf8100
+f90003cc:	01850513          	addi	a0,a0,24 # f8100018 <_start-0xefffe8>
+f90003d0:	d51ff0ef          	jal	f9000120 <wr>
+f90003d4:	f8100537          	lui	a0,0xf8100
+f90003d8:	00100593          	li	a1,1
+f90003dc:	01c50513          	addi	a0,a0,28 # f810001c <_start-0xefffe4>
+f90003e0:	d41ff0ef          	jal	f9000120 <wr>
+ if(transfer(D_COEFFICIENTS,base+0xc0000,p[1],p[6])!=p[7])fail(0x25);
+f90003e4:	01842683          	lw	a3,24(s0)
+f90003e8:	00442603          	lw	a2,4(s0)
+f90003ec:	e18c07b7          	lui	a5,0xe18c0
+static uint32_t slot_base(unsigned n) { return 0xe1800000u+(n<<20); }
+f90003f0:	01449593          	slli	a1,s1,0x14
+ if(transfer(D_COEFFICIENTS,base+0xc0000,p[1],p[6])!=p[7])fail(0x25);
+f90003f4:	00f585b3          	add	a1,a1,a5
+f90003f8:	000c8513          	mv	a0,s9
+f90003fc:	d71ff0ef          	jal	f900016c <transfer>
+f9000400:	01c42783          	lw	a5,28(s0)
+f9000404:	00050593          	mv	a1,a0
+f9000408:	00f50663          	beq	a0,a5,f9000414 <prepare_style+0x17c>
+f900040c:	02500513          	li	a0,37
+f9000410:	ecdff06f          	j	f90002dc <prepare_style+0x44>
+ wr(MB+28,p[7]);wr(APB+0x48,1);
+f9000414:	f9001537          	lui	a0,0xf9001
+f9000418:	f1c50513          	addi	a0,a0,-228 # f9000f1c <firmware_main+0x71c>
+f900041c:	d05ff0ef          	jal	f9000120 <wr>
+f9000420:	f8100537          	lui	a0,0xf8100
+f9000424:	00100593          	li	a1,1
+f9000428:	04850513          	addi	a0,a0,72 # f8100048 <_start-0xefffb8>
+f900042c:	cf5ff0ef          	jal	f9000120 <wr>
+ if((rd(APB+4)&9)!=1)fail(0x26);
+f9000430:	f8100537          	lui	a0,0xf8100
+f9000434:	00450513          	addi	a0,a0,4 # f8100004 <_start-0xeffffc>
+f9000438:	e15ff0ef          	jal	f900024c <rd>
+f900043c:	00957513          	andi	a0,a0,9
+f9000440:	00100793          	li	a5,1
+f9000444:	00f50663          	beq	a0,a5,f9000450 <prepare_style+0x1b8>
+f9000448:	02600513          	li	a0,38
+f900044c:	e91ff06f          	j	f90002dc <prepare_style+0x44>
+ wr(APB+0x50,p[4]);wr(APB+0x54,directory[9]);
+f9000450:	01042583          	lw	a1,16(s0)
+f9000454:	f8100537          	lui	a0,0xf8100
+f9000458:	05050513          	addi	a0,a0,80 # f8100050 <_start-0xefffb0>
+f900045c:	cc5ff0ef          	jal	f9000120 <wr>
+f9000460:	02492583          	lw	a1,36(s2)
+f9000464:	f8100537          	lui	a0,0xf8100
+f9000468:	05450513          	addi	a0,a0,84 # f8100054 <_start-0xefffac>
+f900046c:	cb5ff0ef          	jal	f9000120 <wr>
+ selected=n;flags=F_PREPARED|F_STOPPED;
+f9000470:	8291ae23          	sw	s1,-1988(gp) # f9001854 <selected>
+f9000474:	00500793          	li	a5,5
+f9000478:	82f1aa23          	sw	a5,-1996(gp) # f900184c <flags>
+ io_write(R_STYLE,selected|(count<<8));
+f900047c:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+f9000480:	00879793          	slli	a5,a5,0x8
+f9000484:	0097e7b3          	or	a5,a5,s1
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000488:	00fba023          	sw	a5,0(s7)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900048c:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000490:	00700793          	li	a5,7
+f9000494:	00faa023          	sw	a5,0(s5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000498:	0ff0000f          	fence
+ io_write(R_RUN_STATE,7);io_write(R_FLAGS,flags);io_write(R_READY,isp_ready);
+f900049c:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90004a0:	00fa2023          	sw	a5,0(s4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90004a4:	0ff0000f          	fence
+f90004a8:	8281a783          	lw	a5,-2008(gp) # f9001840 <isp_ready>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90004ac:	00f9a023          	sw	a5,0(s3)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90004b0:	0ff0000f          	fence
+ manual_mode=0;finite_frames=0;io_write(R_FRAME_BUDGET,1023);
+f90004b4:	8001aa23          	sw	zero,-2028(gp) # f900182c <manual_mode>
+f90004b8:	8001a823          	sw	zero,-2032(gp) # f9001828 <finite_frames>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90004bc:	3ff00713          	li	a4,1023
+f90004c0:	f81007b7          	lui	a5,0xf8100
+f90004c4:	0ae7ac23          	sw	a4,184(a5) # f81000b8 <_start-0xefff48>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90004c8:	0ff0000f          	fence
+}
+f90004cc:	02c12083          	lw	ra,44(sp)
+f90004d0:	02812403          	lw	s0,40(sp)
+f90004d4:	02412483          	lw	s1,36(sp)
+f90004d8:	02012903          	lw	s2,32(sp)
+f90004dc:	01c12983          	lw	s3,28(sp)
+f90004e0:	01812a03          	lw	s4,24(sp)
+f90004e4:	01412a83          	lw	s5,20(sp)
+f90004e8:	01012b03          	lw	s6,16(sp)
+f90004ec:	00c12b83          	lw	s7,12(sp)
+f90004f0:	00812c03          	lw	s8,8(sp)
+f90004f4:	00412c83          	lw	s9,4(sp)
+f90004f8:	03010113          	addi	sp,sp,48
+f90004fc:	00008067          	ret
+
+f9000500 <stop>:
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+  }
+  if((io_read(R_ISP_WRITTEN)&0xffffff)!=rgb || (io_read(R_ISP_CONTROL)>>16)!=rejected)fail(0xe2);
+ }
+}
+static void stop(void) {
+f9000500:	ff010113          	addi	sp,sp,-16
+f9000504:	00812423          	sw	s0,8(sp)
+ if(!(flags&F_RUNNING))return;
+f9000508:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+static void stop(void) {
+f900050c:	00112623          	sw	ra,12(sp)
+ if(!(flags&F_RUNNING))return;
+f9000510:	0027f793          	andi	a5,a5,2
+f9000514:	0c078a63          	beqz	a5,f90005e8 <stop+0xe8>
+ flags=F_PREPARED|F_DRAINING;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,56);
+f9000518:	00900793          	li	a5,9
+f900051c:	82f1aa23          	sw	a5,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000520:	f8100737          	lui	a4,0xf8100
+f9000524:	06f72223          	sw	a5,100(a4) # f8100064 <_start-0xefff9c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000528:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f900052c:	00070793          	mv	a5,a4
+f9000530:	03800713          	li	a4,56
+f9000534:	06e7a423          	sw	a4,104(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000538:	0ff0000f          	fence
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f900053c:	0787a583          	lw	a1,120(a5)
+f9000540:	f81006b7          	lui	a3,0xf8100
+ uint32_t start=io_read(R_TIMER);
+ while(!(io_read(R_STATUS)&S_DRAINED)) {
+  if((uint32_t)(io_read(R_TIMER)-start)>200000000u)fail(0xd5);
+f9000544:	0bebc637          	lui	a2,0xbebc
+f9000548:	07878793          	addi	a5,a5,120
+f900054c:	00468693          	addi	a3,a3,4 # f8100004 <_start-0xeffffc>
+f9000550:	20060613          	addi	a2,a2,512 # bebc200 <_start-0xed143e00>
+f9000554:	0006a703          	lw	a4,0(a3)
+ while(!(io_read(R_STATUS)&S_DRAINED)) {
+f9000558:	00277713          	andi	a4,a4,2
+f900055c:	02070663          	beqz	a4,f9000588 <stop+0x88>
+ }
+ wr(APB+8,0);if(rd(APB+8))fail(6);
+f9000560:	f8100537          	lui	a0,0xf8100
+f9000564:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f9000568:	00000593          	li	a1,0
+f900056c:	bb5ff0ef          	jal	f9000120 <wr>
+f9000570:	f8100537          	lui	a0,0xf8100
+f9000574:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f9000578:	cd5ff0ef          	jal	f900024c <rd>
+f900057c:	02050063          	beqz	a0,f900059c <stop+0x9c>
+f9000580:	00600513          	li	a0,6
+f9000584:	0140006f          	j	f9000598 <stop+0x98>
+f9000588:	0007a703          	lw	a4,0(a5)
+  if((uint32_t)(io_read(R_TIMER)-start)>200000000u)fail(0xd5);
+f900058c:	40b70733          	sub	a4,a4,a1
+f9000590:	fce672e3          	bgeu	a2,a4,f9000554 <stop+0x54>
+f9000594:	0d500513          	li	a0,213
+ wr(APB+8,0);if(rd(APB+8))fail(6);
+f9000598:	ab9ff0ef          	jal	f9000050 <fail>
+ flags=F_PREPARED|F_STOPPED;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,7);wr(MB+4,5);
+f900059c:	00500593          	li	a1,5
+f90005a0:	82b1aa23          	sw	a1,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90005a4:	f81007b7          	lui	a5,0xf8100
+f90005a8:	06b7a223          	sw	a1,100(a5) # f8100064 <_start-0xefff9c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90005ac:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90005b0:	00700713          	li	a4,7
+f90005b4:	06e7a423          	sw	a4,104(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90005b8:	0ff0000f          	fence
+f90005bc:	f9001537          	lui	a0,0xf9001
+f90005c0:	f0450513          	addi	a0,a0,-252 # f9000f04 <firmware_main+0x704>
+f90005c4:	b5dff0ef          	jal	f9000120 <wr>
+ finite_frames=0;io_write(R_FRAME_BUDGET,1023);
+f90005c8:	8001a823          	sw	zero,-2032(gp) # f9001828 <finite_frames>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90005cc:	3ff00713          	li	a4,1023
+f90005d0:	f81007b7          	lui	a5,0xf8100
+f90005d4:	0ae7ac23          	sw	a4,184(a5) # f81000b8 <_start-0xefff48>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90005d8:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90005dc:	10000713          	li	a4,256
+f90005e0:	0ae7a023          	sw	a4,160(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90005e4:	0ff0000f          	fence
+ io_write(R_UI,0x100);
+}
+f90005e8:	00c12083          	lw	ra,12(sp)
+f90005ec:	00812403          	lw	s0,8(sp)
+f90005f0:	01010113          	addi	sp,sp,16
+f90005f4:	00008067          	ret
+
+f90005f8 <start>:
+static void start(void) {
+f90005f8:	fe010113          	addi	sp,sp,-32
+f90005fc:	00912a23          	sw	s1,20(sp)
+ if(flags&F_RUNNING)return;
+f9000600:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+static void start(void) {
+f9000604:	00112e23          	sw	ra,28(sp)
+f9000608:	00812c23          	sw	s0,24(sp)
+ if(flags&F_RUNNING)return;
+f900060c:	0027f713          	andi	a4,a5,2
+f9000610:	0c071863          	bnez	a4,f90006e0 <start+0xe8>
+ if(!(flags&F_PREPARED))fail(3);
+f9000614:	0017f793          	andi	a5,a5,1
+f9000618:	00079663          	bnez	a5,f9000624 <start+0x2c>
+f900061c:	00300513          	li	a0,3
+ last_count=rd(APB+0x5c);progress_time=io_read(R_TIMER);
+ progress_poll_time=progress_time;
+ frame_base=last_count;
+ io_write(R_UI,0x100);
+ uint32_t mode=1u|(view<<1);
+ wr(APB+8,mode);if(rd(APB+8)!=mode)fail(6);
+f9000620:	a31ff0ef          	jal	f9000050 <fail>
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000624:	f81007b7          	lui	a5,0xf8100
+f9000628:	0047a403          	lw	s0,4(a5) # f8100004 <_start-0xeffffc>
+ if((io_read(R_STATUS)&(S_BOARD|S_DRAINED))!=(S_BOARD|S_DRAINED))fail(3);
+f900062c:	00300793          	li	a5,3
+f9000630:	00347413          	andi	s0,s0,3
+f9000634:	fef414e3          	bne	s0,a5,f900061c <start+0x24>
+ last_count=rd(APB+0x5c);progress_time=io_read(R_TIMER);
+f9000638:	f8100537          	lui	a0,0xf8100
+f900063c:	05c50513          	addi	a0,a0,92 # f810005c <_start-0xefffa4>
+f9000640:	c0dff0ef          	jal	f900024c <rd>
+f9000644:	82a1a223          	sw	a0,-2012(gp) # f900183c <last_count>
+f9000648:	f81007b7          	lui	a5,0xf8100
+f900064c:	0787a783          	lw	a5,120(a5) # f8100078 <_start-0xefff88>
+f9000650:	82f1a023          	sw	a5,-2016(gp) # f9001838 <progress_time>
+ progress_poll_time=progress_time;
+f9000654:	80f1ac23          	sw	a5,-2024(gp) # f9001830 <progress_poll_time>
+ frame_base=last_count;
+f9000658:	80a1a623          	sw	a0,-2036(gp) # f9001824 <frame_base>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f900065c:	10000713          	li	a4,256
+f9000660:	f81007b7          	lui	a5,0xf8100
+f9000664:	0ae7a023          	sw	a4,160(a5) # f81000a0 <_start-0xefff60>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000668:	0ff0000f          	fence
+ uint32_t mode=1u|(view<<1);
+f900066c:	8301a583          	lw	a1,-2000(gp) # f9001848 <view>
+ wr(APB+8,mode);if(rd(APB+8)!=mode)fail(6);
+f9000670:	f8100537          	lui	a0,0xf8100
+f9000674:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+ uint32_t mode=1u|(view<<1);
+f9000678:	00159593          	slli	a1,a1,0x1
+f900067c:	0015e593          	ori	a1,a1,1
+ wr(APB+8,mode);if(rd(APB+8)!=mode)fail(6);
+f9000680:	00b12623          	sw	a1,12(sp)
+f9000684:	a9dff0ef          	jal	f9000120 <wr>
+f9000688:	f8100537          	lui	a0,0xf8100
+f900068c:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f9000690:	bbdff0ef          	jal	f900024c <rd>
+f9000694:	00c12583          	lw	a1,12(sp)
+f9000698:	00a58663          	beq	a1,a0,f90006a4 <start+0xac>
+f900069c:	00600513          	li	a0,6
+f90006a0:	f81ff06f          	j	f9000620 <start+0x28>
+ flags=F_PREPARED|F_RUNNING;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,47);wr(MB+4,4);
+f90006a4:	8281aa23          	sw	s0,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90006a8:	f81007b7          	lui	a5,0xf8100
+f90006ac:	0687a223          	sw	s0,100(a5) # f8100064 <_start-0xefff9c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90006b0:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90006b4:	02f00713          	li	a4,47
+f90006b8:	06e7a423          	sw	a4,104(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90006bc:	0ff0000f          	fence
+}
+f90006c0:	01812403          	lw	s0,24(sp)
+f90006c4:	01c12083          	lw	ra,28(sp)
+f90006c8:	01412483          	lw	s1,20(sp)
+ flags=F_PREPARED|F_RUNNING;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,47);wr(MB+4,4);
+f90006cc:	f9001537          	lui	a0,0xf9001
+f90006d0:	00400593          	li	a1,4
+f90006d4:	f0450513          	addi	a0,a0,-252 # f9000f04 <firmware_main+0x704>
+}
+f90006d8:	02010113          	addi	sp,sp,32
+ flags=F_PREPARED|F_RUNNING;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,47);wr(MB+4,4);
+f90006dc:	a45ff06f          	j	f9000120 <wr>
+}
+f90006e0:	01c12083          	lw	ra,28(sp)
+f90006e4:	01812403          	lw	s0,24(sp)
+f90006e8:	01412483          	lw	s1,20(sp)
+f90006ec:	02010113          	addi	sp,sp,32
+f90006f0:	00008067          	ret
+
+f90006f4 <firmware_trap>:
+void firmware_trap(void) {
+f90006f4:	fc010113          	addi	sp,sp,-64
+f90006f8:	02112e23          	sw	ra,60(sp)
+f90006fc:	02512c23          	sw	t0,56(sp)
+f9000700:	02612a23          	sw	t1,52(sp)
+f9000704:	02712823          	sw	t2,48(sp)
+f9000708:	02a12623          	sw	a0,44(sp)
+f900070c:	02b12423          	sw	a1,40(sp)
+f9000710:	02c12223          	sw	a2,36(sp)
+f9000714:	02d12023          	sw	a3,32(sp)
+f9000718:	00e12e23          	sw	a4,28(sp)
+f900071c:	00f12c23          	sw	a5,24(sp)
+f9000720:	01012a23          	sw	a6,20(sp)
+f9000724:	01112823          	sw	a7,16(sp)
+f9000728:	01c12623          	sw	t3,12(sp)
+f900072c:	01d12423          	sw	t4,8(sp)
+f9000730:	01e12223          	sw	t5,4(sp)
+f9000734:	01f12023          	sw	t6,0(sp)
+ __asm__ volatile("csrr %0,mcause":"=r"(cause));
+f9000738:	34202773          	csrr	a4,mcause
+ if(cause!=0x8000000bu)fail(0xd3);
+f900073c:	800007b7          	lui	a5,0x80000
+f9000740:	00b78793          	addi	a5,a5,11 # 8000000b <_start-0x78fffff5>
+f9000744:	00f70663          	beq	a4,a5,f9000750 <firmware_trap+0x5c>
+f9000748:	0d300513          	li	a0,211
+f900074c:	905ff0ef          	jal	f9000050 <fail>
+ uint32_t id=PLIC(0x200004);
+f9000750:	f8e007b7          	lui	a5,0xf8e00
+f9000754:	0047a603          	lw	a2,4(a5) # f8e00004 <_start-0x1ffffc>
+ if(id!=16)fail(0xd3);
+f9000758:	01000713          	li	a4,16
+ uint32_t id=PLIC(0x200004);
+f900075c:	00478793          	addi	a5,a5,4
+ if(id!=16)fail(0xd3);
+f9000760:	fee614e3          	bne	a2,a4,f9000748 <firmware_trap+0x54>
+ __asm__ volatile("csrc mie,%0"::"r"(1u<<11):"memory");
+f9000764:	00001737          	lui	a4,0x1
+f9000768:	80070713          	addi	a4,a4,-2048 # 800 <_start-0xf8fff800>
+f900076c:	30473073          	csrc	mie,a4
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000770:	f8100737          	lui	a4,0xf8100
+f9000774:	0a472703          	lw	a4,164(a4) # f81000a4 <_start-0xefff5c>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000778:	f81006b7          	lui	a3,0xf8100
+ io_write(R_IRQ_ACK,io_read(R_IRQ_STATUS)&3u);
+f900077c:	00377713          	andi	a4,a4,3
+f9000780:	0ae6a423          	sw	a4,168(a3) # f81000a8 <_start-0xefff58>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000784:	0ff0000f          	fence
+ irq_seen=1;irq_count++;
+f9000788:	f9002737          	lui	a4,0xf9002
+f900078c:	00100693          	li	a3,1
+f9000790:	80d72e23          	sw	a3,-2020(a4) # f900181c <irq_seen>
+f9000794:	f9002737          	lui	a4,0xf9002
+f9000798:	81872683          	lw	a3,-2024(a4) # f9001818 <irq_count>
+f900079c:	00168693          	addi	a3,a3,1
+f90007a0:	80d72c23          	sw	a3,-2024(a4)
+ io_write(R_IRQ_HANDLED,irq_count);
+f90007a4:	81872683          	lw	a3,-2024(a4)
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90007a8:	f8100737          	lui	a4,0xf8100
+f90007ac:	0ad72623          	sw	a3,172(a4) # f81000ac <_start-0xefff54>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90007b0:	0ff0000f          	fence
+ PLIC(0x200004)=id;
+f90007b4:	00c7a023          	sw	a2,0(a5)
+}
+f90007b8:	03c12083          	lw	ra,60(sp)
+f90007bc:	03812283          	lw	t0,56(sp)
+f90007c0:	03412303          	lw	t1,52(sp)
+f90007c4:	03012383          	lw	t2,48(sp)
+f90007c8:	02c12503          	lw	a0,44(sp)
+f90007cc:	02812583          	lw	a1,40(sp)
+f90007d0:	02412603          	lw	a2,36(sp)
+f90007d4:	02012683          	lw	a3,32(sp)
+f90007d8:	01c12703          	lw	a4,28(sp)
+f90007dc:	01812783          	lw	a5,24(sp)
+f90007e0:	01412803          	lw	a6,20(sp)
+f90007e4:	01012883          	lw	a7,16(sp)
+f90007e8:	00c12e03          	lw	t3,12(sp)
+f90007ec:	00812e83          	lw	t4,8(sp)
+f90007f0:	00412f03          	lw	t5,4(sp)
+f90007f4:	00012f83          	lw	t6,0(sp)
+f90007f8:	04010113          	addi	sp,sp,64
+f90007fc:	30200073          	mret
+
+f9000800 <firmware_main>:
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000800:	f81007b7          	lui	a5,0xf8100
+f9000804:	0007a703          	lw	a4,0(a5) # f8100000 <_start-0xf00000>
+
+void firmware_main(void) {
+f9000808:	fb010113          	addi	sp,sp,-80
+ if(io_read(R_ID)!=0x52563233)fail(0xd0);
+f900080c:	525637b7          	lui	a5,0x52563
+void firmware_main(void) {
+f9000810:	04112623          	sw	ra,76(sp)
+f9000814:	04812423          	sw	s0,72(sp)
+f9000818:	04912223          	sw	s1,68(sp)
+f900081c:	05212023          	sw	s2,64(sp)
+f9000820:	03312e23          	sw	s3,60(sp)
+f9000824:	03412c23          	sw	s4,56(sp)
+f9000828:	03512a23          	sw	s5,52(sp)
+f900082c:	03612823          	sw	s6,48(sp)
+f9000830:	03712623          	sw	s7,44(sp)
+f9000834:	03812423          	sw	s8,40(sp)
+f9000838:	03912223          	sw	s9,36(sp)
+f900083c:	03a12023          	sw	s10,32(sp)
+f9000840:	01b12e23          	sw	s11,28(sp)
+ if(io_read(R_ID)!=0x52563233)fail(0xd0);
+f9000844:	23378793          	addi	a5,a5,563 # 52563233 <_start-0xa6a9cdcd>
+f9000848:	0d000513          	li	a0,208
+f900084c:	10f71463          	bne	a4,a5,f9000954 <firmware_main+0x154>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000850:	f81007b7          	lui	a5,0xf8100
+f9000854:	00100713          	li	a4,1
+f9000858:	06e7a423          	sw	a4,104(a5) # f8100068 <_start-0xefff98>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900085c:	0ff0000f          	fence
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000860:	0787a583          	lw	a1,120(a5)
+f9000864:	f81006b7          	lui	a3,0xf8100
+  if((uint32_t)(io_read(R_TIMER)-power_wait)>BUS_TIMEOUT)fail(0xc2);
+f9000868:	000f4637          	lui	a2,0xf4
+f900086c:	07878793          	addi	a5,a5,120
+f9000870:	00468693          	addi	a3,a3,4 # f8100004 <_start-0xeffffc>
+f9000874:	24060613          	addi	a2,a2,576 # f4240 <_start-0xf8f0bdc0>
+f9000878:	0006a703          	lw	a4,0(a3)
+ while(!(io_read(R_STATUS)&S_CAMERA_POWER))
+f900087c:	00877713          	andi	a4,a4,8
+f9000880:	0c070263          	beqz	a4,f9000944 <firmware_main+0x144>
+f9000884:	0007a603          	lw	a2,0(a5)
+ while((uint32_t)(io_read(R_TIMER)-t)<cycles) { }
+f9000888:	0007a737          	lui	a4,0x7a
+f900088c:	f81007b7          	lui	a5,0xf8100
+f9000890:	07878793          	addi	a5,a5,120 # f8100078 <_start-0xefff88>
+f9000894:	11f70713          	addi	a4,a4,287 # 7a11f <_start-0xf8f85ee1>
+f9000898:	0007a683          	lw	a3,0(a5)
+f900089c:	40c686b3          	sub	a3,a3,a2
+f90008a0:	fed77ce3          	bgeu	a4,a3,f9000898 <firmware_main+0x98>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90008a4:	31076737          	lui	a4,0x31076
+f90008a8:	f81006b7          	lui	a3,0xf8100
+f90008ac:	0cd70713          	addi	a4,a4,205 # 310760cd <_start-0xc7f89f33>
+f90008b0:	04e6a823          	sw	a4,80(a3) # f8100050 <_start-0xefffb0>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90008b4:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90008b8:	00068713          	mv	a4,a3
+f90008bc:	00200693          	li	a3,2
+f90008c0:	04d72a23          	sw	a3,84(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90008c4:	0ff0000f          	fence
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f90008c8:	0007a503          	lw	a0,0(a5)
+f90008cc:	f81006b7          	lui	a3,0xf8100
+  if((uint32_t)(io_read(R_TIMER)-t)>BUS_TIMEOUT)fail(0xc2);
+f90008d0:	000f4637          	lui	a2,0xf4
+f90008d4:	05870713          	addi	a4,a4,88
+f90008d8:	07868693          	addi	a3,a3,120 # f8100078 <_start-0xefff88>
+f90008dc:	24060613          	addi	a2,a2,576 # f4240 <_start-0xf8f0bdc0>
+f90008e0:	00072783          	lw	a5,0(a4)
+f90008e4:	0006a583          	lw	a1,0(a3)
+f90008e8:	40a585b3          	sub	a1,a1,a0
+f90008ec:	06b66263          	bltu	a2,a1,f9000950 <firmware_main+0x150>
+ } while(!(s&(IO_DONE|IO_ERROR)));
+f90008f0:	0067f593          	andi	a1,a5,6
+f90008f4:	fe0586e3          	beqz	a1,f90008e0 <firmware_main+0xe0>
+ if(s&IO_ERROR) {
+f90008f8:	0047f713          	andi	a4,a5,4
+f90008fc:	f81007b7          	lui	a5,0xf8100
+f9000900:	05c78793          	addi	a5,a5,92 # f810005c <_start-0xefffa4>
+f9000904:	04070a63          	beqz	a4,f9000958 <firmware_main+0x158>
+f9000908:	0007a683          	lw	a3,0(a5)
+  if((io_read(R_CAMERA_RESULT)&0xff)!=0x01)fail(0xc1);
+f900090c:	00100793          	li	a5,1
+f9000910:	0c100513          	li	a0,193
+f9000914:	0ff6f693          	zext.b	a3,a3
+f9000918:	02f69e63          	bne	a3,a5,f9000954 <firmware_main+0x154>
+  if(camera(device,0x3107,0xcd,1)!=0xcd)fail(0xc4);
+f900091c:	000035b7          	lui	a1,0x3
+f9000920:	0cd00613          	li	a2,205
+f9000924:	10758593          	addi	a1,a1,263 # 3107 <_start-0xf8ffcef9>
+f9000928:	06400513          	li	a0,100
+f900092c:	fa0ff0ef          	jal	f90000cc <camera>
+f9000930:	0cd00793          	li	a5,205
+  device=0x64;
+f9000934:	06400913          	li	s2,100
+  if(camera(device,0x3107,0xcd,1)!=0xcd)fail(0xc4);
+f9000938:	02f50863          	beq	a0,a5,f9000968 <firmware_main+0x168>
+f900093c:	0c400513          	li	a0,196
+f9000940:	0140006f          	j	f9000954 <firmware_main+0x154>
+f9000944:	0007a703          	lw	a4,0(a5)
+  if((uint32_t)(io_read(R_TIMER)-power_wait)>BUS_TIMEOUT)fail(0xc2);
+f9000948:	40b70733          	sub	a4,a4,a1
+f900094c:	f2e676e3          	bgeu	a2,a4,f9000878 <firmware_main+0x78>
+f9000950:	0c200513          	li	a0,194
+f9000954:	efcff0ef          	jal	f9000050 <fail>
+f9000958:	0007a703          	lw	a4,0(a5)
+ } else if(io_read(R_CAMERA_RESULT)!=0xcd)fail(0xc4);
+f900095c:	0cd00793          	li	a5,205
+f9000960:	fcf71ee3          	bne	a4,a5,f900093c <firmware_main+0x13c>
+ uint32_t device=0x60;
+f9000964:	06000913          	li	s2,96
+ if(camera(device,0x3108,0x6b,1)!=0x6b)fail(0xc4);
+f9000968:	000035b7          	lui	a1,0x3
+f900096c:	00100693          	li	a3,1
+f9000970:	06b00613          	li	a2,107
+f9000974:	10858593          	addi	a1,a1,264 # 3108 <_start-0xf8ffcef8>
+f9000978:	00090513          	mv	a0,s2
+f900097c:	f50ff0ef          	jal	f90000cc <camera>
+f9000980:	06b00793          	li	a5,107
+f9000984:	faf51ce3          	bne	a0,a5,f900093c <firmware_main+0x13c>
+f9000988:	f9001437          	lui	s0,0xf9001
+f900098c:	58840413          	addi	s0,s0,1416 # f9001588 <camera_config>
+f9000990:	29040493          	addi	s1,s0,656
+  uint32_t entry=camera_config[i];
+f9000994:	00042583          	lw	a1,0(s0)
+  (void)camera(device,entry>>8,entry&255,0);
+f9000998:	00000693          	li	a3,0
+f900099c:	00090513          	mv	a0,s2
+f90009a0:	0ff5f613          	zext.b	a2,a1
+ for(unsigned i=0;i<CAMERA_CONFIG_COUNT;i++) {
+f90009a4:	00440413          	addi	s0,s0,4
+  (void)camera(device,entry>>8,entry&255,0);
+f90009a8:	0085d593          	srli	a1,a1,0x8
+f90009ac:	f20ff0ef          	jal	f90000cc <camera>
+ for(unsigned i=0;i<CAMERA_CONFIG_COUNT;i++) {
+f90009b0:	fe9412e3          	bne	s0,s1,f9000994 <firmware_main+0x194>
+f90009b4:	f90014b7          	lui	s1,0xf9001
+f90009b8:	55048493          	addi	s1,s1,1360 # f9001550 <camera_verify>
+f90009bc:	03848a13          	addi	s4,s1,56
+  uint32_t entry=camera_verify[i];
+f90009c0:	0004a983          	lw	s3,0(s1)
+  if((camera(device,entry>>16,(entry>>8)&255,1)&(entry&255))!=((entry>>8)&(entry&255))) fail(0xc5);
+f90009c4:	00100693          	li	a3,1
+f90009c8:	00090513          	mv	a0,s2
+f90009cc:	0089d413          	srli	s0,s3,0x8
+f90009d0:	0ff47613          	zext.b	a2,s0
+f90009d4:	0109d593          	srli	a1,s3,0x10
+f90009d8:	ef4ff0ef          	jal	f90000cc <camera>
+f90009dc:	00a44433          	xor	s0,s0,a0
+f90009e0:	01347433          	and	s0,s0,s3
+f90009e4:	0ff47413          	zext.b	s0,s0
+f90009e8:	00040663          	beqz	s0,f90009f4 <firmware_main+0x1f4>
+f90009ec:	0c500513          	li	a0,197
+f90009f0:	f65ff06f          	j	f9000954 <firmware_main+0x154>
+ for(unsigned i=0;i<CAMERA_VERIFY_COUNT;i++) {
+f90009f4:	00448493          	addi	s1,s1,4
+f90009f8:	fd4494e3          	bne	s1,s4,f90009c0 <firmware_main+0x1c0>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90009fc:	f8100737          	lui	a4,0xf8100
+f9000a00:	00100793          	li	a5,1
+f9000a04:	06f72023          	sw	a5,96(a4) # f8100060 <_start-0xefffa0>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000a08:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000a0c:	003406b7          	lui	a3,0x340
+f9000a10:	02d72223          	sw	a3,36(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000a14:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000a18:	24000693          	li	a3,576
+f9000a1c:	02d72423          	sw	a3,40(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000a20:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000a24:	02f72623          	sw	a5,44(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000a28:	0ff0000f          	fence
+ for(unsigned i=0;i<144;i++) {
+f9000a2c:	f9002437          	lui	s0,0xf9002
+f9000a30:	85840413          	addi	s0,s0,-1960 # f9001858 <directory>
+f9000a34:	00d40833          	add	a6,s0,a3
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0x12);
+f9000a38:	000f45b7          	lui	a1,0xf4
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000a3c:	f81006b7          	lui	a3,0xf8100
+f9000a40:	f8100637          	lui	a2,0xf8100
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000a44:	00040793          	mv	a5,s0
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000a48:	07870713          	addi	a4,a4,120
+f9000a4c:	03068693          	addi	a3,a3,48 # f8100030 <_start-0xefffd0>
+f9000a50:	24058593          	addi	a1,a1,576 # f4240 <_start-0xf8f0bdc0>
+f9000a54:	03460613          	addi	a2,a2,52 # f8100034 <_start-0xefffcc>
+f9000a58:	00072883          	lw	a7,0(a4)
+f9000a5c:	0006a503          	lw	a0,0(a3)
+  while(!(io_read(R_SPI_STATUS)&8)) {
+f9000a60:	00857513          	andi	a0,a0,8
+f9000a64:	52050063          	beqz	a0,f9000f84 <firmware_main+0x784>
+f9000a68:	00062503          	lw	a0,0(a2)
+ for(unsigned i=0;i<144;i++) {
+f9000a6c:	00478793          	addi	a5,a5,4
+  directory[i]=io_read(R_SPI_DATA);
+f9000a70:	fea7ae23          	sw	a0,-4(a5)
+ for(unsigned i=0;i<144;i++) {
+f9000a74:	ff0792e3          	bne	a5,a6,f9000a58 <firmware_main+0x258>
+ wait_complete(R_SPI_STATUS,BUS_TIMEOUT);
+f9000a78:	000f45b7          	lui	a1,0xf4
+f9000a7c:	24058593          	addi	a1,a1,576 # f4240 <_start-0xf8f0bdc0>
+f9000a80:	03000513          	li	a0,48
+f9000a84:	df0ff0ef          	jal	f9000074 <wait_complete.isra.0>
+ count=directory[2];selected=directory[3];
+f9000a88:	00842703          	lw	a4,8(s0)
+f9000a8c:	00c42603          	lw	a2,12(s0)
+ if(directory[0]!=0x31433153 || directory[1]!=0x20755 || count<1 || count>6 ||
+f9000a90:	00042683          	lw	a3,0(s0)
+f9000a94:	314337b7          	lui	a5,0x31433
+ count=directory[2];selected=directory[3];
+f9000a98:	82e1ac23          	sw	a4,-1992(gp) # f9001850 <count>
+f9000a9c:	82c1ae23          	sw	a2,-1988(gp) # f9001854 <selected>
+ if(directory[0]!=0x31433153 || directory[1]!=0x20755 || count<1 || count>6 ||
+f9000aa0:	15378793          	addi	a5,a5,339 # 31433153 <_start-0xc7bccead>
+f9000aa4:	4ef69663          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+f9000aa8:	00442783          	lw	a5,4(s0)
+f9000aac:	fffe06b7          	lui	a3,0xfffe0
+f9000ab0:	8ab68693          	addi	a3,a3,-1877 # fffdf8ab <__global_pointer$+0x6fdd893>
+f9000ab4:	00d787b3          	add	a5,a5,a3
+f9000ab8:	fff70693          	addi	a3,a4,-1
+f9000abc:	0066b693          	sltiu	a3,a3,6
+f9000ac0:	00f037b3          	snez	a5,a5
+f9000ac4:	0016b693          	seqz	a3,a3
+f9000ac8:	00d7e7b3          	or	a5,a5,a3
+f9000acc:	4c079263          	bnez	a5,f9000f90 <firmware_main+0x790>
+f9000ad0:	4ce67063          	bgeu	a2,a4,f9000f90 <firmware_main+0x790>
+    selected>=count || directory[4]!=576 || directory[6]!=0x3cf000+((count-1)*0x6c000) ||
+f9000ad4:	01042683          	lw	a3,16(s0)
+f9000ad8:	24000793          	li	a5,576
+f9000adc:	4af69a63          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+f9000ae0:	00371793          	slli	a5,a4,0x3
+f9000ae4:	40e787b3          	sub	a5,a5,a4
+f9000ae8:	00279793          	slli	a5,a5,0x2
+f9000aec:	40e787b3          	sub	a5,a5,a4
+f9000af0:	003636b7          	lui	a3,0x363
+f9000af4:	00e79793          	slli	a5,a5,0xe
+f9000af8:	00d787b3          	add	a5,a5,a3
+f9000afc:	01842683          	lw	a3,24(s0)
+f9000b00:	48f69863          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+f9000b04:	01c42683          	lw	a3,28(s0)
+f9000b08:	003417b7          	lui	a5,0x341
+f9000b0c:	48f69263          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+    directory[7]!=0x341000 || directory[8]!=132432 || directory[10]!=0x362000 || directory[11]!=768)
+f9000b10:	02042683          	lw	a3,32(s0)
+f9000b14:	000207b7          	lui	a5,0x20
+f9000b18:	55078793          	addi	a5,a5,1360 # 20550 <_start-0xf8fdfab0>
+f9000b1c:	46f69a63          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+f9000b20:	02842683          	lw	a3,40(s0)
+f9000b24:	003627b7          	lui	a5,0x362
+f9000b28:	46f69463          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+f9000b2c:	02c42683          	lw	a3,44(s0)
+f9000b30:	30000793          	li	a5,768
+f9000b34:	44f69e63          	bne	a3,a5,f9000f90 <firmware_main+0x790>
+ for(unsigned i=13;i<16;i++)if(directory[i])fail(0x12);
+f9000b38:	03442683          	lw	a3,52(s0)
+f9000b3c:	03842783          	lw	a5,56(s0)
+f9000b40:	00d7e7b3          	or	a5,a5,a3
+f9000b44:	03c42683          	lw	a3,60(s0)
+f9000b48:	00d7e7b3          	or	a5,a5,a3
+f9000b4c:	44079263          	bnez	a5,f9000f90 <firmware_main+0x790>
+ for(unsigned i=0;i<32;i++)c=(c>>1)^((0u-(c&1u))&0xedb88320u);
+f9000b50:	edb88537          	lui	a0,0xedb88
+ for(unsigned i=13;i<16;i++)if(directory[i])fail(0x12);
+f9000b54:	00040593          	mv	a1,s0
+ for(unsigned i=0;i<144;i++)crc=crc_word(crc,i==5?0:directory[i]);
+f9000b58:	00000693          	li	a3,0
+ uint32_t crc=~0u;
+f9000b5c:	fff00793          	li	a5,-1
+ for(unsigned i=0;i<144;i++)crc=crc_word(crc,i==5?0:directory[i]);
+f9000b60:	00500313          	li	t1,5
+ for(unsigned i=0;i<32;i++)c=(c>>1)^((0u-(c&1u))&0xedb88320u);
+f9000b64:	32050513          	addi	a0,a0,800 # edb88320 <_start-0xb477ce0>
+ for(unsigned i=0;i<144;i++)crc=crc_word(crc,i==5?0:directory[i]);
+f9000b68:	09000893          	li	a7,144
+f9000b6c:	00000813          	li	a6,0
+f9000b70:	00668463          	beq	a3,t1,f9000b78 <firmware_main+0x378>
+f9000b74:	0005a803          	lw	a6,0(a1)
+ c^=w;
+f9000b78:	0107c7b3          	xor	a5,a5,a6
+f9000b7c:	02000813          	li	a6,32
+ for(unsigned i=0;i<32;i++)c=(c>>1)^((0u-(c&1u))&0xedb88320u);
+f9000b80:	01f79e93          	slli	t4,a5,0x1f
+f9000b84:	0017de13          	srli	t3,a5,0x1
+f9000b88:	41fed793          	srai	a5,t4,0x1f
+f9000b8c:	00a7f7b3          	and	a5,a5,a0
+f9000b90:	fff80813          	addi	a6,a6,-1
+f9000b94:	00fe47b3          	xor	a5,t3,a5
+f9000b98:	fe0814e3          	bnez	a6,f9000b80 <firmware_main+0x380>
+ for(unsigned i=0;i<144;i++)crc=crc_word(crc,i==5?0:directory[i]);
+f9000b9c:	00168693          	addi	a3,a3,1 # 363001 <_start-0xf8c9cfff>
+f9000ba0:	00458593          	addi	a1,a1,4
+f9000ba4:	fd1694e3          	bne	a3,a7,f9000b6c <firmware_main+0x36c>
+ if((~crc)!=directory[5])fail(0x12);
+f9000ba8:	01442683          	lw	a3,20(s0)
+f9000bac:	fff7c793          	not	a5,a5
+f9000bb0:	3ed79063          	bne	a5,a3,f9000f90 <firmware_main+0x790>
+  if(p[0]!=1 || !p[1] || p[1]>65535 || p[2]!=0x363000+n*0x6c000 || p[3]!=418944 ||
+f9000bb4:	000108b7          	lui	a7,0x10
+f9000bb8:	00066337          	lui	t1,0x66
+f9000bbc:	04040793          	addi	a5,s0,64
+ if((~crc)!=directory[5])fail(0x12);
+f9000bc0:	00000593          	li	a1,0
+f9000bc4:	00363537          	lui	a0,0x363
+  if(p[0]!=1 || !p[1] || p[1]>65535 || p[2]!=0x363000+n*0x6c000 || p[3]!=418944 ||
+f9000bc8:	00100f93          	li	t6,1
+f9000bcc:	ffe88893          	addi	a7,a7,-2 # fffe <_start-0xf8ff0002>
+f9000bd0:	48030313          	addi	t1,t1,1152 # 66480 <_start-0xf8f99b80>
+     p[5]!=p[2]+0x67000 || p[6]!=20480 || p[8]!=slot_base(n) || p[5]+p[6]>FLASH_LIMIT)
+f9000bd4:	000672b7          	lui	t0,0x67
+f9000bd8:	000053b7          	lui	t2,0x5
+ for(unsigned n=0;n<8;n++) {
+f9000bdc:	0006cf37          	lui	t5,0x6c
+f9000be0:	00800e93          	li	t4,8
+  if(n>=count) { for(unsigned i=0;i<16;i++)if(p[i])fail(0x12);continue; }
+f9000be4:	04078813          	addi	a6,a5,64 # 362040 <_start-0xf8c9dfc0>
+f9000be8:	3ce5e063          	bltu	a1,a4,f9000fa8 <firmware_main+0x7a8>
+f9000bec:	0007a683          	lw	a3,0(a5)
+f9000bf0:	3a069063          	bnez	a3,f9000f90 <firmware_main+0x790>
+f9000bf4:	00478793          	addi	a5,a5,4
+f9000bf8:	ff079ae3          	bne	a5,a6,f9000bec <firmware_main+0x3ec>
+ for(unsigned n=0;n<8;n++) {
+f9000bfc:	00158593          	addi	a1,a1,1
+f9000c00:	00080793          	mv	a5,a6
+f9000c04:	01e50533          	add	a0,a0,t5
+f9000c08:	fdd59ee3          	bne	a1,t4,f9000be4 <firmware_main+0x3e4>
+ io_write(R_STYLE,selected|(count<<8));
+f9000c0c:	00871713          	slli	a4,a4,0x8
+f9000c10:	00c76733          	or	a4,a4,a2
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000c14:	f81007b7          	lui	a5,0xf8100
+f9000c18:	06e7a623          	sw	a4,108(a5) # f810006c <_start-0xefff94>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000c1c:	0ff0000f          	fence
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000c20:	0787a503          	lw	a0,120(a5)
+f9000c24:	f81006b7          	lui	a3,0xf8100
+ configure_camera();read_catalog();
+ uint32_t start_time=io_read(R_TIMER);
+ while((io_read(R_STATUS)&(S_BOARD|S_DRAINED))!=(S_BOARD|S_DRAINED)) {
+  if((uint32_t)(io_read(R_TIMER)-start_time)>LONG_TIMEOUT)fail(0xd6);
+f9000c28:	77359637          	lui	a2,0x77359
+f9000c2c:	07878793          	addi	a5,a5,120
+f9000c30:	00468693          	addi	a3,a3,4 # f8100004 <_start-0xeffffc>
+ while((io_read(R_STATUS)&(S_BOARD|S_DRAINED))!=(S_BOARD|S_DRAINED)) {
+f9000c34:	00300593          	li	a1,3
+  if((uint32_t)(io_read(R_TIMER)-start_time)>LONG_TIMEOUT)fail(0xd6);
+f9000c38:	40060613          	addi	a2,a2,1024 # 77359400 <_start-0x81ca6c00>
+f9000c3c:	0006a703          	lw	a4,0(a3)
+ while((io_read(R_STATUS)&(S_BOARD|S_DRAINED))!=(S_BOARD|S_DRAINED)) {
+f9000c40:	00377713          	andi	a4,a4,3
+f9000c44:	3cb71e63          	bne	a4,a1,f9001020 <firmware_main+0x820>
+ wr(APB+8,0);wr(APB+0x50,0);wr(APB+0x54,0);wr(MB,0);
+f9000c48:	f8100537          	lui	a0,0xf8100
+f9000c4c:	00000593          	li	a1,0
+f9000c50:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f9000c54:	cccff0ef          	jal	f9000120 <wr>
+f9000c58:	f8100537          	lui	a0,0xf8100
+f9000c5c:	00000593          	li	a1,0
+f9000c60:	05050513          	addi	a0,a0,80 # f8100050 <_start-0xefffb0>
+f9000c64:	cbcff0ef          	jal	f9000120 <wr>
+f9000c68:	f8100537          	lui	a0,0xf8100
+f9000c6c:	00000593          	li	a1,0
+f9000c70:	05450513          	addi	a0,a0,84 # f8100054 <_start-0xefffac>
+f9000c74:	cacff0ef          	jal	f9000120 <wr>
+f9000c78:	f9001537          	lui	a0,0xf9001
+f9000c7c:	00000593          	li	a1,0
+f9000c80:	f0050513          	addi	a0,a0,-256 # f9000f00 <firmware_main+0x700>
+f9000c84:	c9cff0ef          	jal	f9000120 <wr>
+ copy_verified(D_SPI_COPY,directory[7],0xe1100000,directory[8],directory[9]);
+f9000c88:	02442683          	lw	a3,36(s0)
+f9000c8c:	02042603          	lw	a2,32(s0)
+f9000c90:	01c42503          	lw	a0,28(s0)
+f9000c94:	e11005b7          	lui	a1,0xe1100
+ for(unsigned n=0;n<count;n++) {
+f9000c98:	00000a13          	li	s4,0
+ copy_verified(D_SPI_COPY,directory[7],0xe1100000,directory[8],directory[9]);
+f9000c9c:	d2cff0ef          	jal	f90001c8 <copy_verified.constprop.0>
+ copy_verified(D_SPI_COPY,directory[10],0xe1300000,directory[11],directory[12]);
+f9000ca0:	03042683          	lw	a3,48(s0)
+f9000ca4:	02c42603          	lw	a2,44(s0)
+f9000ca8:	02842503          	lw	a0,40(s0)
+f9000cac:	e13005b7          	lui	a1,0xe1300
+ for(unsigned n=0;n<count;n++) {
+f9000cb0:	e18009b7          	lui	s3,0xe1800
+ copy_verified(D_SPI_COPY,directory[10],0xe1300000,directory[11],directory[12]);
+f9000cb4:	d14ff0ef          	jal	f90001c8 <copy_verified.constprop.0>
+  copy_verified(D_SPI_COPY,p[5],base+0xc0000,p[6],p[7]);
+f9000cb8:	000c0ab7          	lui	s5,0xc0
+f9000cbc:	00100b37          	lui	s6,0x100
+ for(unsigned n=0;n<count;n++) {
+f9000cc0:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+f9000cc4:	36fa6863          	bltu	s4,a5,f9001034 <firmware_main+0x834>
+ }
+ preload();resident_valid=1;prepare_style(selected);restore_isp();isp_ready=1;io_write(R_READY,1);
+f9000cc8:	83c1a503          	lw	a0,-1988(gp) # f9001854 <selected>
+f9000ccc:	00100793          	li	a5,1
+f9000cd0:	80f1a423          	sw	a5,-2040(gp) # f9001820 <resident_valid>
+f9000cd4:	dc4ff0ef          	jal	f9000298 <prepare_style>
+ wr(MB+0x28,0x49400001);
+f9000cd8:	494005b7          	lui	a1,0x49400
+f9000cdc:	f9001537          	lui	a0,0xf9001
+f9000ce0:	f81007b7          	lui	a5,0xf8100
+f9000ce4:	00158593          	addi	a1,a1,1 # 49400001 <_start-0xafbfffff>
+f9000ce8:	f2850513          	addi	a0,a0,-216 # f9000f28 <firmware_main+0x728>
+f9000cec:	0847a483          	lw	s1,132(a5) # f8100084 <_start-0xefff7c>
+ for(unsigned i=0;i<768;i+=4) {
+f9000cf0:	00000413          	li	s0,0
+ wr(MB+0x28,0x49400001);
+f9000cf4:	c2cff0ef          	jal	f9000120 <wr>
+  uint32_t word=rd(0xe1300000+i);
+f9000cf8:	e1300a37          	lui	s4,0xe1300
+  for(unsigned b=0;b<4;b++)wr(MB+0x28,0x49000000|((i+b)<<8)|((word>>(8*b))&255));
+f9000cfc:	49000ab7          	lui	s5,0x49000
+f9000d00:	02000b93          	li	s7,32
+ for(unsigned i=0;i<768;i+=4) {
+f9000d04:	30000993          	li	s3,768
+  uint32_t word=rd(0xe1300000+i);
+f9000d08:	01440533          	add	a0,s0,s4
+f9000d0c:	d40ff0ef          	jal	f900024c <rd>
+f9000d10:	00050c13          	mv	s8,a0
+  for(unsigned b=0;b<4;b++)wr(MB+0x28,0x49000000|((i+b)<<8)|((word>>(8*b))&255));
+f9000d14:	00841c93          	slli	s9,s0,0x8
+  uint32_t word=rd(0xe1300000+i);
+f9000d18:	00000913          	li	s2,0
+  for(unsigned b=0;b<4;b++)wr(MB+0x28,0x49000000|((i+b)<<8)|((word>>(8*b))&255));
+f9000d1c:	012c55b3          	srl	a1,s8,s2
+f9000d20:	0ff5f593          	zext.b	a1,a1
+f9000d24:	0195e5b3          	or	a1,a1,s9
+f9000d28:	f9001537          	lui	a0,0xf9001
+f9000d2c:	0155e5b3          	or	a1,a1,s5
+f9000d30:	f2850513          	addi	a0,a0,-216 # f9000f28 <firmware_main+0x728>
+f9000d34:	00890913          	addi	s2,s2,8
+f9000d38:	be8ff0ef          	jal	f9000120 <wr>
+f9000d3c:	100c8c93          	addi	s9,s9,256
+f9000d40:	fd791ee3          	bne	s2,s7,f9000d1c <firmware_main+0x51c>
+ for(unsigned i=0;i<768;i+=4) {
+f9000d44:	00440413          	addi	s0,s0,4
+f9000d48:	fd3410e3          	bne	s0,s3,f9000d08 <firmware_main+0x508>
+ wr(MB+0x28,0x49800000|(directory[12]&65535));
+f9000d4c:	f9002437          	lui	s0,0xf9002
+f9000d50:	85840413          	addi	s0,s0,-1960 # f9001858 <directory>
+f9000d54:	03045583          	lhu	a1,48(s0)
+f9000d58:	498007b7          	lui	a5,0x49800
+f9000d5c:	f9001537          	lui	a0,0xf9001
+f9000d60:	00f5e5b3          	or	a1,a1,a5
+f9000d64:	f2850513          	addi	a0,a0,-216 # f9000f28 <firmware_main+0x728>
+f9000d68:	bb8ff0ef          	jal	f9000120 <wr>
+ wr(MB+0x28,0x49c00000|(directory[12]>>16));
+f9000d6c:	03245583          	lhu	a1,50(s0)
+f9000d70:	49c007b7          	lui	a5,0x49c00
+f9000d74:	f9001537          	lui	a0,0xf9001
+f9000d78:	00f5e5b3          	or	a1,a1,a5
+f9000d7c:	f2850513          	addi	a0,a0,-216 # f9000f28 <firmware_main+0x728>
+f9000d80:	ba0ff0ef          	jal	f9000120 <wr>
+f9000d84:	f8100737          	lui	a4,0xf8100
+f9000d88:	07872803          	lw	a6,120(a4) # f8100078 <_start-0xefff88>
+f9000d8c:	f81007b7          	lui	a5,0xf8100
+ while(((io_read(R_ISP_CONTROL)>>8)&0x1f)!=0x17) {
+f9000d90:	000025b7          	lui	a1,0x2
+f9000d94:	000016b7          	lui	a3,0x1
+  if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9000d98:	000f4537          	lui	a0,0xf4
+f9000d9c:	07870713          	addi	a4,a4,120
+f9000da0:	08478793          	addi	a5,a5,132 # f8100084 <_start-0xefff7c>
+ while(((io_read(R_ISP_CONTROL)>>8)&0x1f)!=0x17) {
+f9000da4:	f0058593          	addi	a1,a1,-256 # 1f00 <_start-0xf8ffe100>
+f9000da8:	70068693          	addi	a3,a3,1792 # 1700 <_start-0xf8ffe900>
+  if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9000dac:	24050513          	addi	a0,a0,576 # f4240 <_start-0xf8f0bdc0>
+f9000db0:	0007a603          	lw	a2,0(a5)
+ while(((io_read(R_ISP_CONTROL)>>8)&0x1f)!=0x17) {
+f9000db4:	00b67633          	and	a2,a2,a1
+f9000db8:	2ad61a63          	bne	a2,a3,f900106c <firmware_main+0x86c>
+f9000dbc:	0007a703          	lw	a4,0(a5)
+ if((io_read(R_ISP_CONTROL)&255) || (io_read(R_ISP_CONTROL)>>16)!=rejected ||
+f9000dc0:	0ff77713          	zext.b	a4,a4
+f9000dc4:	2a071a63          	bnez	a4,f9001078 <firmware_main+0x878>
+f9000dc8:	0007a783          	lw	a5,0(a5)
+ uint32_t rejected=io_read(R_ISP_CONTROL)>>16;
+f9000dcc:	0104d493          	srli	s1,s1,0x10
+ if((io_read(R_ISP_CONTROL)&255) || (io_read(R_ISP_CONTROL)>>16)!=rejected ||
+f9000dd0:	0107d793          	srli	a5,a5,0x10
+f9000dd4:	2af49263          	bne	s1,a5,f9001078 <firmware_main+0x878>
+f9000dd8:	f81007b7          	lui	a5,0xf8100
+f9000ddc:	08c7a703          	lw	a4,140(a5) # f810008c <_start-0xefff74>
+f9000de0:	03042783          	lw	a5,48(s0)
+f9000de4:	28f71a63          	bne	a4,a5,f9001078 <firmware_main+0x878>
+f9000de8:	f8100937          	lui	s2,0xf8100
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9000dec:	000f49b7          	lui	s3,0xf4
+  if((io_read(R_ISP_WRITTEN)&0xffffff)!=rgb || (io_read(R_ISP_CONTROL)>>16)!=rejected)fail(0xe2);
+f9000df0:	01000a37          	lui	s4,0x1000
+ for(unsigned i=0;i<256;i++) {
+f9000df4:	00000c13          	li	s8,0
+  for(unsigned c=0;c<3;c++)rgb|=((rd(0xe1300000+(c<<8)+(i&~3u))>>(8*(i&3)))&255)<<(8*c);
+f9000df8:	e1300ab7          	lui	s5,0xe1300
+f9000dfc:	07890913          	addi	s2,s2,120 # f8100078 <_start-0xefff88>
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9000e00:	24098993          	addi	s3,s3,576 # f4240 <_start-0xf8f0bdc0>
+  if((io_read(R_ISP_WRITTEN)&0xffffff)!=rgb || (io_read(R_ISP_CONTROL)>>16)!=rejected)fail(0xe2);
+f9000e04:	fffa0a13          	addi	s4,s4,-1 # ffffff <_start-0xf8000001>
+  for(unsigned c=0;c<3;c++)rgb|=((rd(0xe1300000+(c<<8)+(i&~3u))>>(8*(i&3)))&255)<<(8*c);
+f9000e08:	003c7d13          	andi	s10,s8,3
+f9000e0c:	ffcc7b93          	andi	s7,s8,-4
+f9000e10:	003d1d13          	slli	s10,s10,0x3
+f9000e14:	00000413          	li	s0,0
+  uint32_t rgb=0;
+f9000e18:	00000c93          	li	s9,0
+  for(unsigned c=0;c<3;c++)rgb|=((rd(0xe1300000+(c<<8)+(i&~3u))>>(8*(i&3)))&255)<<(8*c);
+f9000e1c:	015b8bb3          	add	s7,s7,s5
+f9000e20:	01800d93          	li	s11,24
+f9000e24:	00541513          	slli	a0,s0,0x5
+f9000e28:	00ab8533          	add	a0,s7,a0
+f9000e2c:	c20ff0ef          	jal	f900024c <rd>
+f9000e30:	01a55533          	srl	a0,a0,s10
+f9000e34:	0ff57513          	zext.b	a0,a0
+f9000e38:	00851533          	sll	a0,a0,s0
+f9000e3c:	00840413          	addi	s0,s0,8
+f9000e40:	00acecb3          	or	s9,s9,a0
+f9000e44:	ffb410e3          	bne	s0,s11,f9000e24 <firmware_main+0x624>
+  wr(MB+0x28,0x4a000000|i);
+f9000e48:	4a0005b7          	lui	a1,0x4a000
+f9000e4c:	f9001537          	lui	a0,0xf9001
+f9000e50:	00bc65b3          	or	a1,s8,a1
+f9000e54:	f2850513          	addi	a0,a0,-216 # f9000f28 <firmware_main+0x728>
+f9000e58:	ac8ff0ef          	jal	f9000120 <wr>
+f9000e5c:	00092603          	lw	a2,0(s2)
+f9000e60:	f81007b7          	lui	a5,0xf8100
+f9000e64:	f8100737          	lui	a4,0xf8100
+f9000e68:	08478793          	addi	a5,a5,132 # f8100084 <_start-0xefff7c>
+f9000e6c:	08870713          	addi	a4,a4,136 # f8100088 <_start-0xefff78>
+f9000e70:	0007a683          	lw	a3,0(a5)
+  while(((io_read(R_ISP_CONTROL)>>8)&0x60) || (io_read(R_ISP_WRITTEN)>>24)!=i) {
+f9000e74:	00d6d593          	srli	a1,a3,0xd
+f9000e78:	0035f593          	andi	a1,a1,3
+f9000e7c:	20059263          	bnez	a1,f9001080 <firmware_main+0x880>
+f9000e80:	00072683          	lw	a3,0(a4)
+f9000e84:	0186d693          	srli	a3,a3,0x18
+f9000e88:	1f869c63          	bne	a3,s8,f9001080 <firmware_main+0x880>
+f9000e8c:	00072703          	lw	a4,0(a4)
+  if((io_read(R_ISP_WRITTEN)&0xffffff)!=rgb || (io_read(R_ISP_CONTROL)>>16)!=rejected)fail(0xe2);
+f9000e90:	01477733          	and	a4,a4,s4
+f9000e94:	1eec9263          	bne	s9,a4,f9001078 <firmware_main+0x878>
+f9000e98:	0007a783          	lw	a5,0(a5)
+f9000e9c:	0107d793          	srli	a5,a5,0x10
+f9000ea0:	1cf49c63          	bne	s1,a5,f9001078 <firmware_main+0x878>
+ for(unsigned i=0;i<256;i++) {
+f9000ea4:	001c0c13          	addi	s8,s8,1
+f9000ea8:	10000793          	li	a5,256
+f9000eac:	f4fc1ee3          	bne	s8,a5,f9000e08 <firmware_main+0x608>
+ preload();resident_valid=1;prepare_style(selected);restore_isp();isp_ready=1;io_write(R_READY,1);
+f9000eb0:	00100793          	li	a5,1
+f9000eb4:	82f1a423          	sw	a5,-2008(gp) # f9001840 <isp_ready>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000eb8:	f8100737          	lui	a4,0xf8100
+f9000ebc:	08f72823          	sw	a5,144(a4) # f8100090 <_start-0xefff70>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000ec0:	0ff0000f          	fence
+ view=1;io_write(R_VIEW,view);
+f9000ec4:	82f1a823          	sw	a5,-2000(gp) # f9001848 <view>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000ec8:	06f72e23          	sw	a5,124(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000ecc:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9000ed0:	0b872023          	sw	s8,160(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9000ed4:	0ff0000f          	fence
+ io_write(R_UI,0x100);
+ PLIC(16*4)=1;PLIC(0x2000)=1u<<16;PLIC(0x200000)=0;
+f9000ed8:	f8c00737          	lui	a4,0xf8c00
+f9000edc:	04f72023          	sw	a5,64(a4) # f8c00040 <_start-0x3fffc0>
+f9000ee0:	00010737          	lui	a4,0x10
+f9000ee4:	f8c027b7          	lui	a5,0xf8c02
+f9000ee8:	00e7a023          	sw	a4,0(a5) # f8c02000 <_start-0x3fe000>
+f9000eec:	f8e007b7          	lui	a5,0xf8e00
+f9000ef0:	0007a023          	sw	zero,0(a5) # f8e00000 <_start-0x200000>
+ __asm__ volatile("csrs mie,%0;csrs mstatus,%1"::"r"(1u<<11),"r"(8u):"memory");
+f9000ef4:	000017b7          	lui	a5,0x1
+f9000ef8:	80078793          	addi	a5,a5,-2048 # 800 <_start-0xf8fff800>
+f9000efc:	00800693          	li	a3,8
+f9000f00:	3047a073          	csrs	mie,a5
+f9000f04:	3006a073          	csrs	mstatus,a3
+   if((uint32_t)(io_read(R_TIMER)-progress_time)>200000000u)fail(0xd7);
+
+  }
+  if(irq_seen) {
+   irq_seen=0;
+   __asm__ volatile("csrs mie,%0"::"r"(1u<<11):"memory");
+f9000f08:	00078c93          	mv	s9,a5
+ if(!tag || tag>65535 || finite>512)fail(1);
+f9000f0c:	fff70c13          	addi	s8,a4,-1 # ffff <_start-0xf8ff0001>
+ io_write(R_READY,0);flags=F_STOPPED;io_write(R_FLAGS,flags);
+f9000f10:	00400a93          	li	s5,4
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9000f14:	f81007b7          	lui	a5,0xf8100
+  if(!irq_seen && (uint32_t)(poll_now-poll_time)<5000u)continue;
+f9000f18:	f9002a37          	lui	s4,0xf9002
+f9000f1c:	0787a703          	lw	a4,120(a5) # f8100078 <_start-0xefff88>
+f9000f20:	81c1a783          	lw	a5,-2020(gp) # f9001834 <poll_time>
+f9000f24:	81ca2683          	lw	a3,-2020(s4) # f900181c <irq_seen>
+f9000f28:	40f707b3          	sub	a5,a4,a5
+f9000f2c:	00069863          	bnez	a3,f9000f3c <firmware_main+0x73c>
+f9000f30:	000016b7          	lui	a3,0x1
+f9000f34:	38768693          	addi	a3,a3,903 # 1387 <_start-0xf8ffec79>
+f9000f38:	fcf6fee3          	bgeu	a3,a5,f9000f14 <firmware_main+0x714>
+  unsigned progress_due=irq_seen ||
+f9000f3c:	81ca2683          	lw	a3,-2020(s4)
+f9000f40:	00100993          	li	s3,1
+f9000f44:	00069c63          	bnez	a3,f9000f5c <firmware_main+0x75c>
+   (uint32_t)(poll_now-progress_poll_time)>=100000u;
+f9000f48:	8181a983          	lw	s3,-2024(gp) # f9001830 <progress_poll_time>
+  unsigned progress_due=irq_seen ||
+f9000f4c:	000186b7          	lui	a3,0x18
+f9000f50:	69f68693          	addi	a3,a3,1695 # 1869f <_start-0xf8fe7961>
+   (uint32_t)(poll_now-progress_poll_time)>=100000u;
+f9000f54:	413709b3          	sub	s3,a4,s3
+  unsigned progress_due=irq_seen ||
+f9000f58:	0136b9b3          	sltu	s3,a3,s3
+  if(host_due)poll_time=poll_now;
+f9000f5c:	000016b7          	lui	a3,0x1
+f9000f60:	38768693          	addi	a3,a3,903 # 1387 <_start-0xf8ffec79>
+f9000f64:	00f6f463          	bgeu	a3,a5,f9000f6c <firmware_main+0x76c>
+f9000f68:	80e1ae23          	sw	a4,-2020(gp) # f9001834 <poll_time>
+f9000f6c:	f8100737          	lui	a4,0xf8100
+f9000f70:	00472403          	lw	s0,4(a4) # f8100004 <_start-0xeffffc>
+  if(io_read(R_STATUS)&S_BUS_FAULT)fail(0xd4);
+f9000f74:	00447413          	andi	s0,s0,4
+f9000f78:	10040c63          	beqz	s0,f9001090 <firmware_main+0x890>
+f9000f7c:	0d400513          	li	a0,212
+f9000f80:	9d5ff06f          	j	f9000954 <firmware_main+0x154>
+f9000f84:	0006a503          	lw	a0,0(a3)
+   if(io_read(R_SPI_STATUS)&IO_ERROR)fail(0x12);
+f9000f88:	00457513          	andi	a0,a0,4
+f9000f8c:	00050663          	beqz	a0,f9000f98 <firmware_main+0x798>
+f9000f90:	01200513          	li	a0,18
+f9000f94:	9c1ff06f          	j	f9000954 <firmware_main+0x154>
+f9000f98:	00072503          	lw	a0,0(a4)
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0x12);
+f9000f9c:	41150533          	sub	a0,a0,a7
+f9000fa0:	aaa5fee3          	bgeu	a1,a0,f9000a5c <firmware_main+0x25c>
+f9000fa4:	fedff06f          	j	f9000f90 <firmware_main+0x790>
+  if(p[0]!=1 || !p[1] || p[1]>65535 || p[2]!=0x363000+n*0x6c000 || p[3]!=418944 ||
+f9000fa8:	0007a683          	lw	a3,0(a5)
+f9000fac:	fff692e3          	bne	a3,t6,f9000f90 <firmware_main+0x790>
+f9000fb0:	0047ae03          	lw	t3,4(a5)
+f9000fb4:	fffe0693          	addi	a3,t3,-1
+f9000fb8:	fcd8ece3          	bltu	a7,a3,f9000f90 <firmware_main+0x790>
+f9000fbc:	0087a683          	lw	a3,8(a5)
+f9000fc0:	fca698e3          	bne	a3,a0,f9000f90 <firmware_main+0x790>
+f9000fc4:	00c7a683          	lw	a3,12(a5)
+f9000fc8:	fc6694e3          	bne	a3,t1,f9000f90 <firmware_main+0x790>
+f9000fcc:	0147a983          	lw	s3,20(a5)
+     p[5]!=p[2]+0x67000 || p[6]!=20480 || p[8]!=slot_base(n) || p[5]+p[6]>FLASH_LIMIT)
+f9000fd0:	005506b3          	add	a3,a0,t0
+  if(p[0]!=1 || !p[1] || p[1]>65535 || p[2]!=0x363000+n*0x6c000 || p[3]!=418944 ||
+f9000fd4:	fad99ee3          	bne	s3,a3,f9000f90 <firmware_main+0x790>
+     p[5]!=p[2]+0x67000 || p[6]!=20480 || p[8]!=slot_base(n) || p[5]+p[6]>FLASH_LIMIT)
+f9000fd8:	0187a683          	lw	a3,24(a5)
+f9000fdc:	fa769ae3          	bne	a3,t2,f9000f90 <firmware_main+0x790>
+f9000fe0:	0207a983          	lw	s3,32(a5)
+f9000fe4:	e1858693          	addi	a3,a1,-488 # 49fffe18 <_start-0xaf0001e8>
+f9000fe8:	01469693          	slli	a3,a3,0x14
+f9000fec:	fad992e3          	bne	s3,a3,f9000f90 <firmware_main+0x790>
+f9000ff0:	02478793          	addi	a5,a5,36
+  for(unsigned i=9;i<16;i++)if(p[i])fail(0x12);
+f9000ff4:	0007a683          	lw	a3,0(a5)
+f9000ff8:	f8069ce3          	bnez	a3,f9000f90 <firmware_main+0x790>
+f9000ffc:	00478793          	addi	a5,a5,4
+f9001000:	ff079ae3          	bne	a5,a6,f9000ff4 <firmware_main+0x7f4>
+f9001004:	00040793          	mv	a5,s0
+  for(unsigned j=0;j<n;j++)if(entry(j)[1]==p[1])fail(0x12);
+f9001008:	beb68ae3          	beq	a3,a1,f9000bfc <firmware_main+0x3fc>
+f900100c:	0447a983          	lw	s3,68(a5)
+f9001010:	04078793          	addi	a5,a5,64
+static uint32_t *entry(unsigned n) { return directory+16+(n<<4); }
+f9001014:	00168693          	addi	a3,a3,1
+  for(unsigned j=0;j<n;j++)if(entry(j)[1]==p[1])fail(0x12);
+f9001018:	ff3e18e3          	bne	t3,s3,f9001008 <firmware_main+0x808>
+f900101c:	f75ff06f          	j	f9000f90 <firmware_main+0x790>
+f9001020:	0007a703          	lw	a4,0(a5)
+  if((uint32_t)(io_read(R_TIMER)-start_time)>LONG_TIMEOUT)fail(0xd6);
+f9001024:	40a70733          	sub	a4,a4,a0
+f9001028:	c0e67ae3          	bgeu	a2,a4,f9000c3c <firmware_main+0x43c>
+f900102c:	0d600513          	li	a0,214
+f9001030:	925ff06f          	j	f9000954 <firmware_main+0x154>
+  copy_verified(D_SPI_COPY,p[2],base,p[3],p[4]);
+f9001034:	05042683          	lw	a3,80(s0)
+f9001038:	04c42603          	lw	a2,76(s0)
+f900103c:	04842503          	lw	a0,72(s0)
+f9001040:	00098593          	mv	a1,s3
+ for(unsigned n=0;n<count;n++) {
+f9001044:	04040413          	addi	s0,s0,64
+  copy_verified(D_SPI_COPY,p[2],base,p[3],p[4]);
+f9001048:	980ff0ef          	jal	f90001c8 <copy_verified.constprop.0>
+  copy_verified(D_SPI_COPY,p[5],base+0xc0000,p[6],p[7]);
+f900104c:	01c42683          	lw	a3,28(s0)
+f9001050:	01842603          	lw	a2,24(s0)
+f9001054:	01442503          	lw	a0,20(s0)
+f9001058:	015985b3          	add	a1,s3,s5
+static uint32_t *entry(unsigned n) { return directory+16+(n<<4); }
+f900105c:	001a0a13          	addi	s4,s4,1
+  copy_verified(D_SPI_COPY,p[5],base+0xc0000,p[6],p[7]);
+f9001060:	968ff0ef          	jal	f90001c8 <copy_verified.constprop.0>
+ for(unsigned n=0;n<count;n++) {
+f9001064:	016989b3          	add	s3,s3,s6
+f9001068:	c59ff06f          	j	f9000cc0 <firmware_main+0x4c0>
+f900106c:	00072603          	lw	a2,0(a4)
+  if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9001070:	41060633          	sub	a2,a2,a6
+f9001074:	d2c57ee3          	bgeu	a0,a2,f9000db0 <firmware_main+0x5b0>
+f9001078:	0e200513          	li	a0,226
+f900107c:	8d9ff06f          	j	f9000954 <firmware_main+0x154>
+f9001080:	00092683          	lw	a3,0(s2)
+   if((uint32_t)(io_read(R_TIMER)-start)>BUS_TIMEOUT)fail(0xe2);
+f9001084:	40c686b3          	sub	a3,a3,a2
+f9001088:	ded9f4e3          	bgeu	s3,a3,f9000e70 <firmware_main+0x670>
+f900108c:	fedff06f          	j	f9001078 <firmware_main+0x878>
+f9001090:	f8100737          	lui	a4,0xf8100
+f9001094:	0b072703          	lw	a4,176(a4) # f81000b0 <_start-0xefff50>
+  if(io_read(R_CACHE_INVALIDATED)) {
+f9001098:	02070063          	beqz	a4,f90010b8 <firmware_main+0x8b8>
+   resident_valid=0;flags=F_STOPPED;io_write(R_FLAGS,flags);io_write(R_READY,0);
+f900109c:	8001a423          	sw	zero,-2040(gp) # f9001820 <resident_valid>
+f90010a0:	8351aa23          	sw	s5,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90010a4:	f8100737          	lui	a4,0xf8100
+f90010a8:	07572223          	sw	s5,100(a4) # f8100064 <_start-0xefff9c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90010ac:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90010b0:	08072823          	sw	zero,144(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90010b4:	0ff0000f          	fence
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f90010b8:	f8100737          	lui	a4,0xf8100
+f90010bc:	00872483          	lw	s1,8(a4) # f8100008 <_start-0xeffff8>
+  uint32_t host=host_due?rd(MB):0,host_event=0;
+f90010c0:	00001737          	lui	a4,0x1
+f90010c4:	38770713          	addi	a4,a4,903 # 1387 <_start-0xf8ffec79>
+f90010c8:	26f77a63          	bgeu	a4,a5,f900133c <firmware_main+0xb3c>
+f90010cc:	f9001537          	lui	a0,0xf9001
+f90010d0:	f0050513          	addi	a0,a0,-256 # f9000f00 <firmware_main+0x700>
+f90010d4:	978ff0ef          	jal	f900024c <rd>
+f90010d8:	00050d13          	mv	s10,a0
+  if(host) {
+f90010dc:	26050063          	beqz	a0,f900133c <firmware_main+0xb3c>
+   wr(MB,0);
+f90010e0:	f9001537          	lui	a0,0xf9001
+f90010e4:	00000593          	li	a1,0
+f90010e8:	f0050513          	addi	a0,a0,-256 # f9000f00 <firmware_main+0x700>
+f90010ec:	834ff0ef          	jal	f9000120 <wr>
+   if(host==0x4c495645)host_event=E_START;
+f90010f0:	4c4957b7          	lui	a5,0x4c495
+f90010f4:	64578793          	addi	a5,a5,1605 # 4c495645 <_start-0xacb6a9bb>
+f90010f8:	30fd0e63          	beq	s10,a5,f9001414 <firmware_main+0xc14>
+   else if(host==0x53544f50)host_event=E_STOP;
+f90010fc:	535457b7          	lui	a5,0x53545
+f9001100:	f5078793          	addi	a5,a5,-176 # 53544f50 <_start-0xa5abb0b0>
+f9001104:	30fd0c63          	beq	s10,a5,f900141c <firmware_main+0xc1c>
+   else if(host==0x4c4f4144 || host==0x434e4e31) {
+f9001108:	4c4f47b7          	lui	a5,0x4c4f4
+f900110c:	14478793          	addi	a5,a5,324 # 4c4f4144 <_start-0xacb0bebc>
+f9001110:	02fd0663          	beq	s10,a5,f900113c <firmware_main+0x93c>
+f9001114:	434e57b7          	lui	a5,0x434e5
+f9001118:	e3178793          	addi	a5,a5,-463 # 434e4e31 <_start-0xb5b1b1cf>
+f900111c:	00fd1c63          	bne	s10,a5,f9001134 <firmware_main+0x934>
+    uint32_t n=host==0x434e4e31?rd(MB+24):0;
+f9001120:	f9001537          	lui	a0,0xf9001
+f9001124:	f1850513          	addi	a0,a0,-232 # f9000f18 <firmware_main+0x718>
+f9001128:	924ff0ef          	jal	f900024c <rd>
+f900112c:	00050413          	mv	s0,a0
+    if(host==0x434e4e31 && !n)fail(1);
+f9001130:	00051663          	bnez	a0,f900113c <firmware_main+0x93c>
+f9001134:	00100513          	li	a0,1
+f9001138:	81dff06f          	j	f9000954 <firmware_main+0x154>
+ if(flags&(F_RUNNING|F_DRAINING))fail(1);
+f900113c:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+f9001140:	00a7f793          	andi	a5,a5,10
+f9001144:	fe0798e3          	bnez	a5,f9001134 <firmware_main+0x934>
+ uint32_t tag=rd(MB+8),coeff_crc=rd(MB+12),compute_crc=rd(MB+16),dma_crc=rd(MB+20);
+f9001148:	f9001537          	lui	a0,0xf9001
+f900114c:	f0850513          	addi	a0,a0,-248 # f9000f08 <firmware_main+0x708>
+f9001150:	8fcff0ef          	jal	f900024c <rd>
+f9001154:	00a12423          	sw	a0,8(sp)
+f9001158:	f9001537          	lui	a0,0xf9001
+f900115c:	f0c50513          	addi	a0,a0,-244 # f9000f0c <firmware_main+0x70c>
+f9001160:	8ecff0ef          	jal	f900024c <rd>
+f9001164:	00050d13          	mv	s10,a0
+f9001168:	f9001537          	lui	a0,0xf9001
+f900116c:	f1050513          	addi	a0,a0,-240 # f9000f10 <firmware_main+0x710>
+f9001170:	8dcff0ef          	jal	f900024c <rd>
+f9001174:	00a12623          	sw	a0,12(sp)
+f9001178:	f9001537          	lui	a0,0xf9001
+f900117c:	f1450513          	addi	a0,a0,-236 # f9000f14 <firmware_main+0x714>
+f9001180:	8ccff0ef          	jal	f900024c <rd>
+ if(!tag || tag>65535 || finite>512)fail(1);
+f9001184:	00812783          	lw	a5,8(sp)
+ uint32_t tag=rd(MB+8),coeff_crc=rd(MB+12),compute_crc=rd(MB+16),dma_crc=rd(MB+20);
+f9001188:	00050d93          	mv	s11,a0
+ if(!tag || tag>65535 || finite>512)fail(1);
+f900118c:	fff78793          	addi	a5,a5,-1
+f9001190:	fb87f2e3          	bgeu	a5,s8,f9001134 <firmware_main+0x934>
+f9001194:	20143793          	sltiu	a5,s0,513
+f9001198:	f8078ee3          	beqz	a5,f9001134 <firmware_main+0x934>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f900119c:	f81007b7          	lui	a5,0xf8100
+f90011a0:	0807a823          	sw	zero,144(a5) # f8100090 <_start-0xefff70>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90011a4:	0ff0000f          	fence
+ io_write(R_READY,0);flags=F_STOPPED;io_write(R_FLAGS,flags);
+f90011a8:	8351aa23          	sw	s5,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90011ac:	0757a223          	sw	s5,100(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90011b0:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90011b4:	00700713          	li	a4,7
+f90011b8:	06e7a623          	sw	a4,108(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90011bc:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90011c0:	00b00713          	li	a4,11
+f90011c4:	06e7a423          	sw	a4,104(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90011c8:	0ff0000f          	fence
+ if(transfer(D_CRC,0xe1000000,0,418944)!=compute_crc ||
+f90011cc:	000666b7          	lui	a3,0x66
+f90011d0:	48068693          	addi	a3,a3,1152 # 66480 <_start-0xf8f99b80>
+f90011d4:	00000613          	li	a2,0
+f90011d8:	e10005b7          	lui	a1,0xe1000
+f90011dc:	00300513          	li	a0,3
+f90011e0:	f8dfe0ef          	jal	f900016c <transfer>
+f90011e4:	00c12783          	lw	a5,12(sp)
+f90011e8:	00a78663          	beq	a5,a0,f90011f4 <firmware_main+0x9f4>
+    transfer(D_CRC,0xe1100000,0,132432)!=dma_crc)fail(0x24);
+f90011ec:	02400513          	li	a0,36
+f90011f0:	f64ff06f          	j	f9000954 <firmware_main+0x154>
+f90011f4:	000206b7          	lui	a3,0x20
+f90011f8:	55068693          	addi	a3,a3,1360 # 20550 <_start-0xf8fdfab0>
+f90011fc:	00000613          	li	a2,0
+f9001200:	e11005b7          	lui	a1,0xe1100
+f9001204:	00300513          	li	a0,3
+f9001208:	f65fe0ef          	jal	f900016c <transfer>
+ if(transfer(D_CRC,0xe1000000,0,418944)!=compute_crc ||
+f900120c:	fead90e3          	bne	s11,a0,f90011ec <firmware_main+0x9ec>
+ wr(APB+8,0);wr(APB+0x10,1);wr(APB+0x14,17792);wr(APB+0x18,tag);wr(APB+0x1c,1);
+f9001210:	f8100537          	lui	a0,0xf8100
+f9001214:	00000593          	li	a1,0
+f9001218:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f900121c:	f05fe0ef          	jal	f9000120 <wr>
+f9001220:	f8100537          	lui	a0,0xf8100
+f9001224:	00100593          	li	a1,1
+f9001228:	01050513          	addi	a0,a0,16 # f8100010 <_start-0xeffff0>
+f900122c:	ef5fe0ef          	jal	f9000120 <wr>
+f9001230:	000045b7          	lui	a1,0x4
+f9001234:	f8100537          	lui	a0,0xf8100
+f9001238:	58058593          	addi	a1,a1,1408 # 4580 <_start-0xf8ffba80>
+f900123c:	01450513          	addi	a0,a0,20 # f8100014 <_start-0xefffec>
+f9001240:	ee1fe0ef          	jal	f9000120 <wr>
+f9001244:	00812583          	lw	a1,8(sp)
+f9001248:	f8100537          	lui	a0,0xf8100
+f900124c:	01850513          	addi	a0,a0,24 # f8100018 <_start-0xefffe8>
+f9001250:	ed1fe0ef          	jal	f9000120 <wr>
+f9001254:	f8100537          	lui	a0,0xf8100
+f9001258:	00100593          	li	a1,1
+f900125c:	01c50513          	addi	a0,a0,28 # f810001c <_start-0xefffe4>
+f9001260:	ec1fe0ef          	jal	f9000120 <wr>
+ if(transfer(D_COEFFICIENTS,0xe1200000,tag,20480)!=coeff_crc)fail(0x25);
+f9001264:	00812603          	lw	a2,8(sp)
+f9001268:	000056b7          	lui	a3,0x5
+f900126c:	e12005b7          	lui	a1,0xe1200
+f9001270:	00400513          	li	a0,4
+f9001274:	ef9fe0ef          	jal	f900016c <transfer>
+f9001278:	00ad0663          	beq	s10,a0,f9001284 <firmware_main+0xa84>
+f900127c:	02500513          	li	a0,37
+f9001280:	ed4ff06f          	j	f9000954 <firmware_main+0x154>
+ wr(MB+28,coeff_crc);wr(APB+0x48,1);
+f9001284:	f9001537          	lui	a0,0xf9001
+f9001288:	000d0593          	mv	a1,s10
+f900128c:	f1c50513          	addi	a0,a0,-228 # f9000f1c <firmware_main+0x71c>
+f9001290:	e91fe0ef          	jal	f9000120 <wr>
+f9001294:	f8100537          	lui	a0,0xf8100
+f9001298:	00100593          	li	a1,1
+f900129c:	04850513          	addi	a0,a0,72 # f8100048 <_start-0xefffb8>
+f90012a0:	e81fe0ef          	jal	f9000120 <wr>
+ if((rd(APB+4)&9)!=1)fail(0x26);
+f90012a4:	f8100537          	lui	a0,0xf8100
+f90012a8:	00450513          	addi	a0,a0,4 # f8100004 <_start-0xeffffc>
+f90012ac:	fa1fe0ef          	jal	f900024c <rd>
+f90012b0:	00957d13          	andi	s10,a0,9
+f90012b4:	00100793          	li	a5,1
+f90012b8:	00fd0663          	beq	s10,a5,f90012c4 <firmware_main+0xac4>
+f90012bc:	02600513          	li	a0,38
+f90012c0:	e94ff06f          	j	f9000954 <firmware_main+0x154>
+ wr(APB+0x50,compute_crc);wr(APB+0x54,dma_crc);
+f90012c4:	00c12583          	lw	a1,12(sp)
+f90012c8:	f8100537          	lui	a0,0xf8100
+f90012cc:	05050513          	addi	a0,a0,80 # f8100050 <_start-0xefffb0>
+f90012d0:	e51fe0ef          	jal	f9000120 <wr>
+f90012d4:	f8100537          	lui	a0,0xf8100
+f90012d8:	000d8593          	mv	a1,s11
+f90012dc:	05450513          	addi	a0,a0,84 # f8100054 <_start-0xefffac>
+f90012e0:	e41fe0ef          	jal	f9000120 <wr>
+ manual_mode=1;finite_frames=finite;io_write(R_FRAME_BUDGET,finite?finite:1023);
+f90012e4:	81a1aa23          	sw	s10,-2028(gp) # f900182c <manual_mode>
+f90012e8:	8081a823          	sw	s0,-2032(gp) # f9001828 <finite_frames>
+f90012ec:	00041463          	bnez	s0,f90012f4 <firmware_main+0xaf4>
+f90012f0:	3ff00413          	li	s0,1023
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90012f4:	f81007b7          	lui	a5,0xf8100
+f90012f8:	0a87ac23          	sw	s0,184(a5) # f81000b8 <_start-0xefff48>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90012fc:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001300:	00078713          	mv	a4,a5
+f9001304:	00100793          	li	a5,1
+f9001308:	0af72823          	sw	a5,176(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f900130c:	0ff0000f          	fence
+ flags=F_PREPARED|F_STOPPED;io_write(R_FLAGS,flags);io_write(R_RUN_STATE,7);io_write(R_READY,1);
+f9001310:	00500713          	li	a4,5
+f9001314:	82e1aa23          	sw	a4,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001318:	f81006b7          	lui	a3,0xf8100
+f900131c:	06e6a223          	sw	a4,100(a3) # f8100064 <_start-0xefff9c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9001320:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001324:	00068713          	mv	a4,a3
+f9001328:	00700693          	li	a3,7
+f900132c:	06d72423          	sw	a3,104(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9001330:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001334:	08f72823          	sw	a5,144(a4)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9001338:	0ff0000f          	fence
+  if(events) {
+f900133c:	08048c63          	beqz	s1,f90013d4 <firmware_main+0xbd4>
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9001340:	f81007b7          	lui	a5,0xf8100
+f9001344:	0987a783          	lw	a5,152(a5) # f8100098 <_start-0xefff68>
+   request_seq=io_read(R_REQUEST_SEQ);
+f9001348:	82f1a623          	sw	a5,-2004(gp) # f9001844 <request_seq>
+f900134c:	f81007b7          	lui	a5,0xf8100
+f9001350:	0947ad83          	lw	s11,148(a5) # f8100094 <_start-0xefff6c>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001354:	0097a623          	sw	s1,12(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f9001358:	0ff0000f          	fence
+   if(events&E_VIEW) {
+f900135c:	0044f793          	andi	a5,s1,4
+f9001360:	04078663          	beqz	a5,f90013ac <firmware_main+0xbac>
+    view=(rd(APB+8)>>1)^1u;view&=1u;
+f9001364:	f8100537          	lui	a0,0xf8100
+f9001368:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+f900136c:	ee1fe0ef          	jal	f900024c <rd>
+    wr(APB+8,(flags&F_RUNNING?1u:0u)|(view<<1));io_write(R_VIEW,view);
+f9001370:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+    view=(rd(APB+8)>>1)^1u;view&=1u;
+f9001374:	00155413          	srli	s0,a0,0x1
+f9001378:	fff44413          	not	s0,s0
+f900137c:	00147413          	andi	s0,s0,1
+    wr(APB+8,(flags&F_RUNNING?1u:0u)|(view<<1));io_write(R_VIEW,view);
+f9001380:	0017d793          	srli	a5,a5,0x1
+f9001384:	0017f793          	andi	a5,a5,1
+f9001388:	00141593          	slli	a1,s0,0x1
+f900138c:	f8100537          	lui	a0,0xf8100
+f9001390:	00b7e5b3          	or	a1,a5,a1
+f9001394:	00850513          	addi	a0,a0,8 # f8100008 <_start-0xeffff8>
+    view=(rd(APB+8)>>1)^1u;view&=1u;
+f9001398:	8281a823          	sw	s0,-2000(gp) # f9001848 <view>
+    wr(APB+8,(flags&F_RUNNING?1u:0u)|(view<<1));io_write(R_VIEW,view);
+f900139c:	d85fe0ef          	jal	f9000120 <wr>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90013a0:	f81007b7          	lui	a5,0xf8100
+f90013a4:	0687ae23          	sw	s0,124(a5) # f810007c <_start-0xefff84>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90013a8:	0ff0000f          	fence
+   if(events&E_STOP)stop();
+f90013ac:	0204f793          	andi	a5,s1,32
+f90013b0:	06078a63          	beqz	a5,f9001424 <firmware_main+0xc24>
+f90013b4:	94cff0ef          	jal	f9000500 <stop>
+   io_write(R_COMPLETED_SEQ,request_seq);heartbeat();
+f90013b8:	82c1a703          	lw	a4,-2004(gp) # f9001844 <request_seq>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90013bc:	f81007b7          	lui	a5,0xf8100
+f90013c0:	08e7ae23          	sw	a4,156(a5) # f810009c <_start-0xefff64>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90013c4:	0ff0000f          	fence
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90013c8:	00100713          	li	a4,1
+f90013cc:	06e7aa23          	sw	a4,116(a5)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90013d0:	0ff0000f          	fence
+  if((flags&F_RUNNING) && progress_due) {
+f90013d4:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+f90013d8:	0017d793          	srli	a5,a5,0x1
+f90013dc:	0017f793          	andi	a5,a5,1
+f90013e0:	14078e63          	beqz	a5,f900153c <firmware_main+0xd3c>
+f90013e4:	14098c63          	beqz	s3,f900153c <firmware_main+0xd3c>
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f90013e8:	f8100437          	lui	s0,0xf8100
+f90013ec:	07842703          	lw	a4,120(s0) # f8100078 <_start-0xefff88>
+   if(rd(APB+4)&24)fail(6);
+f90013f0:	f8100537          	lui	a0,0xf8100
+f90013f4:	00450513          	addi	a0,a0,4 # f8100004 <_start-0xeffffc>
+   progress_poll_time=io_read(R_TIMER);
+f90013f8:	80e1ac23          	sw	a4,-2024(gp) # f9001830 <progress_poll_time>
+   if(rd(APB+4)&24)fail(6);
+f90013fc:	e51fe0ef          	jal	f900024c <rd>
+f9001400:	01857513          	andi	a0,a0,24
+f9001404:	07840413          	addi	s0,s0,120
+f9001408:	0c050263          	beqz	a0,f90014cc <firmware_main+0xccc>
+f900140c:	00600513          	li	a0,6
+f9001410:	d44ff06f          	j	f9000954 <firmware_main+0x154>
+   if(host_event==E_STOP)stop();else start();
+f9001414:	9e4ff0ef          	jal	f90005f8 <start>
+f9001418:	f25ff06f          	j	f900133c <firmware_main+0xb3c>
+f900141c:	8e4ff0ef          	jal	f9000500 <stop>
+f9001420:	f1dff06f          	j	f900133c <firmware_main+0xb3c>
+   else if(events&E_START)start();
+f9001424:	0104f793          	andi	a5,s1,16
+f9001428:	00078663          	beqz	a5,f9001434 <firmware_main+0xc34>
+f900142c:	9ccff0ef          	jal	f90005f8 <start>
+f9001430:	f89ff06f          	j	f90013b8 <firmware_main+0xbb8>
+   else if(events&E_TOGGLE) { if(flags&F_RUNNING)stop();else start(); }
+f9001434:	0014f793          	andi	a5,s1,1
+f9001438:	00078a63          	beqz	a5,f900144c <firmware_main+0xc4c>
+f900143c:	8341a783          	lw	a5,-1996(gp) # f900184c <flags>
+f9001440:	0027f793          	andi	a5,a5,2
+f9001444:	f60798e3          	bnez	a5,f90013b4 <firmware_main+0xbb4>
+f9001448:	fe5ff06f          	j	f900142c <firmware_main+0xc2c>
+   else if(events&(E_NEXT|E_SELECT)) {
+f900144c:	00a4f793          	andi	a5,s1,10
+f9001450:	f60784e3          	beqz	a5,f90013b8 <firmware_main+0xbb8>
+    target=(events&E_SELECT)?target:(selected+1==count?0:selected+1);
+f9001454:	0084f493          	andi	s1,s1,8
+f9001458:	00049c63          	bnez	s1,f9001470 <firmware_main+0xc70>
+f900145c:	83c1ad83          	lw	s11,-1988(gp) # f9001854 <selected>
+f9001460:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+f9001464:	001d8d93          	addi	s11,s11,1
+f9001468:	00fd9463          	bne	s11,a5,f9001470 <firmware_main+0xc70>
+f900146c:	00000d93          	li	s11,0
+    if(resident_valid && !manual_mode && target<count && target!=selected) {
+f9001470:	8081a783          	lw	a5,-2040(gp) # f9001820 <resident_valid>
+f9001474:	f40782e3          	beqz	a5,f90013b8 <firmware_main+0xbb8>
+f9001478:	8141a783          	lw	a5,-2028(gp) # f900182c <manual_mode>
+f900147c:	f2079ee3          	bnez	a5,f90013b8 <firmware_main+0xbb8>
+f9001480:	8381a783          	lw	a5,-1992(gp) # f9001850 <count>
+f9001484:	f2fdfae3          	bgeu	s11,a5,f90013b8 <firmware_main+0xbb8>
+f9001488:	83c1a783          	lw	a5,-1988(gp) # f9001854 <selected>
+f900148c:	f3b786e3          	beq	a5,s11,f90013b8 <firmware_main+0xbb8>
+     unsigned resume=flags&F_RUNNING;
+f9001490:	8341a403          	lw	s0,-1996(gp) # f900184c <flags>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f9001494:	f81004b7          	lui	s1,0xf8100
+f9001498:	0b448493          	addi	s1,s1,180 # f81000b4 <_start-0xefff4c>
+f900149c:	00247413          	andi	s0,s0,2
+     io_write(R_WARM,resume?1:0);
+f90014a0:	00145793          	srli	a5,s0,0x1
+f90014a4:	00f4a023          	sw	a5,0(s1)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90014a8:	0ff0000f          	fence
+     stop();prepare_style(target);if(resume)start();
+f90014ac:	854ff0ef          	jal	f9000500 <stop>
+f90014b0:	000d8513          	mv	a0,s11
+f90014b4:	de5fe0ef          	jal	f9000298 <prepare_style>
+f90014b8:	00040463          	beqz	s0,f90014c0 <firmware_main+0xcc0>
+f90014bc:	93cff0ef          	jal	f90005f8 <start>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90014c0:	0004a023          	sw	zero,0(s1)
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90014c4:	0ff0000f          	fence
+}
+f90014c8:	ef1ff06f          	j	f90013b8 <firmware_main+0xbb8>
+   uint32_t completed=rd(APB+0x5c);
+f90014cc:	f8100537          	lui	a0,0xf8100
+f90014d0:	05c50513          	addi	a0,a0,92 # f810005c <_start-0xefffa4>
+f90014d4:	d79fe0ef          	jal	f900024c <rd>
+   if(completed!=last_count) { last_count=completed;progress_time=io_read(R_TIMER);heartbeat(); }
+f90014d8:	8241a703          	lw	a4,-2012(gp) # f900183c <last_count>
+f90014dc:	02a70063          	beq	a4,a0,f90014fc <firmware_main+0xcfc>
+f90014e0:	82a1a223          	sw	a0,-2012(gp) # f900183c <last_count>
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f90014e4:	00042703          	lw	a4,0(s0)
+f90014e8:	82e1a023          	sw	a4,-2016(gp) # f9001838 <progress_time>
+ *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset)=value;
+f90014ec:	f81007b7          	lui	a5,0xf8100
+f90014f0:	00100713          	li	a4,1
+f90014f4:	06e7aa23          	sw	a4,116(a5) # f8100074 <_start-0xefff8c>
+ __asm__ volatile("fence iorw,iorw" ::: "memory");
+f90014f8:	0ff0000f          	fence
+   if(finite_frames && (uint32_t)(completed-frame_base)>=finite_frames) { stop();continue; }
+f90014fc:	8101a783          	lw	a5,-2032(gp) # f9001828 <finite_frames>
+f9001500:	00078c63          	beqz	a5,f9001518 <firmware_main+0xd18>
+f9001504:	80c1a703          	lw	a4,-2036(gp) # f9001824 <frame_base>
+f9001508:	40e50533          	sub	a0,a0,a4
+f900150c:	00f56663          	bltu	a0,a5,f9001518 <firmware_main+0xd18>
+f9001510:	ff1fe0ef          	jal	f9000500 <stop>
+f9001514:	a01ff06f          	j	f9000f14 <firmware_main+0x714>
+ return *(volatile uint32_t *)(uintptr_t)(0xf8100000u+offset);
+f9001518:	f81007b7          	lui	a5,0xf8100
+f900151c:	0787a703          	lw	a4,120(a5) # f8100078 <_start-0xefff88>
+   if((uint32_t)(io_read(R_TIMER)-progress_time)>200000000u)fail(0xd7);
+f9001520:	8201a783          	lw	a5,-2016(gp) # f9001838 <progress_time>
+f9001524:	40f70733          	sub	a4,a4,a5
+f9001528:	0bebc7b7          	lui	a5,0xbebc
+f900152c:	20078793          	addi	a5,a5,512 # bebc200 <_start-0xed143e00>
+f9001530:	00e7f663          	bgeu	a5,a4,f900153c <firmware_main+0xd3c>
+f9001534:	0d700513          	li	a0,215
+f9001538:	c1cff06f          	j	f9000954 <firmware_main+0x154>
+  if(irq_seen) {
+f900153c:	81ca2783          	lw	a5,-2020(s4)
+f9001540:	9c078ae3          	beqz	a5,f9000f14 <firmware_main+0x714>
+   irq_seen=0;
+f9001544:	800a2e23          	sw	zero,-2020(s4)
+   __asm__ volatile("csrs mie,%0"::"r"(1u<<11):"memory");
+f9001548:	304ca073          	csrs	mie,s9
+f900154c:	9c9ff06f          	j	f9000f14 <firmware_main+0x714>

@@ -1,53 +1,732 @@
 {
   "schema_version": 1,
-  "generated_date": "2026-11-02",
-  "description": "Selected original assets, copied without byte changes. New documentation is tracked by Git.",
+  "generated_date": "2026-11-03",
+  "description": "Unmodified production-r15 archive files and retained V9-P1 mechanical assets.",
   "versions": {
-    "fpga": "legacy222-ble-five-cn-20261101-ble5",
+    "fpga": "production-r15 / 2026-11-03",
     "mechanical": "V9-P1 / 2026-10-28"
   },
-  "asset_count": 39,
-  "total_bytes": 229416618,
+  "fpga_archive": {
+    "name": "sapphire-native8h-r15-code-20261103.zip",
+    "sha256": "079ffb35b34f72387fdac556de3d59ec2f33e2212f46ee6b1fda4d0256509768",
+    "file_count": 89,
+    "total_bytes": 185657136
+  },
+  "previous_fpga_commit": "423d07ab12629df9136d12e33c879b1a66962133",
+  "asset_count": 123,
+  "total_bytes": 284659900,
   "assets": [
     {
-      "path": "fpga/说明.txt",
-      "source_root": "github代码",
-      "source_path": "说明.txt",
-      "bytes": 1559,
-      "sha256": "1bc4ba091118034a6d7abed8c18cee7ff19786a80d1e849cd2a6e546d4741f63",
+      "path": "fpga/firmware/camera_table.h",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/camera_table.h",
+      "bytes": 2349,
+      "sha256": "2a4dd5902b527f20db9f2af9e0c41359756aa39b6016a0297035a95f3388183a",
       "lfs": false
     },
     {
-      "path": "fpga/rtl/ble_uart_buttons.sv",
-      "source_root": "github代码",
-      "source_path": "rtl/ble_uart_buttons.sv",
+      "path": "fpga/firmware/control.h",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/control.h",
+      "bytes": 1639,
+      "sha256": "b751cf795bff5fdc9eafa3e8c298daaf690b8d17b216f6de8817f0019670644b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/main.c",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/main.c",
+      "bytes": 14946,
+      "sha256": "365aa2b2ee9c2c99ca10834fe6e9c067dc8d58942a41d9911102b266a1bd8de5",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/memory.ld",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/memory.ld",
+      "bytes": 605,
+      "sha256": "6a1f94a921232b2b3df84f75fd1d64335f60ee71ea442b50a65e4a1013faf03f",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/control.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/control.bin",
+      "bytes": 6168,
+      "sha256": "b6a69f287422cc59facececaabc89788d7e059a2831de488bc7cbe1bac83f247",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/control.elf",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/control.elf",
+      "bytes": 47804,
+      "sha256": "4b65bf8a73c348a2c8cbcffbe06294c1f6f332a13dedfcfbcc3b359ecb690509",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/control.elf-main.su",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/control.elf-main.su",
+      "bytes": 1398,
+      "sha256": "0859252bc29ec67277eae5b5b2ef90927fa069289bc6aacb35e531ea453be936",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/control.lst",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/control.lst",
+      "bytes": 97138,
+      "sha256": "20bf9d474532c0ad673e0cd7d6aef3638db3f9dbdf31e9641a0696f25e14bb73",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/control.map",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/control.map",
+      "bytes": 8061,
+      "sha256": "c393d2e06668ef8e24dece0ad8b71f54514c6d22c012308afe180871c97e3101",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin",
+      "bytes": 20480,
+      "sha256": "449a656f8293c9f3335e966031dd7324a3ab66970db316cd7fafdfcbdd9a8bd3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin",
+      "bytes": 20480,
+      "sha256": "4c20e79359d43f49812766b7e49d830363847a167bbe8c28392144e5984f5fc3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin",
+      "bytes": 20480,
+      "sha256": "eca9d73fde716c543c1897c1563a8cc220c8fadc423e5e8a1745ac6c3211a775",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/prebuilt/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin",
+      "bytes": 20480,
+      "sha256": "095ad5f3d9024d93367461d52f028c195143805e8e344ece176d7ea2fce7068c",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/start.S",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/start.S",
+      "bytes": 351,
+      "sha256": "5b02369d6772b93b104fcfeed5e7d370f0d96e5c643c821025ee38e0e759ad3a",
+      "lfs": false
+    },
+    {
+      "path": "fpga/firmware/test_mmio.c",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/firmware/test_mmio.c",
+      "bytes": 926,
+      "sha256": "b676aa03659a2920da607d6825f025595b5eb74a556bdc64fb552fb70998fce4",
+      "lfs": false
+    },
+    {
+      "path": "fpga/MANIFEST.json",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/MANIFEST.json",
+      "bytes": 9696,
+      "sha256": "7bf0a7f9a11af9581162d6f6859157bde906aaebf9a70746100a908ef844b995",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/axi_frame_write_dma.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/axi_frame_write_dma.sv",
+      "bytes": 9414,
+      "sha256": "7dcb57f51ad4495a15a4f6165fdc92320a22132430fdc1d8400c51f05fbd1aec",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/ble_uart_buttons.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/ble_uart_buttons.sv",
       "bytes": 3575,
       "sha256": "629b609afcff26e61d1fac770d2d12c0e45ea9ccd1395e14958d9d264dba75ed",
       "lfs": false
     },
     {
-      "path": "fpga/rtl/five_style_name_osd.sv",
-      "source_root": "github代码",
-      "source_path": "rtl/five_style_name_osd.sv",
-      "bytes": 5207,
-      "sha256": "e54a1a918d0d48a7d1c59685fe2c0b1947bab110d2cb0d4dee37192441b55a7f",
+      "path": "fpga/project/camera_i2c_transaction.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/camera_i2c_transaction.sv",
+      "bytes": 3880,
+      "sha256": "d3d4955674fdaa76ede11f89a74db23b96635ddf490a5038a4fe5060e46e4a6d",
       "lfs": false
     },
     {
-      "path": "fpga/rtl/legacy222_names.sv",
-      "source_root": "github代码",
-      "source_path": "rtl/legacy222_names.sv",
-      "bytes": 980,
-      "sha256": "00ba4523d047c9ea5f1bbc7dcb5ee5f0aeeb0ab8402071b5db922a33d062e80b",
+      "path": "fpga/project/camera_service_bridge.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/camera_service_bridge.sv",
+      "bytes": 3117,
+      "sha256": "7b89fddc0e4c419303171ac6237ff953906c36e9585520dc3455181af82cfec5",
       "lfs": false
     },
     {
-      "path": "fpga/rtl/native222.v",
-      "source_root": "github代码",
-      "source_path": "rtl/native222.v",
-      "bytes": 130402533,
-      "sha256": "f0568f90ad8469a839b65696d0181ab84bb46623cfce8e143ec9d853d7026347",
+      "path": "fpga/project/control_atomic_channel.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/control_atomic_channel.sv",
+      "bytes": 2348,
+      "sha256": "d18d84087ff46a27327fc37912b7333a8ccc278ad7d479ad54b0b4c257d17fb9",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/control_dsp_register.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/control_dsp_register.sv",
+      "bytes": 1987,
+      "sha256": "59700ffd64bb84b64bd204ea4340871865a6a3bc0ca6b41d2aa08d973bd7254d",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/control_rpc_bridge.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/control_rpc_bridge.sv",
+      "bytes": 4881,
+      "sha256": "335db2fca04ca4ce5594e19335121b6d878bae0ba71afed9dd3f801701f74849",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/EfxSapphireSoc.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/EfxSapphireSoc.v",
+      "bytes": 445030,
+      "sha256": "e8074a026df06323d6a4ea3c2d38f1fcbaf86a05a804a08841b4f4d9022928f7",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol0.bin",
+      "bytes": 20480,
+      "sha256": "449a656f8293c9f3335e966031dd7324a3ab66970db316cd7fafdfcbdd9a8bd3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol1.bin",
+      "bytes": 20480,
+      "sha256": "4c20e79359d43f49812766b7e49d830363847a167bbe8c28392144e5984f5fc3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol2.bin",
+      "bytes": 20480,
+      "sha256": "eca9d73fde716c543c1897c1563a8cc220c8fadc423e5e8a1745ac6c3211a775",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol3.bin",
+      "bytes": 20480,
+      "sha256": "095ad5f3d9024d93367461d52f028c195143805e8e344ece176d7ea2fce7068c",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/expected.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/expected.hex",
+      "bytes": 3456,
+      "sha256": "696ec67b4baf5193010d456d442e7cc36a2787bafaafa263ad7e7c951277c109",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/five_style_name_osd.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/five_style_name_osd.sv",
+      "bytes": 5253,
+      "sha256": "bf003552cdffda120cb0901d0e82b5f6f6384370200b40480755d6c1189d44d5",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/frame_pair_owner4.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/frame_pair_owner4.sv",
+      "bytes": 11146,
+      "sha256": "6710b56c64c341975d78cff1ab27476b64c52fd8fdedc837c6f2a05f569eb514",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/i2c_master_bit_ctrl.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/i2c_master_bit_ctrl.v",
+      "bytes": 19013,
+      "sha256": "2df1f5d522725ea216385829a4dec38fdd616e4979aaa0aef7053ac34bf8ac8c",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/i2c_master_byte_ctrl.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/i2c_master_byte_ctrl.v",
+      "bytes": 11679,
+      "sha256": "442159006425fa36a946f67afc62391f9f80142aad379a640118a28ce67c9f80",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/i2c_master_defines.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/i2c_master_defines.v",
+      "bytes": 4071,
+      "sha256": "b6dcf92c66c3dc80192206621e732f0474709579662ee09943e48db0077f302e",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/legacy222_names.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/legacy222_names.sv",
+      "bytes": 1111,
+      "sha256": "c20901fa4d8ee881aaaf0093205fa9b13e60830df8e833b36bec04264a538197",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native_capture_select.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native_capture_select.sv",
+      "bytes": 2601,
+      "sha256": "fce5e567d7684f995af898cb7c4c2bb2a99ba5df91070f097d2b64f80ef06d70",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native_command_register.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native_command_register.sv",
+      "bytes": 1719,
+      "sha256": "b8655b4fdf81732fe1dd445c7b0bbfeb2ecd53bf24f3fcac3f3e85a7d81e671e",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native_output_bypass.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native_output_bypass.sv",
+      "bytes": 2096,
+      "sha256": "c38df701c9e8fed769b0e2daa45341028d8994cc582305f399754054db4980b2",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native_read_credit.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native_read_credit.sv",
+      "bytes": 1285,
+      "sha256": "b83e5f8fab34dd6033221988cdfd310d4f3873274336432c2278b044341967f3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native_slot_format.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native_slot_format.sv",
+      "bytes": 1475,
+      "sha256": "418c94ac9e847ef2a8c23c108e57906ef5af1d02914fcbe690534f6304305827",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/native222.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/native222.v",
+      "bytes": 183337811,
+      "sha256": "c8fe013f885ae74b41c84c85e65b4456063ff6f609841187b535c61b0aee18d0",
       "lfs": true
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob_or.ini",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob_or.ini",
+      "bytes": 244,
+      "sha256": "c5829b06300d6fc3c7d431aae5c6a3e6ab69580c13df55d829b1fb50302a1d59",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.cnst",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.cnst",
+      "bytes": 1351,
+      "sha256": "ab3c62230b4fe699c310d8ed3c4e7e12c363c37525f1d8fc1bc87046450fbcd3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.interface.csv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.interface.csv",
+      "bytes": 17557,
+      "sha256": "49ed3c012bc0a74a325d55b3951fbbaf03bbcdf12485a6d658087c0521f3b5e4",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.peri.cdo",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.peri.cdo",
+      "bytes": 1870,
+      "sha256": "1ed9399c698c496c62567b167b173772fedb7d133fb164101b4fd13b9a92ac84",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.peri.csi",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.peri.csi",
+      "bytes": 19267,
+      "sha256": "e07f7c30ac38fe51a0bb04f5dd232593eb96a29562361393c424d6e73c92eecc",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.peri.pbn",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.peri.pbn",
+      "bytes": 248876,
+      "sha256": "863f2f858b31d535a912f7b3da95ba642510757e56e6f8749c46d936f595afc6",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.peri.qdelay",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.peri.qdelay",
+      "bytes": 111496,
+      "sha256": "9247636dc42f20e85b5d10f5faf002d074b42c12f8430fbc2c36f67c19998c3b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.pinout.csv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.pinout.csv",
+      "bytes": 12974,
+      "sha256": "a038e047df5c143f644f0e3218ea2afe394b0bab01f38cf04d4b90e676a529c2",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.pinout.rpt",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.pinout.rpt",
+      "bytes": 48181,
+      "sha256": "afd85117761b5011e24ff5e6500491c8f9eacebfaea06e45944305d1c8f61d04",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.pt_routing_hints",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.pt_routing_hints",
+      "bytes": 3891,
+      "sha256": "b88591c4ea28b729bde33f44cd182f780008ce25891f32c506de55083c02ba8b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.pt.sdc",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.pt.sdc",
+      "bytes": 41952,
+      "sha256": "108a05809b78ae8c78c9e72b8711ed1b9d77cd29cf1b871ae6057d8272a77331",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/outflow/ti60f225_oob.rs",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/outflow/ti60f225_oob.rs",
+      "bytes": 244,
+      "sha256": "bb7d447bef5f8b24e851fc55123f43c4f22bdff9677c6e463b508cc0164ad7a0",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/resize_axis_up_2_to_3.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/resize_axis_up_2_to_3.sv",
+      "bytes": 3237,
+      "sha256": "6b065f1b5ca902e5e9f58b0d1ef84931963367787611c5b56c887e96a73eda6a",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rgb_bilinear_scaler_prototype.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rgb_bilinear_scaler_prototype.sv",
+      "bytes": 6943,
+      "sha256": "2bdfc267db96e9d1d9531bbc873e69981e8167ef81a5b9f187e254aed3749eeb",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rgb_mode_ddr_reader.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rgb_mode_ddr_reader.sv",
+      "bytes": 7207,
+      "sha256": "626e85e09ac45f801cc44f92827127002fb58624c86bf00e5489eedde194086b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rgb_mode_stream_writer.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rgb_mode_stream_writer.sv",
+      "bytes": 6367,
+      "sha256": "5e201bf3daeea7518674c1562a05037681fd707ab1f2005526c892b8d106a3aa",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rgb24_stream_pack.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rgb24_stream_pack.sv",
+      "bytes": 995,
+      "sha256": "1349e0c95355e6e212ba73b6ac2a669a5fc4bffb3a519ea74fb62ed3cf94863e",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rgb24_stream_unpack.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rgb24_stream_unpack.sv",
+      "bytes": 1234,
+      "sha256": "da11be29a428c8e66591f6f5ee777522ce37e0ad92cd1fdeb50ebe4b3f395ce5",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rv32_control_system.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rv32_control_system.sv",
+      "bytes": 3547,
+      "sha256": "825c4da745e83b9dd6dae8bffabfef38a78ae0a555c97b0fca8dc50d8b3d00a8",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/rv32_service_backend.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/rv32_service_backend.sv",
+      "bytes": 17881,
+      "sha256": "a56396d8f46d3cf4c97c751b4d246d297dac267d8c16b3a5ad4fc4071a9caf78",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/sapphire_candidate.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/sapphire_candidate.sv",
+      "bytes": 831,
+      "sha256": "7207f04f3e84a1968a131d4958056b29b628a1b3fc495838f9b903b230f49fbd",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/scratch217.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/scratch217.hex",
+      "bytes": 4096,
+      "sha256": "5461fbb609689a3aa961411bffbd7b39cae67abf31d21b5eec69b3fb881d2c50",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/service_word_dma.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/service_word_dma.sv",
+      "bytes": 8659,
+      "sha256": "111c06df5494a1c7d001e5b6d59d2ee0e76863993989d44bda87798e245c9037",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/spi_flash_read207.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/spi_flash_read207.sv",
+      "bytes": 2287,
+      "sha256": "8a72e1a7aa837a0f9c91ee9efb4c20f1057383783c63b45fc8159a81d71319fb",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/ti60f225_oob.peri.xml",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/ti60f225_oob.peri.xml",
+      "bytes": 71578,
+      "sha256": "3c6c86b30398b5a8cd877eaf4eb0a94b065af56d8b16d1b8fc7f03f0b52d71a4",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/ti60f225_oob.sdc",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/ti60f225_oob.sdc",
+      "bytes": 199728,
+      "sha256": "b03fd8d498339030e1de620303f13e9a75ce0ea9b4e479f5e666d9540de05c52",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/ti60f225_oob.xml",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/ti60f225_oob.xml",
+      "bytes": 12024,
+      "sha256": "670286c0efffdb4f1bb1e20629795f42aaa2f83bbb544a67e4115aab2b9bb4c8",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/timescale.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/timescale.v",
+      "bytes": 813,
+      "sha256": "d98dd66323e809ee4bc88896063327802ca13241b5742a5e25db17db17a40a4c",
+      "lfs": false
+    },
+    {
+      "path": "fpga/project/unified217.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/project/unified217.hex",
+      "bytes": 12288,
+      "sha256": "16d7150c456315fff6d0a3dd458f8a7606e947f2949be2b491a88b906235aee3",
+      "lfs": false
+    },
+    {
+      "path": "fpga/README.md",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/README.md",
+      "bytes": 2580,
+      "sha256": "374611dd8a1565ecbb064eea8d091e9e17720d3c7f8379eccc8aa454cf02fe7c",
+      "lfs": false
+    },
+    {
+      "path": "fpga/sapphire/bsp/efinix/EfxSapphireSoc/include/soc.dts",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/sapphire/bsp/efinix/EfxSapphireSoc/include/soc.dts",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "lfs": false
+    },
+    {
+      "path": "fpga/sapphire/bsp/efinix/EfxSapphireSoc/include/soc.h",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/sapphire/bsp/efinix/EfxSapphireSoc/include/soc.h",
+      "bytes": 952,
+      "sha256": "14d374cca84c3769d24b0ffc3dd055d5914f6bb8cc489f08d27824db8ca88ce8",
+      "lfs": false
+    },
+    {
+      "path": "fpga/sapphire/cpu0.yaml",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/sapphire/cpu0.yaml",
+      "bytes": 59,
+      "sha256": "c05d5637226b5ab5a5cf66806673db4c55fd8c4a30399a59de31442aedee5fbb",
+      "lfs": false
+    },
+    {
+      "path": "fpga/sapphire/soc_config",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/sapphire/soc_config",
+      "bytes": 590,
+      "sha256": "9cd99b2b269c79a1b26e118a664f12d559a67ad0676476fdf0a2fd7edc13edb0",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/data/camera.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/data/camera.hex",
+      "bytes": 1640,
+      "sha256": "115ccfbc97cb8a77353fe71df8b363011dd8310020a3dd088597d6e04b05ec20",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/data/catalog.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/data/catalog.hex",
+      "bytes": 1440,
+      "sha256": "4bbadb12b33d067354fd62a0f52306cdf9f93627a452a8c23ca3b071e03920fc",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/data/isp.hex",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/data/isp.hex",
+      "bytes": 3072,
+      "sha256": "763402f2c0470a8d709f0fd3562c7ff5071820ceb1440275f6562f32ec93aeb5",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_camera_service.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_camera_service.sv",
+      "bytes": 5048,
+      "sha256": "c89de0d7a4d2dcd5900fd2be09ccfca999a7d3145caef5abfac6cefacdf7ff32",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_control_rpc.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_control_rpc.sv",
+      "bytes": 5523,
+      "sha256": "75a97c93a834efc4b393dcce7e3c7ea8a7c028d50a9293c2249dbeb8cdee3a49",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_control_system.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_control_system.sv",
+      "bytes": 5184,
+      "sha256": "f79be143d7b4dc68424ee3115fe04ac0a3a6d65d39eb19f996fd801a2da7136d",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_production_firmware.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_production_firmware.sv",
+      "bytes": 11454,
+      "sha256": "1ff50f544eb20fc799dc3b227f43c0067d5a2732345b35009ba8f8e2029d8b3a",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_service_backend.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_service_backend.sv",
+      "bytes": 9084,
+      "sha256": "13fc4786a520dc86b617a823fce6d9dfdc084cde8b8380004efd2d178b0cbbc0",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_service_word_dma.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_service_word_dma.sv",
+      "bytes": 4947,
+      "sha256": "cdb8fad3b9a74f9200936be068c924aaee37a3e7d3577a30ae4497ddb8802fb9",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/tb_snapshot_registers.sv",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/tb_snapshot_registers.sv",
+      "bytes": 2631,
+      "sha256": "5b4d57d91ac385a508d6501f2f404d02651058445057fe3bb50041ddc351341b",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/vendor/efx_dsp48.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/vendor/efx_dsp48.v",
+      "bytes": 53532,
+      "sha256": "551e13efac2d55cd532097bb28bf50063848af637f62409890962216c1f5a581",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tests/vendor/EfxSapphireSoc.v",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tests/vendor/EfxSapphireSoc.v",
+      "bytes": 447314,
+      "sha256": "f85a688f5d749171bb5effd08526f2182c12ae178792e70c7847ebed045a78fa",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tools/build_firmware.py",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tools/build_firmware.py",
+      "bytes": 1510,
+      "sha256": "571ed1ce47d5187a365182c253765da91a6295cbdeca984e926d386d1e970e9a",
+      "lfs": false
+    },
+    {
+      "path": "fpga/tools/verify_package.py",
+      "source_root": "sapphire-native8h-r15-code-20261103.zip",
+      "source_path": "sapphire-native8h-r15-code-20261103/tools/verify_package.py",
+      "bytes": 1089,
+      "sha256": "2cdcdcd437eca2ea3cffb95224e1eecc23a9f31a9937897856ddb5426b14f054",
+      "lfs": false
     },
     {
       "path": "mechanical/enclosure_v9/01_正式打印零件/01_front_frame_grip.stl",
