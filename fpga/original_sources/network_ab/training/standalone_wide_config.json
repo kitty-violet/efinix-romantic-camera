@@ -1,0 +1,18 @@
+{
+  "schema": "standalone-wide-game-style-v1",
+  "seed": 20261001,
+  "architecture": "johnson-inspired-32-64-128-r5-instance-norm-fullres-skip",
+  "purpose": "software-game-style-reproduction",
+  "content_manifest": "E:/fpga/model-training-workspace/data/processed/content-20261001-v3-normal-validation/manifest.approved.json",
+  "style_manifest": "E:/fpga/model-training-workspace/data/processed/style-target-20261001-v5-wide-clean/dataset-manifest.json",
+  "crop_hw": [[256, 256]],
+  "crop_probabilities": [1.0],
+  "full_frame_every": 0,
+  "horizontal_flip_probability": 0.5,
+  "learning_rate": 0.0001,
+  "style_weight": 83380.33554739958,
+  "style_target_mode": "mean_gram",
+  "maximum_steps": 2000,
+  "validation_steps": [100, 250, 500, 1000, 2000],
+  "precision": "fp32-no-amp-no-tf32"
+}

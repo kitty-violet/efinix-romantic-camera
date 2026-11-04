@@ -38,7 +38,7 @@ def repository_path(value: str) -> Path:
 
 def verify_fpga(indexed: dict[str, dict], errors: list[str]) -> int:
     package = json.loads(repository_path("fpga/MANIFEST.json").read_text(encoding="utf-8"))
-    if package["version"] != "production-r15":
+    if package["version"] != "production-r15-complete":
         errors.append("Unexpected FPGA package version")
     listed = package["files"]
     expected = {"fpga/MANIFEST.json"}
@@ -85,6 +85,64 @@ def verify_fpga(indexed: dict[str, dict], errors: list[str]) -> int:
             elif bytes(int(line, 2) for line in lines) != expected_bytes:
                 errors.append(f"Firmware/ROM lane mismatch: {folder}/{filename}")
     return references
+
+
+def verify_network(indexed: dict[str, dict], errors: list[str]) -> None:
+    graph = json.loads(repository_path("fpga/network/graph.json").read_text(encoding="utf-8"))
+    if graph["schema"] != "S4R1_8_32_8_V1" or graph["input_shape_hwc"] != [720, 1280, 3]:
+        errors.append("Unexpected network schema or image dimensions")
+    nodes = graph["nodes"]
+    convs = [node for node in nodes if "kernel" in node]
+    weights = sum(node["channels"] * (node["cin"] // node["groups"]) *
+                  node["kernel"] ** 2 for node in convs)
+    biases = sum(node["channels"] for node in convs)
+    if (len(nodes), len(convs), weights, biases) != (13, 11, 3808, 227):
+        errors.append("Network topology or parameter count differs from S4R1")
+    known = {"input"}
+    for node in nodes:
+        if node["id"] in known or not set(node["inputs"]).issubset(known):
+            errors.append(f"Invalid network dependency: {node['id']}")
+        known.add(node["id"])
+    for slot in range(5):
+        folder = f"fpga/network/models/slot{slot}"
+        for filename in ("selected.pt", "graph.json", "parameter-count.json",
+                         "coefficients.bin", "resident-padded.bin", "reference-vectors.json"):
+            if f"{folder}/{filename}" not in indexed:
+                errors.append(f"Missing model delivery asset: {folder}/{filename}")
+        counts = json.loads(repository_path(f"{folder}/parameter-count.json").read_text(encoding="utf-8"))
+        if (counts["model_parameters"], counts["additional_q17_multipliers"]) != (4035, 227):
+            errors.append(f"Incorrect parameter metadata: slot{slot}")
+        style_graph = json.loads(repository_path(f"{folder}/graph.json").read_text(encoding="utf-8"))
+        if style_graph["nodes"] != nodes or style_graph["input_shape_hwc"] != [720, 1280, 3]:
+            errors.append(f"Style topology differs from shared graph: slot{slot}")
+    if repository_path("fpga/network/models/slot5/selected.pt").exists():
+        errors.append("Original-image bypass must not be presented as a sixth CNN checkpoint")
+
+    runtime = json.loads(
+        repository_path("fpga/network/runtime_data/manifest.json").read_text(encoding="utf-8"))
+    image = indexed["fpga/network/runtime_data/flash-user-data.bin"]
+    if runtime["flash_offset"] != 0x340000 or runtime["flash_end"] - runtime["flash_offset"] != image["bytes"]:
+        errors.append("Runtime data-region address/length mismatch")
+    if runtime["image_sha256"] != image["sha256"] or runtime["hardware_access"] is not False:
+        errors.append("Runtime image identity or hardware-verification metadata mismatch")
+    if [entry["slot"] for entry in runtime["styles"]] != list(range(6)):
+        errors.append("Runtime catalog must contain slots 0 through 5")
+    for entry in runtime["styles"]:
+        if entry["compute_sha256"] != indexed["fpga/network/programs/compute.bin"]["sha256"]:
+            errors.append(f"Runtime compute program mismatch: slot{entry['slot']}")
+        coefficient = indexed[f"fpga/network/models/slot{entry['slot']}/resident-padded.bin"]
+        if entry["coefficient_sha256"] != coefficient["sha256"]:
+            errors.append(f"Runtime coefficient identity mismatch: slot{entry['slot']}")
+
+    core = repository_path("fpga/network/rtl/cnn_production_frame.xml")
+    design_files = [element.attrib["name"] for element in ET.parse(core).iter()
+                    if element.tag.split("}")[-1] == "design_file"]
+    if len(design_files) != 42:
+        errors.append("Expected 42 readable compute-core design files")
+    for name in design_files:
+        full_name = f"fpga/network/rtl/{name}"
+        if full_name not in indexed or not repository_path(full_name).is_file():
+            errors.append(f"Missing readable compute-core source: {name}")
 
 
 def verify(allow_pointers: bool) -> int:
@@ -145,6 +203,7 @@ def verify(allow_pointers: bool) -> int:
     if not re.fullmatch(r"[0-9a-f]{64}", archive["sha256"]):
         errors.append("Invalid source archive SHA-256")
     project_references = verify_fpga(indexed, errors)
+    verify_network(indexed, errors)
 
     required = [
         "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "THIRD_PARTY_NOTICES.md",
@@ -153,9 +212,13 @@ def verify(allow_pointers: bool) -> int:
         "fpga/project/ble_uart_buttons.sv", "fpga/project/legacy222_names.sv",
         "fpga/project/five_style_name_osd.sv", "fpga/project/ti60f225_oob.xml",
         "fpga/firmware/main.c", "fpga/tools/verify_package.py", f"{CAD}/README.md",
+        "fpga/tools/verify_complete.py", "fpga/SOURCE_ORIGINS.json",
+        "fpga/network/model.py", "fpga/network/infer_package.py",
+        "fpga/network/models/slot5/identity.json", "fpga/network/rtl/cnn_production_frame.xml",
+        "fpga/network/runtime_data/flash-user-data.bin",
         "docs/environment.md", "docs/usage.md", "docs/ble-protocol.md",
         "docs/competition-checklist.md", "docs/submission.md", "docs/verification.md",
-        "docs/fpga-project.md",
+        "docs/fpga-project.md", "docs/network.md",
     ]
     for name in required:
         if not repository_path(name).is_file():
@@ -213,6 +276,7 @@ def verify(allow_pointers: bool) -> int:
     print(f"Verified: {actual_count} file hashes; {pointer_count} LFS pointers")
     print(f"Documentation: {len(markdown_files)} Markdown files; {link_count} local links")
     print(f"FPGA: original package hashes, {project_references} project references, and 8 ROM lane copies match")
+    print("Network: five checkpoints, S4R1 topology, runtime identities, and 42 core-source references match")
     print("CAD: parts CSV references and historical final SHA-256 values match")
     print("Scope: file integrity only; no synthesis, timing, board, or physical print tests")
     return 0

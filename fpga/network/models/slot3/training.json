@@ -1,0 +1,169 @@
+{
+  "gradient_steps": 500,
+  "selected_step": 0,
+  "initial": [
+    0.5682977211972078,
+    0.38332465415199596,
+    0.5284944772720337
+  ],
+  "selected_score": [
+    0.5682977211972078,
+    0.38332465415199596,
+    0.5284944772720337
+  ],
+  "records": [
+    {
+      "step": 0,
+      "score": 0.5682977211972078,
+      "colour_mae": 0.38332465415199596,
+      "grid_edge_mae": 0.5284944772720337,
+      "kernel": [
+        [
+          8.0,
+          16.0,
+          8.0
+        ],
+        [
+          16.0,
+          31.0,
+          16.0
+        ],
+        [
+          8.0,
+          16.0,
+          8.0
+        ]
+      ]
+    },
+    {
+      "step": 100,
+      "score": 0.5682977211972078,
+      "colour_mae": 0.38332465415199596,
+      "grid_edge_mae": 0.5284944772720337,
+      "kernel": [
+        [
+          8.0,
+          16.0,
+          8.0
+        ],
+        [
+          16.0,
+          31.0,
+          16.0
+        ],
+        [
+          8.0,
+          16.0,
+          8.0
+        ]
+      ]
+    },
+    {
+      "step": 200,
+      "score": 0.5873962902153531,
+      "colour_mae": 0.39900174488623935,
+      "grid_edge_mae": 0.5382701295117537,
+      "kernel": [
+        [
+          8.0,
+          15.0,
+          8.0
+        ],
+        [
+          15.0,
+          35.0,
+          15.0
+        ],
+        [
+          8.0,
+          15.0,
+          8.0
+        ]
+      ]
+    },
+    {
+      "step": 300,
+      "score": 0.5824737376843889,
+      "colour_mae": 0.3922048682967822,
+      "grid_edge_mae": 0.543625341107448,
+      "kernel": [
+        [
+          9.0,
+          15.0,
+          9.0
+        ],
+        [
+          15.0,
+          31.0,
+          15.0
+        ],
+        [
+          9.0,
+          15.0,
+          9.0
+        ]
+      ]
+    },
+    {
+      "step": 400,
+      "score": 0.5873962902153531,
+      "colour_mae": 0.39900174488623935,
+      "grid_edge_mae": 0.5382701295117537,
+      "kernel": [
+        [
+          8.0,
+          15.0,
+          8.0
+        ],
+        [
+          15.0,
+          35.0,
+          15.0
+        ],
+        [
+          8.0,
+          15.0,
+          8.0
+        ]
+      ]
+    },
+    {
+      "step": 500,
+      "score": 0.5824737376843889,
+      "colour_mae": 0.3922048682967822,
+      "grid_edge_mae": 0.543625341107448,
+      "kernel": [
+        [
+          9.0,
+          15.0,
+          9.0
+        ],
+        [
+          15.0,
+          31.0,
+          15.0
+        ],
+        [
+          9.0,
+          15.0,
+          9.0
+        ]
+      ]
+    }
+  ],
+  "base_R1_sha256": "6d8587288530cd1dcb5289482ea7505843729b7c0ad006846377222d005243c7",
+  "teacher_R2_sha256": "06ba17e1eb0fcee7e7677136963c3a74c4a42fdf3349eef00fec4b1ac38e233d",
+  "coefficient_sha256": "2e8f5cc4f40d44da9e795e82259624528ff4c1b4acc312a80303a9f42e6fbb4a",
+  "only_trainable_layer": "up1_low_dw, existing first24 depthwise kernels, tied symmetric nonnegative DC127",
+  "operators_and_topology_unchanged": true,
+  "flat_RGB_320_cases_exactly_preserved": true,
+  "final_palette_weights_frozen": true,
+  "high_resolution_decoder_centre_only": true,
+  "qat_vs_bin_validation_exact": true,
+  "oracle": {
+    "all_nodes_exact": true,
+    "scalar_comparisons": 6720
+  },
+  "new_user_sources_not_training": true,
+  "hardware_modified": false
+}

@@ -1,0 +1,364 @@
+{
+  "schema": "S4R1PKG1",
+  "header_bytes": 64,
+  "graph_sha256": "65b7f0521a2ac341d612a272aec605340d88061174340f6efee81be4e9a0d401",
+  "operators": [
+    {
+      "node": "stem",
+      "fields": {
+        "weight": {
+          "offset": 64,
+          "length": 216,
+          "shape": [
+            8,
+            3,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 280,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 312,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "down_dw",
+      "fields": {
+        "weight": {
+          "offset": 344,
+          "length": 72,
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 416,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 448,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "down_pw",
+      "fields": {
+        "weight": {
+          "offset": 480,
+          "length": 256,
+          "shape": [
+            32,
+            8,
+            1,
+            1
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 736,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 864,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "res1_a_dw",
+      "fields": {
+        "weight": {
+          "offset": 992,
+          "length": 288,
+          "shape": [
+            32,
+            1,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 1280,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 1408,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "res1_a_pw",
+      "fields": {
+        "weight": {
+          "offset": 1536,
+          "length": 1024,
+          "shape": [
+            32,
+            32,
+            1,
+            1
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 2560,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 2688,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "res1_b_dw",
+      "fields": {
+        "weight": {
+          "offset": 2816,
+          "length": 288,
+          "shape": [
+            32,
+            1,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 3104,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 3232,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "res1_b_pw",
+      "fields": {
+        "weight": {
+          "offset": 3360,
+          "length": 1024,
+          "shape": [
+            32,
+            32,
+            1,
+            1
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 4384,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 4512,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "up1_low_dw",
+      "fields": {
+        "weight": {
+          "offset": 4640,
+          "length": 288,
+          "shape": [
+            32,
+            1,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 4928,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 5056,
+          "length": 128,
+          "shape": [
+            32
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "up1_low_pw",
+      "fields": {
+        "weight": {
+          "offset": 5184,
+          "length": 256,
+          "shape": [
+            8,
+            32,
+            1,
+            1
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 5440,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 5472,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "up1_high",
+      "fields": {
+        "weight": {
+          "offset": 5504,
+          "length": 72,
+          "shape": [
+            8,
+            1,
+            3,
+            3
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 5576,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 5608,
+          "length": 32,
+          "shape": [
+            8
+          ],
+          "dtype": "<i4"
+        }
+      }
+    },
+    {
+      "node": "rgb",
+      "fields": {
+        "weight": {
+          "offset": 5640,
+          "length": 24,
+          "shape": [
+            3,
+            8,
+            1,
+            1
+          ],
+          "dtype": "i1"
+        },
+        "bias": {
+          "offset": 5664,
+          "length": 12,
+          "shape": [
+            3
+          ],
+          "dtype": "<i4"
+        },
+        "multiplier": {
+          "offset": 5680,
+          "length": 12,
+          "shape": [
+            3
+          ],
+          "dtype": "<i4"
+        }
+      }
+    }
+  ],
+  "residual_offset": 5696,
+  "effective_bytes": 5708,
+  "padded_bytes": 8192,
+  "crc32": "1a79970f",
+  "sha256": "a3ef507b720ec12278d6a92d1ec6bb7e9b59fdcd86bca019d17ce0be4e093121"
+}

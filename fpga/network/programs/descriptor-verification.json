@@ -1,0 +1,88 @@
+{
+  "status": "S4R1_DESCRIPTOR_ABI_DEPENDENCY_PASS_NOT_RTL_RELEASE",
+  "compute_records": 6546,
+  "dma_records": 8277,
+  "compute_bytes": 418944,
+  "dma_bytes": 132432,
+  "schedule_sha256": "6d3570453d9b6bf414f2e059ae9d30e3e28e4f46965245fb1454dc188f612020",
+  "styles": [
+    {
+      "slot": 0,
+      "compute_sha256": "aa10e57b9d955f58ddb335c700a3746ec9654e6b4af446d67408b98accc6438f",
+      "compute_crc32": "4a267647"
+    },
+    {
+      "slot": 1,
+      "compute_sha256": "aa10e57b9d955f58ddb335c700a3746ec9654e6b4af446d67408b98accc6438f",
+      "compute_crc32": "4a267647"
+    },
+    {
+      "slot": 2,
+      "compute_sha256": "aa10e57b9d955f58ddb335c700a3746ec9654e6b4af446d67408b98accc6438f",
+      "compute_crc32": "4a267647"
+    },
+    {
+      "slot": 3,
+      "compute_sha256": "aa10e57b9d955f58ddb335c700a3746ec9654e6b4af446d67408b98accc6438f",
+      "compute_crc32": "4a267647"
+    },
+    {
+      "slot": 4,
+      "compute_sha256": "aa10e57b9d955f58ddb335c700a3746ec9654e6b4af446d67408b98accc6438f",
+      "compute_crc32": "4a267647"
+    }
+  ],
+  "dma_sha256": "220257bf995c8ff0aac7f0c569e08a087bfac9ebd50089abe9b3614eef84f4da",
+  "dma_crc32": "4a82d03a",
+  "replays": [
+    {
+      "seed": 71,
+      "completed": [
+        6546,
+        8277
+      ],
+      "overlapped_starts": 7683,
+      "abstract_ticks": 650816
+    },
+    {
+      "seed": 391,
+      "completed": [
+        6546,
+        8277
+      ],
+      "overlapped_starts": 7714,
+      "abstract_ticks": 645274
+    },
+    {
+      "seed": 1027,
+      "completed": [
+        6546,
+        8277
+      ],
+      "overlapped_starts": 7611,
+      "abstract_ticks": 651477
+    }
+  ],
+  "expected_node_mask": 8191,
+  "compute_version": 85,
+  "new_bits": {
+    "stride4": 447,
+    "nearest4": 448
+  },
+  "source_bytes": 6596385,
+  "result_bytes": 6451200,
+  "rtl_decoder_verified": false,
+  "hardware_access": false,
+  "source_handoff": "E:\\fpga\\workspaces\\dma-prefetch-audit",
+  "source_handoff_sha256": "92d1bc759d8ba9354c065819a3d9e9db4e9a6684399949c0cbded283235bf3c0",
+  "SRAM_high_words": [
+    1024,
+    884,
+    876,
+    1019,
+    1019,
+    968
+  ],
+  "static_read_identity_checks": 7040479,
+  "unchanged_fields_checked": 261243
+}

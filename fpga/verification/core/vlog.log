@@ -1,0 +1,95 @@
+Questa Altera Starter FPGA Edition-64 vlog 2025.3 Compiler 2025.09 Sep 15 2025
+Start time: 13:25:03 on Nov 03,2026
+vlog -sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_add.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_dpram10.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_dsp48.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_lut4.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_ram10.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\tests\vendor\efx_srl8.v E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\cnn_production_frame.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\axi_read_merge2.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\banked_result_fifo.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\cnn_frame_datapath.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\coefficient_bank_store_fast.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\column_write4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\column_write8.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\finish_rr_arbiter.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_column_store4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_partial32.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_production_mac.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_ring_weights9.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_rq32_mixed.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_skip_vectors4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_source_columns6.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_video_compute.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_weight_loader.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\fixed_window_dot8x32.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\frame_program_fetch.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\frame_program_issue.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\int8_dual_mac_lane_dspacc.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\int8_dual_mac_lane_prefix_stream.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\phase_resident_reader.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\pw_skip_fuse4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\requantize_i32_mul18_q17_pipeline.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\resident_weight_bank64.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\residual_column_fuse.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\result_pair_expand4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_arena6.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_aux_router.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_column_reader.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_column_writer.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_compute_cluster.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_dma.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\row_pair_skip_fuse4.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\shallow_result_fifo.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\shared_mac_stream_front.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\shared_pool_banked_fifo.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\shared_rq_oc8_cluster.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\tensor_arena12.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\unified_column_dispatch32.sv E:\fpga\output\handoff\sapphire-native8h-r15-complete-20261103\network\rtl\unified_column_reader.sv 
+** Note: (vlog-220) 'E:/quatra/questa_fse/win64/../modelsim.ini' is used as the ini file.
+-- Compiling module EFX_ADD
+-- Compiling module EFX_DPRAM10
+-- Compiling module EFX_DSP48
+-- Compiling module EFX_DSP48_int
+-- Compiling module EFX_DSP48_float
+-- Compiling module EFX_DSP48_pipe
+-- Compiling module EFX_DSP48_mult_mode
+-- Compiling module EFX_DSP48_mult
+-- Compiling module EFX_DSP48_p_extender
+-- Compiling module EFX_DSP48_c_extender
+-- Compiling module EFX_DSP48_extender
+-- Compiling module EFX_DSP48_shifter_mode
+-- Compiling module EFX_DSP48_shifter
+-- Compiling module EFX_DSP48_add_sub_mode
+-- Compiling module EFX_DSP48_add_sub
+-- Compiling module f_mulAdd
+-- Compiling module fp_fmt_conv
+-- Compiling module EFX_LUT4
+-- Compiling module EFX_RAM10
+-- Compiling module EFX_SRL8
+-- Compiling module cnn_production_frame
+-- Compiling module axi_read_merge2
+-- Compiling module banked_result_fifo
+-- Compiling module cnn_frame_datapath
+-- Compiling module resident_header_table
+-- Compiling module fixed_dma_window_guard
+-- Compiling module fixed_progress_watchdog
+-- Compiling module coefficient_bank_store_fast
+-- Compiling module column_write4
+-- Compiling module column_write8
+-- Compiling module finish_rr_arbiter
+-- Compiling module fixed_column_store4
+-- Compiling module fixed_partial32
+-- Compiling module fixed_production_mac
+-- Compiling module fixed_ring_weights9
+-- Compiling module fixed_rq32_mixed
+-- Compiling module fixed_rq_predecoded_pipeline
+-- Compiling module shared_rq_phase96
+-- Compiling module shared_rq_dsp96
+-- Compiling module fixed_skip_vectors4
+-- Compiling module fixed_source_columns6
+-- Compiling module fixed_video_compute
+-- Compiling module fixed_weight_loader
+-- Compiling module fixed_window_dot8x32
+-- Compiling module generic_b1_tail94
+-- Compiling module frame_program_fetch
+-- Compiling module frame_program_issue
+-- Compiling module int8_dual_mac_lane_dspacc
+-- Compiling module int8_dual_mac_lane_prefix_stream
+-- Compiling module phase_resident_reader
+-- Compiling module pw_skip_fuse4
+-- Compiling module requantize_i32_mul18_q17_pipeline
+-- Compiling module cnn_weight_bank64
+-- Compiling module residual_column_fuse
+-- Compiling module result_pair_expand4
+-- Compiling module row_pair_arena6
+-- Compiling module row_pair_aux_router
+-- Compiling module row_pair_column_reader
+-- Compiling module row_pair_column_writer
+-- Compiling module row_pair_compute_cluster
+-- Compiling module header_group_cache3
+-- Compiling module row_pair_dma
+-- Compiling module row_pair_skip_fuse4
+-- Compiling module shallow_result_fifo
+-- Compiling module shared_mac_stream_front
+-- Compiling module shared_pool_banked_fifo
+-- Compiling module shared_rq_oc8_cluster
+-- Compiling module tensor_dual_bank
+-- Compiling module tensor_arena12
+-- Compiling module unified_column_dispatch32
+-- Compiling module unified_column_reader
+
+Top level modules:
+	cnn_production_frame
+	column_write4
+	column_write8
+	finish_rr_arbiter
+	phase_resident_reader
+	pw_skip_fuse4
+	residual_column_fuse
+	result_pair_expand4
+	row_pair_column_reader
+	row_pair_column_writer
+	header_group_cache3
+	row_pair_skip_fuse4
+	shared_pool_banked_fifo
+	tensor_arena12
+	unified_column_dispatch32
+	unified_column_reader
+End time: 13:25:04 on Nov 03,2026, Elapsed time: 0:00:01
+Errors: 0, Warnings: 0

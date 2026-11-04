@@ -1,0 +1,62 @@
+{
+  "scope": "r15 complete source, model, dependency and runtime-data packaging",
+  "model": {
+    "status": "ALL_FIVE_CHECKPOINTS_AND_INTEGER_NETWORKS_MATCH",
+    "torch": "2.11.0+cu128",
+    "styles": [
+      {
+        "slot": 0,
+        "parameters": 4035,
+        "coefficient_checks": 4262,
+        "exact_output_scalars": 480,
+        "strict_checkpoint_load": true
+      },
+      {
+        "slot": 1,
+        "parameters": 4035,
+        "coefficient_checks": 4262,
+        "exact_output_scalars": 480,
+        "strict_checkpoint_load": true
+      },
+      {
+        "slot": 2,
+        "parameters": 4035,
+        "coefficient_checks": 4262,
+        "exact_output_scalars": 480,
+        "strict_checkpoint_load": true
+      },
+      {
+        "slot": 3,
+        "parameters": 4035,
+        "coefficient_checks": 4262,
+        "exact_output_scalars": 480,
+        "strict_checkpoint_load": true
+      },
+      {
+        "slot": 4,
+        "parameters": 4035,
+        "coefficient_checks": 4262,
+        "exact_output_scalars": 480,
+        "strict_checkpoint_load": true
+      }
+    ]
+  },
+  "readable_cnn": {
+    "status": "READABLE_CNN_COMPILE_ELABORATE_PASS",
+    "design_files": 42,
+    "vendor_models": 6,
+    "suppressed_recommendation": 14408
+  },
+  "runtime_rebuild": {
+    "bytes": 2797568,
+    "slots": 6,
+    "identical": true
+  },
+  "network": {
+    "convolutions": 11,
+    "nodes": 13,
+    "parameters_per_style": 4035,
+    "styles": 5
+  },
+  "r15_top_sha256": "c8fe013f885ae74b41c84c85e65b4456063ff6f609841187b535c61b0aee18d0"
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ti60-model-contract-generation-v1",
+  "contract_sha256": "b330b3bce8d09544d596ff446a457c60c77407ded12800cd9cceb16fba92abf3",
+  "contract_hash_encoding": "UTF8 canonical JSON sorted keys without whitespace",
+  "source_sha256": {
+    "model_contract.schema.json": "1ad049d1005b21b2b4369e7b57ddafa1c215a5124d06f6691b546b5f325d09db",
+    "model_contract.py": "42c0541a45c2adbf4be6fe984df0d4950996578a4bb9e185e7e2244f6ea836cb",
+    "contract_reference.py": "698351a6ed5e4dd6d212fb9df09ff5d497c8c1175307dd2b9e36d7693080da36",
+    "contract_torch.py": "d351c08964c7e81e4503479bccfa8e6140df111868e574e0626f5858446b536d"
+  },
+  "pytorch_execution_verified": false,
+  "complete_network_start_allowed": false
+}

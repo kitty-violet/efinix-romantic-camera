@@ -1,41 +1,54 @@
-# Sapphire + native8h 第十五版代码
+# Sapphire + native8h r15 完整代码
 
-版本：production-r15，日期：2026-11-03。
+## 先看网络结构
 
-## 目录
+- **`网络结构与源码导航.md`**：逐层尺寸、运算、残差连接和 FPGA 模块对应关系。
+- **`network/model.py`**：可直接读取本包五套 `selected.pt` 的 PyTorch 网络类 `S4R1`。
+- **`network/graph.json`**：13 个节点的结构定义；各风格完整结构及量化参数同时保留在 `network/models/slot*/graph.json`。
+- **`network/rtl/cnn_production_frame.sv`**：可读 FPGA 计算核入口，下面的 MAC、DW/PW、缓存、DMA 和重定量模块均随包提供。
 
-- `project/`：完整 FPGA 工程、Verilog/SystemVerilog 源码、官方 Sapphire 核、ROM 初值、引脚和时序约束。
-- `firmware/`：C 控制程序、相机配置表、启动汇编和链接脚本；`prebuilt/` 为本版对应的 ELF、BIN、反汇编和 ROM 文件。
-- `sapphire/`：官方核生成配置、CPU 配置和 BSP。
-- `tests/`：控制桥、服务后端、DMA、相机及固件测试源码；`data/` 为测试数据，`vendor/` 为对应的仿真模型。
-- `tools/`：固件编译及文件完整性检查工具。
-- `MANIFEST.json`：文件 SHA-256 清单。
+## 工程目录
 
-## 工程参数与功能
+| 目录 | 内容 |
+|---|---|
+| `project/` | 第十五版实际整机工程、展平顶层、Sapphire 核、接口 RTL、ROM、引脚和时序约束 |
+| `firmware/` | 生产 C 程序、相机表、启动汇编、链接脚本和匹配的预编译固件 |
+| `network/models/` | 五风格 checkpoint、整数权重、BIN/HEX、逐层结构、测试向量；slot5 为原图模式装载 ABI 占位 |
+| `network/rtl/` | 共享 CNN 计算核的完整可读模块及实际选定映射输入 |
+| `network/programs/` | 计算/DMA 描述符、字段定义、存储分配和已生成二进制 |
+| `network/scheduler/` | 调度与描述符编译源码 |
+| `network/runtime_data/` | 匹配六槽目录、计算程序、系数和 RGB 表的运行数据 |
+| `original_sources/` | 网络定义、训练、导出、像素修正及集成工具的原始开发源码，保留目录层次 |
+| `sapphire/` | 官方 CPU 配置和 BSP |
+| `tests/` | 控制、CPU、相机、DMA 测试及对应模型/数据 |
+| `tools/` | 包完整性、模型数值、源码依赖检查与固件构建入口 |
+| `source_binding/` | r15 模式缓冲修改与原计算核对应的来源记录 |
 
-器件为 Efinix Titanium Ti60F225，工具版本为 Efinity 2026.1.132，顶层为 `ti60f225_oob_top`。CPU 为官方 Sapphire trim3_no_clint，RV32I + Zicsr/Zifencei，100 MHz、8 KiB OCR；视频计算域为 150 MHz。
+## 使用
 
-C 固件负责相机配置、目录检查与装载调度、事件及模式切换。硬件保留底层传输、CRC、地址保护、流水计算和显示。工程包含六模式、中文名称、FPS、BLE/按键控制和全半屏切换。r15 的模式控制网采用 16 支组合缓冲，其源码已包含在 `project/native222.v` 中。
+Efinity 2026.1.132 打开 `project/ti60f225_oob.xml`；器件 Ti60F225/I3，顶层 `ti60f225_oob_top`，CPU 100 MHz，计算域 150 MHz。实际整机入口是 `project/`；`network/rtl/` 供分层阅读和单独计算核开发，已在整机展平文件中实现。
 
-## 打开与使用
+使用 Python 3.10+ 检查所有文件、项目输入、逐层图、权重转换、描述符和运行数据：
 
-1. 解压到本地目录，用 Efinity 2026.1.132 打开 `project/ti60f225_oob.xml`。
-2. 工程文件使用包内相对路径；RTL、四个 CPU ROM 文件及外围接口文件已放在对应位置。
-3. C 固件入口为 `firmware/main.c`，寄存器定义在 `firmware/control.h`，内存布局在 `firmware/memory.ld`。
-4. 如需重新编译固件，使用 Python 3 和 RV32 GCC 15.2.0 工具链：
+```powershell
+python tools/verify_complete.py
+```
 
-   ```powershell
-   python .\tools\build_firmware.py --toolchain "E:\path\to\gcc"
-   ```
+在已有 PyTorch/NumPy/Pillow 环境中打开网络和检查五套 checkpoint：
 
-   输出位于 `build/firmware/`。将其中四个 `EfxSapphireSoc.v_toplevel_system_ramA_logic_ram_symbol*.bin` 复制到 `project/`，即可供 FPGA 工程使用。
+```powershell
+python network/model.py --slot 0
+python tools/check_network_model.py
+```
 
-5. 文件完整性检查：
+模型输入为 NCHW 的 `RGB_uint8 / 128 - 1`，输出乘 128 加 128 后恢复 RGB。图像推理入口为 `network/infer_package.py`，支持 `--style-root network/models/slot0 --input image.png --output result.png --device cpu`，输入为 1280×720 RGB。
 
-   ```powershell
-   python .\tools\verify_package.py
-   ```
+C 固件重新编译入口：`python tools/build_firmware.py --toolchain E:/path/to/gcc`，使用 RV32 GCC 15.2.0。生成的四个 ROM 文件放回 `project/`。原始训练脚本的素材和历史输出路径保留在 `original_sources/`，当前模型的独立加载与推理使用上述包内入口。
 
-## 测试源码
+模式顺序为漫画、阿凡达、热成像、像素动画、阴曹地府、原图。文件清单见 `MANIFEST.json`，来源对应见 `SOURCE_ORIGINS.json`，本次检查结果见 `检查结果.json`。
 
-`tb_control_rpc.sv`、`tb_service_backend.sv`、`tb_service_word_dma.sv` 和 `tb_camera_service.sv` 分别对应控制跨域桥、服务后端、DMA 和相机接口；`tb_control_system.sv`、`tb_production_firmware.sv` 对应 CPU 相邻接口与 C 固件测试。仿真时使用 `tests/vendor/EfxSapphireSoc.v`，综合工程使用 `project/EfxSapphireSoc.v`。固件测试的运行目录需要放置 `tests/data/` 下的三个 HEX 文件和本版四个 CPU ROM 文件。
+运行数据重建：`python tools/build_runtime.py`，从包内五套系数和描述符字段重建六槽运行数据，并逐字节对照交付文件。调度算法入口为 `network/scheduler/compile_schedule.py`，当前选定程序的打包入口为 `network/scheduler/pack_program.py`；早期实验和迁移脚本保留于 `original_sources/`。
+
+可读计算核检查：`python tools/check_core.py --questa E:/path/to/questa/win64 --license E:/path/to/license.dat`。所需六个官方 Verilog 原语模型已在 `tests/vendor/`。`network/rtl/fixed_video_compute.sv` 仅将 `start` 的声明提前以兼容 Questa；原文件与修改记录均随包保存。
+
+新说明文件为 UTF-8；整机工程保留原始字节，`project/i2c_master_bit_ctrl.v` 的中文注释使用原 GB18030 编码。

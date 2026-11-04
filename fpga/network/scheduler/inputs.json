@@ -1,0 +1,35 @@
+{
+  "package": "..",
+  "selected": [
+    {
+      "slot": 0,
+      "folder": "../models/slot0",
+      "id": "R8-07",
+      "name": "漫画"
+    },
+    {
+      "slot": 1,
+      "folder": "../models/slot1",
+      "id": "B03",
+      "name": "阿凡达"
+    },
+    {
+      "slot": 2,
+      "folder": "../models/slot2",
+      "id": "R8-06",
+      "name": "热成像"
+    },
+    {
+      "slot": 3,
+      "folder": "../models/slot3",
+      "id": "PIXEL_R39",
+      "name": "像素动画"
+    },
+    {
+      "slot": 4,
+      "folder": "../models/slot4",
+      "id": "W-T256",
+      "name": "阴曹地府"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 # 基于易灵思的浪漫相机
 
-基于 Efinix Titanium Ti60F225 与 Sapphire RISC-V 的视频图像处理作品。当前代码为 **production-r15（2026-11-03）**，包含 Efinity 工程、C 固件、CPU ROM、六模式显示与控制、测试源码，以及 V9-P1 相机外壳。
+基于 Efinix Titanium Ti60F225 与 Sapphire RISC-V 的实时风格化视频系统。当前归档为团队确认的 **production-r15-complete（2026-11-03）**：整机工程、C 固件、可读 CNN 源码、五套模型权重、运行数据、开发来源及 V9-P1 相机外壳。
 
-本仓库用于 2026 年全国大学生嵌入式芯片与系统设计竞赛 FPGA 创新设计赛道的项目归档与团队交接，对应易灵思赛题一“AI 赋能的「实时绘画」——风格化视频渲染系统”。当前仓库为私有仓库。
+本仓库用于 2026 年全国大学生嵌入式芯片与系统设计竞赛 FPGA 创新设计赛道，对应易灵思赛题一“AI 赋能的「实时绘画」——风格化视频渲染系统”。仓库已按团队要求公开，供评委直接浏览和下载；公开访问不等于授予统一开源许可证。
 
 ![V9-P1 正式打印件与装配分解](mechanical/enclosure_v9/03_三维核对/打印零件_装配分解核对.png)
 
@@ -13,25 +13,31 @@
 | 项目 | 内容 |
 | --- | --- |
 | FPGA 器件 | Efinix Titanium Ti60F225 |
-| 代码版本 | `production-r15`，来自 `sapphire-native8h-r15-code-20261103.zip` |
+| 代码版本 | `production-r15-complete`，来自 `sapphire-native8h-r15-complete-20261103.rar`，2026-11-04 更新入库 |
 | 顶层模块 | `ti60f225_oob_top` |
 | CPU | 官方 Sapphire `trim3_no_clint`，RV32I + Zicsr/Zifencei，100 MHz，8 KiB OCR |
-| 硬件计算域 | 150 MHz；风格处理及原始分辨率路径见工程模块 |
-| 模式 | 原包说明为六模式，包含中文名称、FPS、全/半屏切换 |
+| 硬件计算域 | 150 MHz；`S4R1_8_32_8_V1`，11 卷积、13 节点、1 残差块 |
+| 模型规模 | 每风格 3808 权重 + 227 偏置 = 4035 参数，另 227 个 Q17 乘数 |
+| 风格 | 漫画、阿凡达、热成像、像素动画、阴曹地府，共五套 checkpoint/整数权重 |
+| 原图模式 | 第六槽位走 1080p bypass，装载占位数据不是第六套 CNN |
+| 视频 | 风格计算 1280×720 RGB；HDMI 按源码时序为 1920×1080@30Hz |
 | 控制 | C 固件负责相机配置、目录校验、装载调度、事件及模式切换；BLE/实体按键输入 |
 | Efinity | `2026.1.132`；工程器件 Ti60F225、时序模型 I3 |
 | 固件工具链 | RV32 GCC 15.2.0，已附对应预编译固件和四个 ROM lane 文件 |
 | 外壳 | V9-P1，2026-10-28，毫米，1:1 |
 
-视频输出时序与 AI 推理帧率是两种指标。旧版约 17.1 AI FPS 的记录不作为 r15 的实测值；新包没有附本版实测帧率、切换延迟或综合时序结果，也不能凭六个显示模式推定有六套独立网络权重。
+HDMI 30Hz 是显示时序，**不代表 AI 每秒生成 30 个新画面**。本次没有重新测量实际采集帧率、AI 吞吐、切换延迟或综合时序；旧版约 17.1 AI FPS 不作为 r15 实测。
 
-本次将新包 **89 个文件原样收录**于 `fpga/`，已具备项目 XML、外设配置、引脚/时序资料、RTL、C 固件和测试源码。[原包 README](fpga/README.md)和[工程使用说明](docs/fpga-project.md)给出构建入口。包内未附最终 FPGA 位流及外部 Flash 目录/模型/ISP 数据镜像，故不能仅用 CPU `control.bin` 完成整机烧录。本次没有重新综合、仿真或实板测试。外壳仍是原 V9-P1 首件试装交付，完整边界见[赛题对照](docs/competition-checklist.md)。
+新包 **3240 个文件逐字节保留**于 `fpga/`，比上一代码包补齐五套模型、42 个可读核设计源、调度器、计算/DMA 描述符、生产运行数据和原始开发源码。原包 [README](fpga/README.md)、[网络结构导航](fpga/网络结构与源码导航.md)、[来源清单](fpga/SOURCE_ORIGINS.json)均原样保留。
+
+**烧录边界：**已附的 `flash-user-data.bin` 仅是 Flash `0x340000` 起的数据区，不是整片 Flash 镜像，不能从地址 0 烧录。包内仍无最终 FPGA 位流；来源记录将该数据标为 `NOT_BOARD_VERIFIED`，应由硬件维护者与匹配位流、相机配置及回读验收一起确认，详见[工程说明](docs/fpga-project.md)。外壳仍是原 V9-P1 首件试装交付，验收边界见[赛题对照](docs/competition-checklist.md)。
 
 ## 从哪里开始
 
 | 需要做的事 | 文档 |
 | --- | --- |
 | 下载完整文件、配置已有环境 | [环境与获取方式](docs/environment.md) |
+| 查看五风格网络、参数与图像推理 | [网络与模型](docs/network.md) |
 | 使用已有已烧录设备 | [使用说明](docs/usage.md) |
 | 打开 FPGA 工程、构建固件 | [工程使用说明](docs/fpga-project.md)、[原包说明](fpga/README.md) |
 | 实现手机/串口控制 | [蓝牙命令协议](docs/ble-protocol.md) |
@@ -49,10 +55,11 @@ git clone https://github.com/kitty-violet/efinix-romantic-camera.git
 cd efinix-romantic-camera
 git lfs pull
 python -B scripts/verify_repository.py
-python -B fpga/tools/verify_package.py
+python -B fpga/tools/verify_complete.py
+git lfs fsck
 ```
 
-私有仓库需要 GitHub 账号已获访问权限；命令中的 `git` 和 `python` 应替换为本人已确认的可执行文件路径。校验脚本仅使用 Python 3.10+ 标准库，无需 PyTorch、CUDA 或训练环境。
+公开库浏览和克隆不需要协作者权限；命令中的 `git` 和 `python` 应替换为本人已确认的可执行文件路径。两级 Python 校验仅用 Python 3.10+ 标准库，无需 PyTorch/CUDA。原包的 `verify_package.py` 基础校验也继续保留。
 
 大网表、STEP/STL/BREP 使用 Git LFS。r15 顶层网表约 174.8 MiB；没有拉取 LFS 时，它们可能只是几行指针文本。完整下载及磁盘预算见[环境说明](docs/environment.md)。
 
@@ -63,9 +70,18 @@ python -B fpga/tools/verify_package.py
 ├── fpga/
 │   ├── project/                 Efinity XML、RTL、外设/SDC、CPU ROM
 │   ├── firmware/                C/汇编/链接脚本及本版预编译文件
+│   ├── network/
+│   │   ├── model.py             包内独立 S4R1 网络类
+│   │   ├── models/              五风格 checkpoint/整数权重，原图槽位占位
+│   │   ├── rtl/                 可读共享 CNN 计算核
+│   │   ├── programs/            计算/DMA 描述符与二进制
+│   │   ├── scheduler/           调度与程序打包源码
+│   │   └── runtime_data/        六槽目录和 Flash 数据区镜像
+│   ├── original_sources/        原训练、导出、集成等开发源码，保留来源层次
 │   ├── sapphire/                Sapphire 配置与 BSP
 │   ├── tests/                   测试台、仿真模型及测试数据
-│   ├── tools/                   固件构建与原包校验脚本
+│   ├── tools/                   完整性、模型/核检查、固件及运行数据构建入口
+│   ├── verification/            来源编译/展开记录，不是本轮上板结果
 │   └── MANIFEST.json            原包 SHA-256 清单，原样保留
 ├── mechanical/enclosure_v9/
 │   ├── 01_正式打印零件/         六种正式零件，STEP/STL 各一份
@@ -79,10 +95,10 @@ python -B fpga/tools/verify_package.py
 └── .github/workflows/           自动执行仓库完整性检查
 ```
 
-当前收录 123 个原始资产：r15 代码包 89 个、V9 外壳 34 个，共约 271.5 MiB。未打包个人环境、账号凭据、工具安装包或历史训练实验。文件来源与哈希见[资产清单](manifests/source-assets.json)。11 月 2 日的五风格无 RISC-V 版本保留在 Git 历史提交 `423d07a`，不与新工程混用。
+共 **3274 个原始资产，323,843,953 字节，约 308.8 MiB**：最终包 3240 个、V9 外壳 34 个。不含个人环境、账号凭据、许可证或工具安装包。`original_sources/output/` 是队友交付的开发源码归档，不是本轮产生的缓存；其中历史绝对路径需自行适配，不应整目录自动执行。来源与哈希见[资产清单](manifests/source-assets.json)。历史版本可在 Git 提交记录查阅，不与当前工程混用。
 
 ## 维护
 
-先阅读[贡献与更新约定](CONTRIBUTING.md)。每次替换网表、CAD 或参数文件时，保持版本说明、校验清单和对应验证证据一致；不要将归档校验通过解释成时序收敛或实板验收通过。
+先阅读[贡献与更新约定](CONTRIBUTING.md)。本轮执行文件/ROM/模型转换/描述符及运行数据一致性检查，没有重新训练、安装工具、综合、HDL 仿真、烧录或实物测试。文件校验通过、来源历史验证与本轮实板验收必须分别表述。
 
 版本变更记录见 [CHANGELOG](CHANGELOG.md)。本仓库未授予统一开源许可证，Efinix 原语和受保护 IP 的权利说明见 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md)。

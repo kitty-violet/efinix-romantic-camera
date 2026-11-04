@@ -1,0 +1,22 @@
+{
+  "schema": "cut-wide-fp32-v1",
+  "seed": 20261001,
+  "content_manifest": "E:/fpga/model-training-workspace/data/processed/content-20261001-v4-minus1ev-draft/manifest.approved.json",
+  "style_manifest": "E:/fpga/model-training-workspace/data/processed/style-target-20261001-v6-daylight-draft/dataset-manifest.json",
+  "expected_style_count": 27,
+  "generator_width": 32,
+  "discriminator_width": 48,
+  "residual_blocks": 6,
+  "projection_width": 128,
+  "nce_patches": 64,
+  "nce_weight": 1.0,
+  "learning_rate": 0.0002,
+  "wide_width": 512,
+  "wide_height": 288,
+  "lowpass_weight": 1.0,
+  "edge_weight": 0.5,
+  "maximum_steps": 4000,
+  "checkpoint_every": 250,
+  "validation_steps": [50, 100, 250, 500, 1000, 2000, 4000],
+  "precision": "FP32-no-AMP-no-TF32"
+}

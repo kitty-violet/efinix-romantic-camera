@@ -1,6 +1,6 @@
 # 更新与团队协作
 
-本库记录当前 production-r15 工程和指定 V9-P1 外壳。更新前先阅读[原包说明](fpga/README.md)、[工程说明](docs/fpga-project.md)、[赛题对照](docs/competition-checklist.md)和[第三方说明](THIRD_PARTY_NOTICES.md)。
+本库公开归档 production-r15-complete 工程、五风格模型/可读核、运行数据及指定 V9-P1 外壳。更新前先阅读[原包说明](fpga/README.md)、[工程说明](docs/fpga-project.md)、[网络说明](docs/network.md)、[赛题对照](docs/competition-checklist.md)和[第三方说明](THIRD_PARTY_NOTICES.md)。
 
 ## 修改约定
 
@@ -18,6 +18,7 @@ git pull --ff-only
 git lfs pull
 python -B scripts/verify_repository.py
 python -B fpga/tools/verify_package.py
+python -B fpga/tools/verify_complete.py
 git lfs fsck
 ```
 
@@ -25,6 +26,6 @@ git lfs fsck
 
 ## 补充完整工程
 
-参照[交接缺项](docs/submission.md)，补充生产 Flash 数据镜像、位流、模型资料和验证证据。r15 已附工程与约束，不要再使用旧版四文件工程说明。源码包内 `project/outflow`、预编译 BIN 和 ROM 是有意保留的交付资料；新编译输出仍放忽略的 `fpga/build`、`work_syn`、`work_pnr` 等目录。大型镜像/权重按实际交付需要选择 LFS，不提交安装环境。
+参照[交接缺项](docs/submission.md)，后续补齐最终位流、相机配置/镜像匹配和板端验证证据。已有模型及 `0x340000` 起的数据区不再列为缺失；数据来源未板验，不能仅改文档声称已验收。源码包内 `project/outflow`、预编译 BIN/ROM、模型 BIN/HEX、`original_sources/output`和来源验证日志均为有意交付；新输出仍放忽略的 `fpga/build`、`work_syn`、`work_pnr`等目录，不混入历史归档。大型镜像/权重按实际需要选择 LFS，不提交安装环境。
 
 测试结果注明硬件、工具版本、输入条件和 commit。文件校验通过、原说明的历史实板声明、本次实测三者应分别表述。

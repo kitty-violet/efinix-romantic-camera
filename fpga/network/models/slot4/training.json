@@ -1,0 +1,159 @@
+{
+  "style_id": "W-T256",
+  "name": "阴曹地府",
+  "teacher_sha256": "8c724103bf55efdd382210cace51a81ec345d181adcd514ee3ac309cf7f6efd1",
+  "teacher_folder": "E:\\fpga\\output\\single4x-r2-style-library-20261102\\models\\W-T256",
+  "source_r2_read_only": true,
+  "initialization": "delete_second_block",
+  "gradient_steps": 700,
+  "nonzero_gradient_steps": 0,
+  "any_training_weight_update": false,
+  "selected_step": 0,
+  "initial_score": 0.0,
+  "selected_score": 0.0,
+  "selected_natural_mae": 0.0,
+  "selected_palette_mae": 0.0,
+  "selected_extra": {},
+  "records": [
+    {
+      "step": 0,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 100,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 200,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 300,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 400,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 500,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 600,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    },
+    {
+      "step": 700,
+      "score": 0.0,
+      "natural_mae": 0.0,
+      "palette_mae": 0.0
+    }
+  ],
+  "max_gradient_norm": 0.0,
+  "coefficient_sha256": "6374e58e4c99ee4d02b2207e42e7eba9e285a8b225c03465b8b9da864cc0130f",
+  "cost": {
+    "weights": 3808,
+    "biases": 227,
+    "parameters": 4035,
+    "macs_per_720p": 488908800,
+    "convolutions": 11,
+    "residual_blocks": 1,
+    "shapes": {
+      "input": [
+        720,
+        1280,
+        3
+      ],
+      "stem": [
+        720,
+        1280,
+        8
+      ],
+      "down_dw": [
+        180,
+        320,
+        8
+      ],
+      "down_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_a_dw": [
+        180,
+        320,
+        32
+      ],
+      "res1_a_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_b_dw": [
+        180,
+        320,
+        32
+      ],
+      "res1_b_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_add": [
+        180,
+        320,
+        32
+      ],
+      "up1_low_dw": [
+        180,
+        320,
+        32
+      ],
+      "up1_low_pw": [
+        180,
+        320,
+        8
+      ],
+      "up1_nearest": [
+        720,
+        1280,
+        8
+      ],
+      "up1_high": [
+        720,
+        1280,
+        8
+      ],
+      "rgb": [
+        720,
+        1280,
+        3
+      ]
+    }
+  },
+  "independent_oracle": {
+    "all_nodes_exact": true,
+    "scalar_comparisons": 6720
+  },
+  "qat_vs_export_all_validation_exact": true,
+  "no_inference_filter": true,
+  "no_inference_flow": true,
+  "visual_acceptance": false,
+  "hardware_test": false,
+  "seconds": 26.95017690001987
+}

@@ -1,0 +1,28 @@
+{
+  "status": "DATA_ONLY_CAMERA44_V2_PREPARED_NOT_BOARD_VERIFIED",
+  "catalog": "E:\\fpga\\workspaces\\ble-button-control\\s4r1-native\\data\\catalog6-camera44-v2",
+  "table_crc32": "aa50aa80",
+  "directory_crc32": "4f6b19b1",
+  "table_sha256": "34d5f4345e4c74c1b9fb5a132618a563f85e26bc1b6510456fe1be13a55ed194",
+  "exposure_half_lines": 591,
+  "old_half_lines": 538,
+  "changed_camera_word_indices": [
+    116,
+    117
+  ],
+  "stream_on_last": true,
+  "all_six_style_entries_and_programs_weights_unchanged": true,
+  "changed_catalog_bytes": 706,
+  "payload_sha256": "b29b4fc95a590cb51572ea087f280ebe148071997039da6fa39451dabfd74016",
+  "inputs": {
+    "E:\\fpga\\workspaces\\ble-button-control\\s4r1-native\\data\\catalog5\\flash-user-data.bin": "dd951bd7d8a829934027d907bce1c3e2d087e50548ca1515ba4b3403b8c1de7e",
+    "E:\\fpga\\workspaces\\ble-button-control\\s4r1-native\\data\\catalog5\\manifest.json": "f3c0e47d83f4b69f929bceb87b885fb6cd6697f1eb2df4427d367a3bfc47de94",
+    "E:\\fpga\\output\\handoff\\camera-rgb44-lut-v2-20261103\\manifest.json": "187fc042db0e74c69bc3ba9f6e81585ef04626d6cd6bc06f9ecec9799a337269",
+    "E:\\fpga\\output\\handoff\\camera-rgb44-lut-v2-20261103\\exposure.json": "56c4ed41a2cbd342be33258c493bcb5a53e2729ff9a774156e01b86b908cd9fc",
+    "E:\\fpga\\output\\handoff\\camera-rgb44-lut-v2-20261103\\isp44-v2-mild-candidate.bin": "34d5f4345e4c74c1b9fb5a132618a563f85e26bc1b6510456fe1be13a55ed194",
+    "E:\\fpga\\workspaces\\ble-button-control\\s4r1-native\\exposure\\t-exposure40-stream-last-v1\\words-after.json": "d43d53fc286bda5352790ead537678b3ad923d3fb79ee336194f698dcbe72df2",
+    "E:\\fpga\\workspaces\\ble-button-control\\s4r1-native\\prepare_camera44_v2_data.py": "9ddf02975b38902552de7e2b5d2fa9c10cc20ccddf3804182f6750783cffb4d2"
+  },
+  "hardware_access": false,
+  "requires": "Apply two register bytes to selected current-route LBF using existing official BRAM updater; new final image/readback and supervised video acceptance."
+}

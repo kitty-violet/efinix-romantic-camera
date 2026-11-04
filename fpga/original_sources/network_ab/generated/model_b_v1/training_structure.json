@@ -1,0 +1,1444 @@
+{
+  "schema": "ti60-compiled-model-contract-v1",
+  "model_id": "B_BALANCED_DECODER_8_16_32_R3",
+  "contract_sha256": "b330b3bce8d09544d596ff446a457c60c77407ded12800cd9cceb16fba92abf3",
+  "input_shape_hwc": [
+    720,
+    1280,
+    3
+  ],
+  "nodes": [
+    {
+      "id": "stem",
+      "kind": "conv3x3",
+      "inputs": [
+        "input"
+      ],
+      "channels": 8,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "stem",
+      "legacy_operator": "conv3x3",
+      "legacy_note": "A/B共用普通3x3 RGB入口",
+      "fusion_group": "encoder",
+      "ddr_boundary": "stream_internal",
+      "index": 0,
+      "quantized_index": 0,
+      "input_shape_hwc": [
+        720,
+        1280,
+        3
+      ],
+      "output_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "input_channels": 3,
+      "terms": 27,
+      "raw_weights": 216,
+      "macs": 199065600,
+      "groups": 1,
+      "oc8_groups": 1,
+      "lane_masks": [
+        255
+      ]
+    },
+    {
+      "id": "down1.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "stem"
+      ],
+      "channels": 8,
+      "kernel": 3,
+      "stride": 2,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "down1",
+      "legacy_operator": "dw3x3_s2+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "encoder",
+      "ddr_boundary": "stream_internal",
+      "index": 1,
+      "quantized_index": 1,
+      "input_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        8
+      ],
+      "input_channels": 8,
+      "terms": 9,
+      "raw_weights": 72,
+      "macs": 16588800,
+      "groups": 8,
+      "oc8_groups": 1,
+      "lane_masks": [
+        255
+      ]
+    },
+    {
+      "id": "down1.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "down1.dw"
+      ],
+      "channels": 16,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "down1",
+      "legacy_operator": "dw3x3_s2+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "encoder",
+      "ddr_boundary": "stream_internal",
+      "index": 2,
+      "quantized_index": 2,
+      "input_shape_hwc": [
+        360,
+        640,
+        8
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "input_channels": 8,
+      "terms": 8,
+      "raw_weights": 128,
+      "macs": 29491200,
+      "groups": 1,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "down2.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "down1.pw"
+      ],
+      "channels": 16,
+      "kernel": 3,
+      "stride": 2,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "down2",
+      "legacy_operator": "dw3x3_s2+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "encoder",
+      "ddr_boundary": "stream_internal",
+      "index": 3,
+      "quantized_index": 3,
+      "input_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        16
+      ],
+      "input_channels": 16,
+      "terms": 9,
+      "raw_weights": 144,
+      "macs": 8294400,
+      "groups": 16,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "down2.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "down2.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "down2",
+      "legacy_operator": "dw3x3_s2+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "encoder",
+      "ddr_boundary": "commit_feature0",
+      "index": 4,
+      "quantized_index": 4,
+      "input_shape_hwc": [
+        180,
+        320,
+        16
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 16,
+      "terms": 16,
+      "raw_weights": 512,
+      "macs": 29491200,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res1_conv1.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "down2.pw"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res1_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual1",
+      "ddr_boundary": "stream_internal",
+      "index": 5,
+      "quantized_index": 5,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res1_conv1.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res1_conv1.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res1_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual1",
+      "ddr_boundary": "stream_internal",
+      "index": 6,
+      "quantized_index": 6,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res1_conv2.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res1_conv1.pw"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res1_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual1",
+      "ddr_boundary": "stream_internal",
+      "index": 7,
+      "quantized_index": 7,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res1_conv2.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res1_conv2.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "output_int8",
+      "legacy_name": "res1_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual1",
+      "ddr_boundary": "stream_internal",
+      "index": 8,
+      "quantized_index": 8,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res1_add",
+      "kind": "residual_add",
+      "inputs": [
+        "res1_conv2.pw",
+        "down2.pw"
+      ],
+      "channels": 32,
+      "kernel": 0,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "residual_int8",
+      "legacy_name": "res1_add",
+      "legacy_operator": "residual_add",
+      "legacy_note": "",
+      "fusion_group": "residual1",
+      "ddr_boundary": "commit_pingpong_feature",
+      "index": 9,
+      "quantized_index": null,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 0,
+      "raw_weights": 0,
+      "macs": 0,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res2_conv1.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res1_add"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res2_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual2",
+      "ddr_boundary": "stream_internal",
+      "index": 10,
+      "quantized_index": 9,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res2_conv1.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res2_conv1.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res2_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual2",
+      "ddr_boundary": "stream_internal",
+      "index": 11,
+      "quantized_index": 10,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res2_conv2.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res2_conv1.pw"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res2_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual2",
+      "ddr_boundary": "stream_internal",
+      "index": 12,
+      "quantized_index": 11,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res2_conv2.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res2_conv2.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "output_int8",
+      "legacy_name": "res2_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual2",
+      "ddr_boundary": "stream_internal",
+      "index": 13,
+      "quantized_index": 12,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res2_add",
+      "kind": "residual_add",
+      "inputs": [
+        "res2_conv2.pw",
+        "res1_add"
+      ],
+      "channels": 32,
+      "kernel": 0,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "residual_int8",
+      "legacy_name": "res2_add",
+      "legacy_operator": "residual_add",
+      "legacy_note": "",
+      "fusion_group": "residual2",
+      "ddr_boundary": "commit_pingpong_feature",
+      "index": 14,
+      "quantized_index": null,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 0,
+      "raw_weights": 0,
+      "macs": 0,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res3_conv1.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res2_add"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res3_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual3",
+      "ddr_boundary": "stream_internal",
+      "index": 15,
+      "quantized_index": 13,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res3_conv1.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res3_conv1.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res3_conv1",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual3",
+      "ddr_boundary": "stream_internal",
+      "index": 16,
+      "quantized_index": 14,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res3_conv2.dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res3_conv1.pw"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "res3_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual3",
+      "ddr_boundary": "stream_internal",
+      "index": 17,
+      "quantized_index": 15,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res3_conv2.pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res3_conv2.dw"
+      ],
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "output_int8",
+      "legacy_name": "res3_conv2",
+      "legacy_operator": "dw3x3_s1+pw1x1",
+      "legacy_note": "",
+      "fusion_group": "residual3",
+      "ddr_boundary": "stream_internal",
+      "index": 18,
+      "quantized_index": 16,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 1024,
+      "macs": 58982400,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "res3_add",
+      "kind": "residual_add",
+      "inputs": [
+        "res3_conv2.pw",
+        "res2_add"
+      ],
+      "channels": 32,
+      "kernel": 0,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "residual_int8",
+      "legacy_name": "res3_add",
+      "legacy_operator": "residual_add",
+      "legacy_note": "",
+      "fusion_group": "residual3",
+      "ddr_boundary": "commit_pingpong_feature",
+      "index": 19,
+      "quantized_index": null,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 0,
+      "raw_weights": 0,
+      "macs": 0,
+      "groups": 1,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up1_low_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res3_add"
+      ],
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up1_low_dw",
+      "legacy_operator": "dw3x3",
+      "legacy_note": "低分辨率空间处理",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 20,
+      "quantized_index": 17,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "input_channels": 32,
+      "terms": 9,
+      "raw_weights": 288,
+      "macs": 16588800,
+      "groups": 32,
+      "oc8_groups": 4,
+      "lane_masks": [
+        255,
+        255,
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up1_low_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "up1_low_dw"
+      ],
+      "channels": 16,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up1_low_pw",
+      "legacy_operator": "pw1x1",
+      "legacy_note": "低分辨率降通道",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 21,
+      "quantized_index": 18,
+      "input_shape_hwc": [
+        180,
+        320,
+        32
+      ],
+      "output_shape_hwc": [
+        180,
+        320,
+        16
+      ],
+      "input_channels": 32,
+      "terms": 32,
+      "raw_weights": 512,
+      "macs": 29491200,
+      "groups": 1,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up1_nn",
+      "kind": "nearest_x2",
+      "inputs": [
+        "up1_low_pw"
+      ],
+      "channels": 16,
+      "kernel": 0,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "inherit_scale",
+      "legacy_name": "up1_nn",
+      "legacy_operator": "nearest_x2",
+      "legacy_note": "",
+      "fusion_group": "decoder",
+      "ddr_boundary": "virtual_copy",
+      "index": 22,
+      "quantized_index": null,
+      "input_shape_hwc": [
+        180,
+        320,
+        16
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "input_channels": 16,
+      "terms": 0,
+      "raw_weights": 0,
+      "macs": 0,
+      "groups": 1,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up1_high_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "up1_nn"
+      ],
+      "channels": 16,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up1_high_dw",
+      "legacy_operator": "dw3x3",
+      "legacy_note": "放大后逐通道边缘细化",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 23,
+      "quantized_index": 19,
+      "input_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "input_channels": 16,
+      "terms": 9,
+      "raw_weights": 144,
+      "macs": 33177600,
+      "groups": 16,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up2_low_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "up1_high_dw"
+      ],
+      "channels": 16,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up2_low_dw",
+      "legacy_operator": "dw3x3",
+      "legacy_note": "低分辨率空间处理",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 24,
+      "quantized_index": 20,
+      "input_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "input_channels": 16,
+      "terms": 9,
+      "raw_weights": 144,
+      "macs": 33177600,
+      "groups": 16,
+      "oc8_groups": 2,
+      "lane_masks": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "up2_low_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "up2_low_dw"
+      ],
+      "channels": 8,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up2_low_pw",
+      "legacy_operator": "pw1x1",
+      "legacy_note": "低分辨率降通道",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 25,
+      "quantized_index": 21,
+      "input_shape_hwc": [
+        360,
+        640,
+        16
+      ],
+      "output_shape_hwc": [
+        360,
+        640,
+        8
+      ],
+      "input_channels": 16,
+      "terms": 16,
+      "raw_weights": 128,
+      "macs": 29491200,
+      "groups": 1,
+      "oc8_groups": 1,
+      "lane_masks": [
+        255
+      ]
+    },
+    {
+      "id": "up2_nn",
+      "kind": "nearest_x2",
+      "inputs": [
+        "up2_low_pw"
+      ],
+      "channels": 8,
+      "kernel": 0,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "none",
+      "quantization": "inherit_scale",
+      "legacy_name": "up2_nn",
+      "legacy_operator": "nearest_x2",
+      "legacy_note": "",
+      "fusion_group": "decoder",
+      "ddr_boundary": "virtual_copy",
+      "index": 26,
+      "quantized_index": null,
+      "input_shape_hwc": [
+        360,
+        640,
+        8
+      ],
+      "output_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "input_channels": 8,
+      "terms": 0,
+      "raw_weights": 0,
+      "macs": 0,
+      "groups": 1,
+      "oc8_groups": 1,
+      "lane_masks": [
+        255
+      ]
+    },
+    {
+      "id": "up2_high_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "up2_nn"
+      ],
+      "channels": 8,
+      "kernel": 3,
+      "stride": 1,
+      "padding": "replicate_1",
+      "training_bias": false,
+      "batch_norm": {
+        "enabled": true,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "relu",
+      "quantization": "output_int8",
+      "legacy_name": "up2_high_dw",
+      "legacy_operator": "dw3x3",
+      "legacy_note": "720p逐通道边缘细化",
+      "fusion_group": "decoder",
+      "ddr_boundary": "stream_internal",
+      "index": 27,
+      "quantized_index": 22,
+      "input_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "output_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "input_channels": 8,
+      "terms": 9,
+      "raw_weights": 72,
+      "macs": 66355200,
+      "groups": 8,
+      "oc8_groups": 1,
+      "lane_masks": [
+        255
+      ]
+    },
+    {
+      "id": "rgb_head",
+      "kind": "pw1x1",
+      "inputs": [
+        "up2_high_dw"
+      ],
+      "channels": 3,
+      "kernel": 1,
+      "stride": 1,
+      "padding": "none",
+      "training_bias": true,
+      "batch_norm": {
+        "enabled": false,
+        "epsilon": 1e-05,
+        "momentum": 0.1,
+        "affine": true,
+        "track_running_stats": true
+      },
+      "activation": "clamp_rgb",
+      "quantization": "output_int8",
+      "legacy_name": "rgb_head",
+      "legacy_operator": "pw1x1",
+      "legacy_note": "B版1x1 RGB输出头",
+      "fusion_group": "decoder",
+      "ddr_boundary": "commit_rgb_frame",
+      "index": 28,
+      "quantized_index": 23,
+      "input_shape_hwc": [
+        720,
+        1280,
+        8
+      ],
+      "output_shape_hwc": [
+        720,
+        1280,
+        3
+      ],
+      "input_channels": 8,
+      "terms": 8,
+      "raw_weights": 24,
+      "macs": 22118400,
+      "groups": 1,
+      "oc8_groups": 1,
+      "lane_masks": [
+        7
+      ]
+    }
+  ],
+  "quantized_operator_count": 24,
+  "raw_weight_count": 10256,
+  "macs_per_frame": 966758400,
+  "trainable_parameter_count": 11379,
+  "trainable_bn_affine_parameters": 1120,
+  "bn_running_stat_values": 1120,
+  "training_bias_parameters": 3,
+  "pytorch_execution_verified": false,
+  "residual_alignment_rtl_verified": false
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "model-training-workspace-v1",
+  "root": "E:/fpga/model-training-workspace",
+  "content_incoming": "data/incoming/content",
+  "holdout_incoming": "data/incoming/holdout",
+  "processed": "data/processed",
+  "runs": "runs",
+  "style_reference": "E:/fpga/model-training-workspace/data/processed/style-target-20261001-v14-expanded-reviewed",
+  "style_reference_status": "approved",
+  "retired_style_references": ["E:/fpga/output/style-reference/20260924-0512/approved/scene-style-train-256-v2"],
+  "authorized_on": "2026-09-29"
+}

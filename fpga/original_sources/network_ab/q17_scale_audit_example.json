@@ -1,0 +1,21 @@
+{
+  "schema": "q17-scale-audit-v1",
+  "model_id": "EXAMPLE_NOT_TRAINED_DATA",
+  "layers": [
+    {
+      "name": "stem",
+      "input_scale": "0.0078125",
+      "input_zero_point": 0,
+      "weight_scales": ["0.025", "0.03125"],
+      "weight_zero_points": [0, 0],
+      "output_scale": "0.015625",
+      "output_zero_point": 0,
+      "relu": true,
+      "accumulator_abs_max": [100000, 120000],
+      "accumulator_samples": [
+        [-100000, -1024, -1, 0, 1, 1024, 100000],
+        [-120000, -2048, -1, 0, 1, 2048, 120000]
+      ]
+    }
+  ]
+}

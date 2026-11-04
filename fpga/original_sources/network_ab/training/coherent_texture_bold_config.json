@@ -1,0 +1,19 @@
+{
+  "schema": "coherent-texture-fp32-v1",
+  "seed": 20261005,
+  "manifest": "E:/fpga/model-training-workspace/runs/coherent-shared-20261002/data/manifest.json",
+  "initial_checkpoint": "E:/fpga/model-training-workspace/runs/coherent-texture-20261002/train/checkpoint_001500.pt",
+  "prior_training_steps": 4000,
+  "preflight_run": "E:/fpga/model-training-workspace/runs/coherent-texture-20261002/bold_preflight",
+  "model": {"width": 32, "blocks": 6, "residual_scale": 0.9},
+  "learning_rate": 0.00004,
+  "loss_weights": {
+    "content": 0.5, "style": 6.0, "structure": 1.2, "temporal": 10.0,
+    "adversarial": 1.4, "texture_adversarial": 1.8, "texture_style": 2.0,
+    "residual_tv": 0.07, "shift": 4.0, "anchor": 0.5,
+    "edge_floor": 1.5, "flat_residual": 0.8
+  },
+  "checkpoint_every": 250,
+  "preview_steps": [100, 250, 500, 750, 1000],
+  "precision": "FP32-no-AMP-no-TF32"
+}

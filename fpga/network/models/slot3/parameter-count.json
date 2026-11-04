@@ -1,0 +1,67 @@
+{
+  "weights_including_zeros": 3808,
+  "biases_including_zeros": 227,
+  "model_parameters": 4035,
+  "additional_q17_multipliers": 227,
+  "convolutions": 11,
+  "residual_blocks": 1,
+  "nodes": 13,
+  "macs_per_720p": 488908800,
+  "layers": [
+    {
+      "id": "stem",
+      "weights": 216,
+      "biases": 8
+    },
+    {
+      "id": "down_dw",
+      "weights": 72,
+      "biases": 8
+    },
+    {
+      "id": "down_pw",
+      "weights": 256,
+      "biases": 32
+    },
+    {
+      "id": "res1_a_dw",
+      "weights": 288,
+      "biases": 32
+    },
+    {
+      "id": "res1_a_pw",
+      "weights": 1024,
+      "biases": 32
+    },
+    {
+      "id": "res1_b_dw",
+      "weights": 288,
+      "biases": 32
+    },
+    {
+      "id": "res1_b_pw",
+      "weights": 1024,
+      "biases": 32
+    },
+    {
+      "id": "up1_low_dw",
+      "weights": 288,
+      "biases": 32
+    },
+    {
+      "id": "up1_low_pw",
+      "weights": 256,
+      "biases": 8
+    },
+    {
+      "id": "up1_high",
+      "weights": 72,
+      "biases": 8
+    },
+    {
+      "id": "rgb",
+      "weights": 24,
+      "biases": 3
+    }
+  ]
+}

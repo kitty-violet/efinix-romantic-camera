@@ -1,0 +1,52 @@
+<efx:project xmlns:efx="http://www.efinixinc.com/enf_proj" name="cnn_production_frame" sw_version="2026.1.132">
+<efx:device_info><efx:family name="Titanium" /><efx:device name="Ti60F225" /><efx:timing_model name="I3" /></efx:device_info>
+<efx:design_info def_veri_version="sv_09" def_vhdl_version="vhdl_2008" unified_flow="false">
+<efx:top_module name="cnn_production_frame" /><efx:design_file name="cnn_production_frame.sv" version="default" library="default" />
+<efx:design_file name="axi_read_merge2.sv" version="default" library="default" />
+<efx:design_file name="banked_result_fifo.sv" version="default" library="default" />
+<efx:design_file name="cnn_frame_datapath.sv" version="default" library="default" />
+<efx:design_file name="coefficient_bank_store_fast.sv" version="default" library="default" />
+<efx:design_file name="column_write4.sv" version="default" library="default" />
+<efx:design_file name="column_write8.sv" version="default" library="default" />
+<efx:design_file name="finish_rr_arbiter.sv" version="default" library="default" />
+<efx:design_file name="fixed_column_store4.sv" version="default" library="default" />
+<efx:design_file name="fixed_partial32.sv" version="default" library="default" />
+<efx:design_file name="fixed_production_mac.sv" version="default" library="default" />
+<efx:design_file name="fixed_ring_weights9.sv" version="default" library="default" />
+<efx:design_file name="fixed_rq32_mixed.sv" version="default" library="default" />
+<efx:design_file name="fixed_skip_vectors4.sv" version="default" library="default" />
+<efx:design_file name="fixed_source_columns6.sv" version="default" library="default" />
+<efx:design_file name="fixed_video_compute.sv" version="default" library="default" />
+<efx:design_file name="fixed_weight_loader.sv" version="default" library="default" />
+<efx:design_file name="fixed_window_dot8x32.sv" version="default" library="default" />
+<efx:design_file name="frame_program_fetch.sv" version="default" library="default" />
+<efx:design_file name="frame_program_issue.sv" version="default" library="default" />
+<efx:design_file name="int8_dual_mac_lane_dspacc.sv" version="default" library="default" />
+<efx:design_file name="int8_dual_mac_lane_prefix_stream.sv" version="default" library="default" />
+<efx:design_file name="phase_resident_reader.sv" version="default" library="default" />
+<efx:design_file name="pw_skip_fuse4.sv" version="default" library="default" />
+<efx:design_file name="requantize_i32_mul18_q17_pipeline.sv" version="default" library="default" />
+<efx:design_file name="resident_weight_bank64.sv" version="default" library="default" />
+<efx:design_file name="residual_column_fuse.sv" version="default" library="default" />
+<efx:design_file name="result_pair_expand4.sv" version="default" library="default" />
+<efx:design_file name="row_pair_arena6.sv" version="default" library="default" />
+<efx:design_file name="row_pair_aux_router.sv" version="default" library="default" />
+<efx:design_file name="row_pair_column_reader.sv" version="default" library="default" />
+<efx:design_file name="row_pair_column_writer.sv" version="default" library="default" />
+<efx:design_file name="row_pair_compute_cluster.sv" version="default" library="default" />
+<efx:design_file name="row_pair_dma.sv" version="default" library="default" />
+<efx:design_file name="row_pair_skip_fuse4.sv" version="default" library="default" />
+<efx:design_file name="shallow_result_fifo.sv" version="default" library="default" />
+<efx:design_file name="shared_mac_stream_front.sv" version="default" library="default" />
+<efx:design_file name="shared_pool_banked_fifo.sv" version="default" library="default" />
+<efx:design_file name="shared_rq_oc8_cluster.sv" version="default" library="default" />
+<efx:design_file name="tensor_arena12.sv" version="default" library="default" />
+<efx:design_file name="unified_column_dispatch32.sv" version="default" library="default" />
+<efx:design_file name="unified_column_reader.sv" version="default" library="default" />
+<efx:top_vhdl_arch name="" /></efx:design_info><efx:constraint_info><efx:sdc_file name="cnn_production_frame.sdc" /><efx:inter_file name="" /></efx:constraint_info>
+<efx:sim_info /><efx:misc_info /><efx:ooc_info /><efx:ip_info />
+<efx:synthesis tool_name="efx_map"><efx:param name="work_dir" value="work_syn" value_type="e_string" />
+<efx:param name="mode" value="speed" value_type="e_option" /><efx:param name="max_ram" value="-1" value_type="e_integer" />
+<efx:param name="max_mult" value="-1" value_type="e_integer" /><efx:param name="max_threads" value="2" value_type="e_integer" /></efx:synthesis>
+<efx:place_and_route tool_name="efx_pnr"><efx:param name="work_dir" value="work_pnr" value_type="e_string" /></efx:place_and_route>
+<efx:bitstream_generation tool_name="efx_pgm" /><efx:debugger><efx:param name="auto_instantiation" value="off" value_type="e_bool" /></efx:debugger></efx:project>

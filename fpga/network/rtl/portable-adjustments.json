@@ -1,0 +1,8 @@
+{
+  "fixed_video_compute.sv": {
+    "before": "2969ddb15bbfb7666143b1995d065dd2865011567ec9de993e32be6c1223f57b",
+    "after": "d3abe6714e5a446f67a26588da29cc90b85dc734ff851b383169675156a7e7a8",
+    "original": "original_sources/cnn_mapped_inputs/fixed_video_compute.sv",
+    "edit": "Declare start before the always block; retain the identical continuous cmd_valid && cmd_ready assignment."
+  }
+}

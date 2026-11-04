@@ -1,0 +1,159 @@
+{
+  "style_id": "PIXEL_R39",
+  "name": "像素动画",
+  "teacher_sha256": "06ba17e1eb0fcee7e7677136963c3a74c4a42fdf3349eef00fec4b1ac38e233d",
+  "teacher_folder": "E:\\fpga\\output\\single4x-r2-style-library-20261102\\revisions\\film-pixel-r2\\models\\PIXEL_R39",
+  "source_r2_read_only": true,
+  "initialization": "delete_second_block",
+  "gradient_steps": 700,
+  "nonzero_gradient_steps": 700,
+  "any_training_weight_update": true,
+  "selected_step": 500,
+  "initial_score": 0.9506337568163872,
+  "selected_score": 0.4550868161022663,
+  "selected_natural_mae": 0.4300000071525574,
+  "selected_palette_mae": 0.10034723579883575,
+  "selected_extra": {},
+  "records": [
+    {
+      "step": 0,
+      "score": 0.9506337568163872,
+      "natural_mae": 0.9238108396530151,
+      "palette_mae": 0.10729166865348816
+    },
+    {
+      "step": 100,
+      "score": 0.9400694891810417,
+      "natural_mae": 0.9132465720176697,
+      "palette_mae": 0.10729166865348816
+    },
+    {
+      "step": 200,
+      "score": 0.5075174048542976,
+      "natural_mae": 0.4747917056083679,
+      "palette_mae": 0.13090279698371887
+    },
+    {
+      "step": 300,
+      "score": 0.4851562883704901,
+      "natural_mae": 0.45468753576278687,
+      "palette_mae": 0.12187501043081284
+    },
+    {
+      "step": 400,
+      "score": 0.48459201119840145,
+      "natural_mae": 0.45412325859069824,
+      "palette_mae": 0.12187501043081284
+    },
+    {
+      "step": 500,
+      "score": 0.4550868161022663,
+      "natural_mae": 0.4300000071525574,
+      "palette_mae": 0.10034723579883575
+    },
+    {
+      "step": 600,
+      "score": 0.4620920158922672,
+      "natural_mae": 0.4449913203716278,
+      "palette_mae": 0.06840278208255768
+    },
+    {
+      "step": 700,
+      "score": 0.4757205471396446,
+      "natural_mae": 0.4548872113227844,
+      "palette_mae": 0.0833333432674408
+    }
+  ],
+  "max_gradient_norm": 10.27047061920166,
+  "coefficient_sha256": "6d8587288530cd1dcb5289482ea7505843729b7c0ad006846377222d005243c7",
+  "cost": {
+    "weights": 3808,
+    "biases": 227,
+    "parameters": 4035,
+    "macs_per_720p": 488908800,
+    "convolutions": 11,
+    "residual_blocks": 1,
+    "shapes": {
+      "input": [
+        720,
+        1280,
+        3
+      ],
+      "stem": [
+        720,
+        1280,
+        8
+      ],
+      "down_dw": [
+        180,
+        320,
+        8
+      ],
+      "down_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_a_dw": [
+        180,
+        320,
+        32
+      ],
+      "res1_a_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_b_dw": [
+        180,
+        320,
+        32
+      ],
+      "res1_b_pw": [
+        180,
+        320,
+        32
+      ],
+      "res1_add": [
+        180,
+        320,
+        32
+      ],
+      "up1_low_dw": [
+        180,
+        320,
+        32
+      ],
+      "up1_low_pw": [
+        180,
+        320,
+        8
+      ],
+      "up1_nearest": [
+        720,
+        1280,
+        8
+      ],
+      "up1_high": [
+        720,
+        1280,
+        8
+      ],
+      "rgb": [
+        720,
+        1280,
+        3
+      ]
+    }
+  },
+  "independent_oracle": {
+    "all_nodes_exact": true,
+    "scalar_comparisons": 6720
+  },
+  "qat_vs_export_all_validation_exact": true,
+  "no_inference_filter": true,
+  "no_inference_flow": true,
+  "visual_acceptance": false,
+  "hardware_test": false,
+  "seconds": 28.96916089998558
+}

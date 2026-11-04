@@ -1,0 +1,35 @@
+{
+  "schema": "coherent-material-fp32-v1",
+  "seed": 20261003,
+  "manifest": "E:/fpga/model-training-workspace/runs/coherent-shared-20261002/data/manifest.json",
+  "initial_weights": "E:/fpga/model-training-workspace/runs/coherent-surface-20261002/final-4850/shared_style_fp32.pt",
+  "prior_training_steps": 4850,
+  "material_bank": "E:/fpga/model-training-workspace/runs/coherent-material-20261003/bank/material_bank.pt",
+  "preflight_run": "E:/fpga/model-training-workspace/runs/coherent-material-20261003/preflight_stronger",
+  "model": {
+    "width": 32,
+    "blocks": 6,
+    "residual_scale": 0.9
+  },
+  "learning_rate": 3E-05,
+  "mode": "material_fixed",
+  "loss_weights": {
+    "material": 30.0,
+    "content": 0.3,
+    "tone": 8.0,
+    "chroma": 4.0,
+    "anchor": 0.15,
+    "edge": 4.0,
+    "temporal": 8.0,
+    "shift": 4.0
+  },
+  "checkpoint_every": 100,
+  "preview_steps": [
+    100,
+    200,
+    300,
+    500,
+    600
+  ],
+  "precision": "FP32-no-AMP-no-TF32"
+}

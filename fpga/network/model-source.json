@@ -1,0 +1,18 @@
+{
+  "model.py": {
+    "forward": {
+      "source": "E:\\fpga\\output\\single4x-r2-style-library-20261102\\source\\library.py",
+      "sha256": "abcb8bed1e908117f7b3a18504fea516754bbb8b6d659579c42d0a304b83c8b9",
+      "class": "StyleModel.forward"
+    },
+    "quantization": {
+      "source": "E:\\fpga\\output\\b1-mc-pixel-20261027\\source\\core.py",
+      "sha256": "72ed09a5df95bf601a8b3090274834380893c8b0a61b3eee91515021cf7a0b98"
+    },
+    "calibration": {
+      "source": "E:\\fpga\\output\\single-down-up-reconstruction-20261102\\source\\reconstruct.py",
+      "sha256": "24690585d4ee4be555c77d45865174058e1c4be1451186a6e182826c23c51bf3"
+    },
+    "constructor": "Package-local parameter shapes from the unchanged per-style graph; strict state_dict loading required."
+  }
+}

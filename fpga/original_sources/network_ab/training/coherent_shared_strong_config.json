@@ -1,0 +1,15 @@
+{
+  "schema": "coherent-shared-fp32-v1",
+  "seed": 20261003,
+  "manifest": "E:/fpga/model-training-workspace/runs/coherent-shared-20261002/data/manifest.json",
+  "preflight_run": "E:/fpga/model-training-workspace/runs/coherent-shared-20261002/strong_preflight",
+  "initial_checkpoint": "E:/fpga/model-training-workspace/runs/coherent-shared-20261002/train/checkpoint_002000.pt",
+  "prior_training_steps": 2000,
+  "model": {"width": 32, "blocks": 6, "residual_scale": 0.9},
+  "learning_rate": 0.000075,
+  "loss_weights": {"content": 0.8, "style": 4.0, "structure": 1.0,
+                   "temporal": 6.0, "adversarial": 1.0, "residual_tv": 0.05, "shift": 2.0},
+  "checkpoint_every": 250,
+  "preview_steps": [100, 250, 500, 1000],
+  "precision": "FP32-no-AMP-no-TF32"
+}

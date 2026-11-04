@@ -1,0 +1,215 @@
+{
+  "status": "SELECTED_LOCAL_BUFFERS_AND_RESTORED_CONTROL_NETS_MAPPED",
+  "map_sha256": "5c33fe010044ae19bea7e8e51dc1201bf70e0faf82119c0289fd715c73c82980",
+  "selected_groups": "mode",
+  "branches": [
+    {
+      "group": "mode",
+      "driver": "control_local_mode_0_driver",
+      "fanout": 118,
+      "pin_classes": {
+        "I2": 90,
+        "A": 28
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_1_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 105,
+        "A": 12
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_2_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 100,
+        "A": 17
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_3_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 85,
+        "A": 31,
+        "I0": 1
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_4_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 101,
+        "A": 16
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_5_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "A": 10,
+        "I2": 107
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_6_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_7_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_8_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "A": 42,
+        "I2": 75
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_9_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 87,
+        "A": 30
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_10_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 113,
+        "A": 4
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_11_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 115,
+        "A": 2
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_12_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_13_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_14_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    },
+    {
+      "group": "mode",
+      "driver": "control_local_mode_15_driver",
+      "fanout": 117,
+      "pin_classes": {
+        "I2": 117
+      }
+    }
+  ],
+  "restored": [
+    {
+      "group": "enable",
+      "driver": "s4r1/core/dut/engine/mac/arithmetic/ROW_CONTROL[1].PAIR[3].enable_driver",
+      "fanout": 906
+    }
+  ],
+  "plan_sha256": "ae67941155140b36e39720e960c0f04e4b2b7c8934e21ab239dee6459ca082a6",
+  "primitive_counts": {
+    "EFX_LUT4": 39270,
+    "EFX_FF": 14689,
+    "EFX_ADD": 5237,
+    "EFX_RAM10": 156,
+    "EFX_SRL8": 3407,
+    "EFX_DPRAM10": 100,
+    "EFX_COMB4": 179,
+    "EFX_DSP48": 160
+  },
+  "packing": {
+    "production-r13": {
+      "xlr": 56609,
+      "ram": 256,
+      "dsp": 160,
+      "LUT_only": 31177,
+      "LUT_FF": 8077,
+      "COMB_only": 125,
+      "COMB_FF": 54,
+      "ADD_only": 3893,
+      "ADD_FF": 1994,
+      "SRL_only": 3407,
+      "SRL_FF": 0,
+      "FF_only": 7882
+    },
+    "production-r15": {
+      "xlr": 56626,
+      "ram": 256,
+      "dsp": 160,
+      "LUT_only": 31194,
+      "LUT_FF": 8078,
+      "COMB_only": 125,
+      "COMB_FF": 54,
+      "ADD_only": 3893,
+      "ADD_FF": 1994,
+      "SRL_only": 3407,
+      "SRL_FF": 0,
+      "FF_only": 7881
+    }
+  },
+  "packing_deltas": {
+    "xlr": 17,
+    "ram": 0,
+    "dsp": 0,
+    "LUT_only": 17,
+    "LUT_FF": 1,
+    "COMB_only": 0,
+    "COMB_FF": 0,
+    "ADD_only": 0,
+    "ADD_FF": 0,
+    "SRL_only": 0,
+    "SRL_FF": 0,
+    "FF_only": -1
+  },
+  "reports": {
+    "E:\\fpga\\workspaces\\sapphire-s4r1-control\\native8h-integration\\build\\production-r13\\outflow\\ti60f225_oob.pnr.hier_util.rpt": "b5fa75a052f939bf96ca243548b9d7e3449d73b1b1537050b1cfe49c5483b3f6",
+    "E:\\fpga\\workspaces\\sapphire-s4r1-control\\native8h-integration\\build\\production-r15\\outflow\\ti60f225_oob.pnr.hier_util.rpt": "98a9a3d93082d831058354c80eac1267c41f8d691341a9739618a90809822fe6"
+  },
+  "checker_sha256": "b8ed0f664f570fd02145f3f6a33edeef8a57f6c5c0bd3a6f24d2b16634214aab",
+  "physical_pass": false,
+  "hardware_access": false
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "game-style-adain-finetune-v1",
+  "seed": 20261001,
+  "content_manifest": "E:/fpga/model-training-workspace/data/processed/content-20260930-v2/manifest.approved.json",
+  "style_manifest": "E:/fpga/model-training-workspace/data/processed/style-target-20261001-v1/dataset-manifest.json",
+  "crop_hw": [[256, 256]],
+  "crop_probabilities": [1.0],
+  "full_frame_every": 0,
+  "horizontal_flip_probability": 0.5,
+  "learning_rate": 0.00002,
+  "content_weight": 1.0,
+  "style_weight": 10.0,
+  "edge_weight": 0.1,
+  "maximum_steps": 2000,
+  "validation_steps": [250, 500, 1000, 2000],
+  "eval_style_ids": ["2-00540-F", "3-02760-D"],
+  "precision": "fp32-no-amp-no-tf32"
+}

@@ -56,6 +56,13 @@ logs/
 !/fpga/firmware/prebuilt/*.bin
 !/fpga/tests/data/*.hex
 
+# Complete-package delivery assets, not locally generated build output.
+!/fpga/network/**/*.bin
+!/fpga/network/**/*.hex
+!/fpga/original_sources/output/
+!/fpga/original_sources/output/**
+!/fpga/verification/core/*.log
+
 # Local editor and OS files
 .vscode/
 .idea/

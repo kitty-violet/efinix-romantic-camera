@@ -1,0 +1,190 @@
+{
+  "schema": "S4R1_8_32_8_V1",
+  "input_shape_hwc": [
+    720,
+    1280,
+    3
+  ],
+  "nodes": [
+    {
+      "id": "stem",
+      "kind": "conv3x3",
+      "inputs": [
+        "input"
+      ],
+      "cin": 3,
+      "channels": 8,
+      "kernel": 3,
+      "stride": 1,
+      "groups": 1,
+      "activation": "relu"
+    },
+    {
+      "id": "down_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "stem"
+      ],
+      "cin": 8,
+      "channels": 8,
+      "kernel": 3,
+      "stride": 4,
+      "groups": 8,
+      "activation": "relu"
+    },
+    {
+      "id": "down_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "down_dw"
+      ],
+      "cin": 8,
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "groups": 1,
+      "activation": "relu"
+    },
+    {
+      "id": "res1_a_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "down_pw"
+      ],
+      "cin": 32,
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "groups": 32,
+      "activation": "relu"
+    },
+    {
+      "id": "res1_a_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res1_a_dw"
+      ],
+      "cin": 32,
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "groups": 1,
+      "activation": "relu"
+    },
+    {
+      "id": "res1_b_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res1_a_pw"
+      ],
+      "cin": 32,
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "groups": 32,
+      "activation": "relu"
+    },
+    {
+      "id": "res1_b_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "res1_b_dw"
+      ],
+      "cin": 32,
+      "channels": 32,
+      "kernel": 1,
+      "stride": 1,
+      "groups": 1,
+      "activation": "none"
+    },
+    {
+      "id": "res1_add",
+      "kind": "add",
+      "inputs": [
+        "res1_b_pw",
+        "down_pw"
+      ],
+      "channels": 32
+    },
+    {
+      "id": "up1_low_dw",
+      "kind": "dw3x3",
+      "inputs": [
+        "res1_add"
+      ],
+      "cin": 32,
+      "channels": 32,
+      "kernel": 3,
+      "stride": 1,
+      "groups": 32,
+      "activation": "relu"
+    },
+    {
+      "id": "up1_low_pw",
+      "kind": "pw1x1",
+      "inputs": [
+        "up1_low_dw"
+      ],
+      "cin": 32,
+      "channels": 8,
+      "kernel": 1,
+      "stride": 1,
+      "groups": 1,
+      "activation": "relu"
+    },
+    {
+      "id": "up1_nearest",
+      "kind": "nearest",
+      "inputs": [
+        "up1_low_pw"
+      ],
+      "channels": 8,
+      "factor": 4
+    },
+    {
+      "id": "up1_high",
+      "kind": "dw3x3",
+      "inputs": [
+        "up1_nearest"
+      ],
+      "cin": 8,
+      "channels": 8,
+      "kernel": 3,
+      "stride": 1,
+      "groups": 8,
+      "activation": "relu"
+    },
+    {
+      "id": "rgb",
+      "kind": "pw1x1",
+      "inputs": [
+        "up1_high"
+      ],
+      "cin": 8,
+      "channels": 3,
+      "kernel": 1,
+      "stride": 1,
+      "groups": 1,
+      "activation": "none"
+    }
+  ],
+  "residual": {
+    "res1_add": {
+      "main_scaled": false,
+      "multiplier": 1,
+      "post_multiplier": 131071
+    }
+  },
+  "numeric": {
+    "input": "RGB uint8 minus 128",
+    "weights": "signed INT8 OIHW",
+    "activations": "signed INT8 scale 1/128",
+    "bias": "signed INT32",
+    "multiplier": "signed18 Q17 stored LE32",
+    "rounding": "nearest half away from zero",
+    "padding": "replicate",
+    "output": "clamp signed INT8 plus 128"
+  },
+  "old_fixed_B1_binary_compatible": false,
+  "hardware_implemented": false
+}
